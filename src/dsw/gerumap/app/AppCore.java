@@ -1,4 +1,10 @@
 package dsw.gerumap.app;
 
-public class AppCore {
+import dsw.gerumap.app.core.ApplicationFramework;
+
+public class AppCore extends ApplicationFramework {
+    @Override
+    public void start() {
+
+    }
 }

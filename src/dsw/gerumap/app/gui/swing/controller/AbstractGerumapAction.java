@@ -1,4 +1,6 @@
 package dsw.gerumap.app.gui.swing.controller;
 
-public abstract class AbstractGerumapAction {
+import javax.swing.*;
+
+public abstract class AbstractGerumapAction extends AbstractAction {
 }
