@@ -9,7 +9,7 @@ public class AppCore extends ApplicationFramework {
     private static AppCore instance;
     @Override
     public void start() {
-
+        this.gui.start();
     }
 
     private AppCore(){

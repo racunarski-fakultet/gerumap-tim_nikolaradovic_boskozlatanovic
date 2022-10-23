@@ -14,4 +14,16 @@ public class ActionManager {
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
     }
+
+    public ActionManager(){
+        initialliseActions();
+    }
+
+    public InfoAction getInfoAction() {
+        return infoAction;
+    }
+
+    public NewProjectAction getNewProjectAction() {
+        return newProjectAction;
+    }
 }

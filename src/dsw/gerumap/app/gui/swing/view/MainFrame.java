@@ -49,8 +49,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Gerumap app");
 
-        menuBar = new MyMenuBar();
-        setJMenuBar(menuBar);
+        menu = new MyMenuBar();
+        setJMenuBar(menu);
 
         toolBar = new ToolBar();
         add(toolBar, BorderLayout.NORTH);
