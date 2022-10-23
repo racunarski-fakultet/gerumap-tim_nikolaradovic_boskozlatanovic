@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
 
     private ActionManager actionManager;
 
-    private JMenuBar menuBar;
+    private JMenuBar menu;
 
     private JToolBar toolBar;
 
