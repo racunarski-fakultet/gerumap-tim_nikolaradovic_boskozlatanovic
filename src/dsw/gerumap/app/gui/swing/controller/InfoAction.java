@@ -1,6 +1,6 @@
 package dsw.gerumap.app.gui.swing.controller;
 
-import dsw.gerumap.app.gui.swing.view.MyDialog;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,9 +19,7 @@ public class InfoAction extends AbstractGerumapAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //novi jdialog dodati sliku i poruku iz view modela
-        JDialog dialog = new MyDialog();
-        dialog.add(new JLabel(loadIcon("")));
+       JOptionPane.showMessageDialog(MainFrame.getIntance(),"Bosko Zlatanovic 27/21 i Nikola Radovic 49/21","Info",JOptionPane.INFORMATION_MESSAGE,loadIcon("images/info.png"));
 
     }
 }
