@@ -13,13 +13,13 @@ public class InfoAction extends AbstractGerumapAction {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_I,ActionEvent.CTRL_MASK)); // ako bude trebalo
         putValue(NAME,"Info");
         putValue(SHORT_DESCRIPTION,"Info");
-        putValue(SMALL_ICON,loadIcon("/gui.swing/images/info.png"));
+        putValue(SMALL_ICON,loadIcon("/dsw/gerumap/app/gui/swing/images/info.png"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-       JOptionPane.showMessageDialog(MainFrame.getIntance(),"Bosko Zlatanovic 36/21 i Nikola Radovic 49/21","Info",JOptionPane.INFORMATION_MESSAGE,loadIcon("images/info.png"));
+       JOptionPane.showMessageDialog(MainFrame.getIntance(),"Bosko Zlatanovic 36/21 i Nikola Radovic 49/21","Info",JOptionPane.INFORMATION_MESSAGE,loadIcon("/dsw/gerumap/app/gui/swing/images/info.png"));
 
     }
 }
