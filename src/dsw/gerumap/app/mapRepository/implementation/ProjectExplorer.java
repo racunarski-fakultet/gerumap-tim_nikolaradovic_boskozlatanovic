@@ -2,12 +2,16 @@ package dsw.gerumap.app.mapRepository.implementation;
 
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 public class ProjectExplorer extends MapNodeComposite {
 
     @Override
     public void addChildren(MapNode child) {
-
         if (child instanceof Project) {
             super.addChildren(child);
         }
@@ -15,10 +19,8 @@ public class ProjectExplorer extends MapNodeComposite {
 
     @Override
     public void removeChildren(MapNode child) {
-
         if (child instanceof MindMap){
             super.removeChildren(child);
         }
-
     }
 }

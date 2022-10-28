@@ -1,8 +1,13 @@
 package dsw.gerumap.app.mapRepository.composite;
 
 import dsw.gerumap.app.core.MapRepository;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
+
+@Getter
+@Setter
 
 public class MapNodeComposite extends MapNode {
 
@@ -15,6 +20,4 @@ public class MapNodeComposite extends MapNode {
     public void removeChildren(MapNode child){
         this.children.remove(child);
     }
-
-
 }
