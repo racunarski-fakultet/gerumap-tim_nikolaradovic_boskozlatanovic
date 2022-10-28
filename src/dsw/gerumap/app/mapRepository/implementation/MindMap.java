@@ -7,12 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MindMap extends MapNodeComposite {
-    private List<Element> elementi = new ArrayList<>();
 
+    private boolean siTemplate;
     @Override
     public void addChildren(MapNode child) {
         if(child instanceof Element){
-            elementi.add((Element) child);
+            super.addChildren(child);
         }
+    }
+
+    @Override
+    public void removeChildren(MapNode child) {
+        if (child instanceof Element){
+            super.removeChildren(child);
+        }
+
     }
 }
