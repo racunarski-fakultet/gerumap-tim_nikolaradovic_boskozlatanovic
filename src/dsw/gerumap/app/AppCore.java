@@ -22,9 +22,6 @@ public class AppCore extends ApplicationFramework {
         return instance;
     }
 
-    public void run(){
-        this.gui.start();
-    }
 
     public static void main(String[] args) {
         Gui gui = new SwingGui();

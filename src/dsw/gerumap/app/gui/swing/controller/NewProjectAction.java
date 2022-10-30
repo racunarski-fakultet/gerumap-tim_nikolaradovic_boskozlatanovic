@@ -10,7 +10,7 @@ public class NewProjectAction extends AbstractGerumapAction{
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N,ActionEvent.CTRL_MASK));
         putValue(NAME,"New Project");
         putValue(SHORT_DESCRIPTION,"New Project");
-         putValue(SMALL_ICON,loadIcon("/dsw/gerumap/app/gui/swing/images/new.png"));
+         putValue(SMALL_ICON,loadIcon("/dsw/gerumap/app/gui/swing/images/Add.png"));
     }
 
     @Override
