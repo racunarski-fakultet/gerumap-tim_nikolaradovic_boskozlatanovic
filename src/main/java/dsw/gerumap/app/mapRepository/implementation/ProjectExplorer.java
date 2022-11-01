@@ -5,22 +5,32 @@ import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 
 public class ProjectExplorer extends MapNodeComposite {
 
+    public ProjectExplorer(String name) {
+        super(null, name);
+    }
+
+    public ProjectExplorer(MapNode parent, String name, List<MapNode> children) {
+        super(parent, name, children);
+    }
+
     @Override
     public void addChildren(MapNode child) {
-        if (child instanceof Project) {
-            super.addChildren(child);
+        if (child instanceof Project && !this.getChildren().contains((Project)child)) {
+            this.getChildren().add(child);
         }
     }
 
     @Override
     public void removeChildren(MapNode child) {
-        if (child instanceof MindMap){
-            super.removeChildren(child);
+        if (child instanceof Project && this.getChildren().contains((Project)child)){
+            this.getChildren().remove(child);
         }
     }
 }

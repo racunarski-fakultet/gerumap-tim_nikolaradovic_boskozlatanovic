@@ -14,17 +14,26 @@ import java.util.List;
 public class MindMap extends MapNodeComposite {
 
     private boolean isTemplate;
+
+    public MindMap(MapNode parent, String name) {
+        super(parent, name);
+    }
+
+    public MindMap(MapNode parent, String name, List<MapNode> children) {
+        super(parent, name, children);
+    }
+
     @Override
     public void addChildren(MapNode child) {
-        if(child instanceof Element){
-            super.addChildren(child);
+        if(child instanceof Element && !this.getChildren().contains((Element)child)){
+            this.getChildren().add(child);
         }
     }
 
     @Override
     public void removeChildren(MapNode child) {
-        if (child instanceof Element){
-            super.removeChildren(child);
+        if (child instanceof Element && !this.getChildren().contains((Element)child)){
+            this.getChildren().remove(child);
         }
 
     }
