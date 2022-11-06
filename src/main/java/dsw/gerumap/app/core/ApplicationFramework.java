@@ -6,7 +6,8 @@ public abstract class ApplicationFramework {
     protected MapRepository mapRepository;
     public abstract void start();
 
-    public void initialize(Gui gui){
+    public void initialize(Gui gui,MapRepository mapRepository){
         this.gui = gui;
+        this.mapRepository = mapRepository;
     }
 }
