@@ -14,6 +14,17 @@ import java.util.Random;
 
 public class MapTreeImplementation implements MapTree{
     private MapTreeView treeView;
+
+    @Override
+    public void setAuthor(MapTreeItem node,String name) {
+
+        if (node.getMapNode() instanceof Project){
+            Project p = (Project) node.getMapNode();
+            p.setAutor(name);
+            System.out.println(name);
+        }
+    }
+
     private DefaultTreeModel treeModel;
 
 
@@ -50,9 +61,8 @@ public class MapTreeImplementation implements MapTree{
 
         treeModel.removeNodeFromParent(child);
 
-
-
     }
+
 
 
     @Override

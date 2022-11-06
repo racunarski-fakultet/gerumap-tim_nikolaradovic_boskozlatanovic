@@ -12,10 +12,13 @@ public class ActionManager {
 
     private DeleteAction deleteAction;
 
+    private AddAuthorAction addAuthorAction;
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();
+        addAuthorAction = new AddAuthorAction();
     }
 
     public ActionManager(){
