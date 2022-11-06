@@ -41,6 +41,21 @@ public class MapTreeImplementation implements MapTree{
     }
 
     @Override
+    public void removeChild(MapTreeItem child) {
+
+        if (!(child.getMapNode() instanceof MapNodeComposite))
+            return;
+        MapNodeComposite parent = (MapNodeComposite) child.getMapNode().getParent();
+        parent.removeChildren((MapNode) child.getMapNode());
+
+        treeModel.removeNodeFromParent(child);
+
+
+
+    }
+
+
+    @Override
     public MapTreeItem getSelectedNode() {
         return (MapTreeItem) treeView.getLastSelectedPathComponent();
     }

@@ -9,6 +9,7 @@ public class ToolBar extends JToolBar {
         setFloatable(false);
         add(MainFrame.getIntance().getActionManager().getNewProjectAction());
         add(MainFrame.getIntance().getActionManager().getInfoAction());
+        add(MainFrame.getIntance().getActionManager().getDeleteAction());
     }
 
 }
