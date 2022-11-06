@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class MapNode implements MapRepository {
+public abstract class MapNode {
 
     private MapNode parent;
 

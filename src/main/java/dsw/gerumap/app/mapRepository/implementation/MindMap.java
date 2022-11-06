@@ -27,6 +27,7 @@ public class MindMap extends MapNodeComposite {
     public void addChildren(MapNode child) {
         if(child instanceof Element && !this.getChildren().contains((Element)child)){
             this.getChildren().add(child);
+            child.setParent(this);
         }
     }
 
