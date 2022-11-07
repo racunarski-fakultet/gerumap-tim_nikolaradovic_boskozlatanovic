@@ -88,4 +88,9 @@ public class MainFrame extends JFrame {
 
     }
 
+    public void update(){
+
+        desktop.updateUI();
+    }
+
 }

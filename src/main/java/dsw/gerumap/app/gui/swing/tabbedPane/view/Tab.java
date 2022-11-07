@@ -9,8 +9,9 @@ public class Tab extends JTabbedPane {
     private MapNode mapNode;
 
     public Tab(MapNode mapNode) {
-
-            this.addTab("test1", null);
+        super(JTabbedPane.TOP,JTabbedPane.WRAP_TAB_LAYOUT);
+        this.mapNode = mapNode;
+            this.addTab(mapNode.getName(), null);
 //            this.setComponentAt();
 
     }

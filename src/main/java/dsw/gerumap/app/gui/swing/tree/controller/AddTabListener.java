@@ -10,6 +10,7 @@ import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,10 +25,11 @@ public class AddTabListener implements MouseListener {
         if ((((MouseEvent) e)).getClickCount() == 2) {
             MapTreeItem item = MainFrame.getIntance().getMapTree().getSelectedNode();
             MapNode mp = item.getMapNode();
+
             for(MapNode i: ((MapNodeComposite)mp).getChildren()){
                 tab = new Tab(i);
-                tab.setName(i.getName());
-                MainFrame.getIntance().getDesktop().add(tab);
+                MainFrame.getIntance().getDesktop().add(i.getName(),tab);
+                MainFrame.getIntance().getDesktop().updateUI();
             }
         }
 
