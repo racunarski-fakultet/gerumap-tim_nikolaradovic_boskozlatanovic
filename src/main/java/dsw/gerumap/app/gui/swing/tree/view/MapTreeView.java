@@ -16,6 +16,7 @@ public class MapTreeView extends JTree {
         setCellEditor(new MapTreeCellEditor(this, geruTreeCellRenderer));
         setCellRenderer(geruTreeCellRenderer);
         setEditable(true);
+        setSelectionRow(0);
 
     }
 }

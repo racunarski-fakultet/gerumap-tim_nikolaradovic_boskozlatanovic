@@ -1,18 +1,21 @@
 package dsw.gerumap.app.gui.swing.tree;
 
+import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.tree.view.MapTreeView;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.mapRepository.Actions;
+import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
-import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.Random;
 
-public class MapTreeImplementation implements MapTree{
+public class MapTreeImplementation implements MapTree, Subscriber {
     private MapTreeView treeView;
 
     @Override
@@ -34,31 +37,23 @@ public class MapTreeImplementation implements MapTree{
         MapTreeItem root = new MapTreeItem(projectExplorer);
         treeModel = new DefaultTreeModel(root);
         treeView = new MapTreeView(treeModel);
+        ((MapRepositoryImplementation)AppCore.getInstance().getMapRepository()).addSubscriber(this);
         return treeView;
 
 
     }
 
     @Override
-    public void addChild(MapTreeItem parent) {
-        if (!(parent.getMapNode() instanceof MapNodeComposite) || parent.getMapNode() instanceof MindMap)
-            return;
-
-        MapNode child = createChild(parent.getMapNode());
-        parent.add(new MapTreeItem(child));
-        ((MapNodeComposite) parent.getMapNode()).addChildren(child);
+    public void addChild(MapTreeItem child) {
+        MapTreeItem parent = MainFrame.getIntance().getMapTree().getSelectedNode();
+        parent.add(child);
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
     }
 
     @Override
-    public void removeChild(MapTreeItem child) {
-
-        if (!(child.getMapNode() instanceof MapNodeComposite))
-            return;
-        MapNodeComposite parent = (MapNodeComposite) child.getMapNode().getParent();
-        parent.removeChildren((MapNode) child.getMapNode());
-
+    public void removeChild() {
+        MapTreeItem child = MainFrame.getIntance().getMapTree().getSelectedNode();
         treeModel.removeNodeFromParent(child);
 
     }
@@ -70,13 +65,14 @@ public class MapTreeImplementation implements MapTree{
         return (MapTreeItem) treeView.getLastSelectedPathComponent();
     }
 
-    private MapNode createChild(MapNode parent){
 
-        if (parent instanceof Project){
-            return new MindMap(parent, "MindMap" + new Random().nextInt(100));
+    @Override
+    public void update(Object obj, Enum e) {
+        if (e.equals(Actions.ADD)){
+            addChild(new MapTreeItem((MapNode) obj));
         }
-            return new Project(parent, "Project" + new Random().nextInt(100));
-
+        if(e.equals(Actions.DELETE)){
+            removeChild();
+        }
     }
-
 }
