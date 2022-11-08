@@ -1,6 +1,12 @@
 package dsw.gerumap.app.gui.swing.tree.controller;
 
+import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
+import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellEditor;
@@ -45,7 +51,9 @@ public class MapTreeCellEditor extends DefaultTreeCellEditor implements ActionLi
         if(!(clickedOn instanceof MapTreeItem))
             return;
         MapTreeItem clicked = (MapTreeItem) clickedOn;
-        clicked.setName(e.getActionCommand());
+        System.out.println(e.getActionCommand());
+        ((MapRepositoryImplementation) AppCore.getInstance().getMapRepository()).rename(clicked.getMapNode(), e.getActionCommand());
     }
+
 
 }

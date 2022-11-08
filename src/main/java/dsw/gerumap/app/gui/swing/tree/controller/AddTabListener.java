@@ -1,11 +1,14 @@
 package dsw.gerumap.app.gui.swing.tree.controller;
 
+import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.Tab;
 import dsw.gerumap.app.gui.swing.tree.MapTree;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
+import dsw.gerumap.app.mapRepository.implementation.Project;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -21,16 +24,13 @@ public class AddTabListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Tab tab;
         if ((((MouseEvent) e)).getClickCount() == 2) {
             MapTreeItem item = MainFrame.getIntance().getMapTree().getSelectedNode();
             MapNode mp = item.getMapNode();
+            if(mp instanceof Project)
+                MainFrame.getIntance().getTabbedPane().addToPanel(mp);
 
-            for(MapNode i: ((MapNodeComposite)mp).getChildren()){
-                tab = new Tab(i);
-                MainFrame.getIntance().getDesktop().add(i.getName(),tab);
-                MainFrame.getIntance().getDesktop().updateUI();
-            }
+          //  ((MapRepositoryImplementation) AppCore.getInstance().getMapRepository()).addTab(mp);
         }
 
 

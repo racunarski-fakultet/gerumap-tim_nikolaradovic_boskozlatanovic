@@ -28,6 +28,11 @@ public class MapTreeImplementation implements MapTree, Subscriber {
         }
     }
 
+    @Override
+    public void renameMapTreeItem() {
+        SwingUtilities.updateComponentTreeUI(treeView);
+    }
+
     private DefaultTreeModel treeModel;
 
 
@@ -74,5 +79,9 @@ public class MapTreeImplementation implements MapTree, Subscriber {
         if(e.equals(Actions.DELETE)){
             removeChild();
         }
+        if(e.equals(Actions.RENAME)){
+            renameMapTreeItem();
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package dsw.gerumap.app.gui.swing.view;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.controller.ActionManager;
+import dsw.gerumap.app.gui.swing.tabbedPane.TabbedPaneImplementation;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.Tab;
 import dsw.gerumap.app.gui.swing.tree.MapTree;
 import dsw.gerumap.app.gui.swing.tree.MapTreeImplementation;
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
 
     private Tab tab;
     private JPanel desktop = new JPanel();
+    private TabbedPaneImplementation tabbedPane;
     private MainFrame(){
 
     }
@@ -35,6 +37,7 @@ public class MainFrame extends JFrame {
     private void initialise(){
         actionManager = new ActionManager();
         mapTree = new MapTreeImplementation();
+        tabbedPane = new TabbedPaneImplementation();
         initialiseGUI();
     }
 
@@ -88,9 +91,5 @@ public class MainFrame extends JFrame {
 
     }
 
-    public void update(){
-
-        desktop.updateUI();
-    }
 
 }
