@@ -1,7 +1,9 @@
 package dsw.gerumap.app.gui.swing.controller;
 
+import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +21,10 @@ public class NewProjectAction extends AbstractGerumapAction{
     @Override
     public void actionPerformed(ActionEvent e) {
         MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
-        MainFrame.getIntance().getMapTree().addChild(selected);
+        if(selected == null)
+            return;
+        ((MapRepositoryImplementation) AppCore.getInstance().getMapRepository()).addChild(selected.getMapNode());
+
+
     }
 }

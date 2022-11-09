@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ActionManager {
+public class  ActionManager {
 
     private InfoAction infoAction;
     private NewProjectAction newProjectAction;
@@ -14,11 +14,13 @@ public class ActionManager {
 
     private AddAuthorAction addAuthorAction;
 
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();
         addAuthorAction = new AddAuthorAction();
+
     }
 
     public ActionManager(){
