@@ -10,6 +10,8 @@ public interface MapRepository {
     ProjectExplorer getProjectExplorer();
     void addChild( MapNode child);
     void removeChild(MapNode child);
+
+    void setAuthoer(MapNode mapNode,String name);
     void rename(MapNode mapNode, String name);
 
 }

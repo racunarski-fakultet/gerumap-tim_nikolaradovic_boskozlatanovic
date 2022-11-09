@@ -13,5 +13,6 @@ public interface MapTree {
 
     void setAuthor(MapTreeItem node,String name);
     void renameMapTreeItem();
+
     MapTreeItem getSelectedNode();
 }

@@ -4,5 +4,5 @@ import dsw.gerumap.app.mapRepository.composite.MapNode;
 
 public interface TabbedPane {
     void addToPanel(MapNode mp);
-    void setAuthor(String author);
+    void setAuthor(MapNode mp);
 }
