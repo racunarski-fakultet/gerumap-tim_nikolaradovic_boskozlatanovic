@@ -1,8 +1,9 @@
 package dsw.gerumap.app;
 
-import dsw.gerumap.app.core.ApplicationFramework;
-import dsw.gerumap.app.core.Gui;
-import dsw.gerumap.app.core.MapRepository;
+import dsw.gerumap.app.core.*;
+import dsw.gerumap.app.errorHandling.loggerImplementations.ConsoleLogger;
+import dsw.gerumap.app.errorHandling.loggerImplementations.FileLogger;
+import dsw.gerumap.app.errorHandling.messageImplementation.MessageGeneratorImplementation;
 import dsw.gerumap.app.gui.swing.SwingGui;
 import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
 import lombok.Getter;
@@ -11,15 +12,24 @@ import lombok.Getter;
 public class AppCore extends ApplicationFramework {
 
     private static AppCore instance;
-    private MapRepository mapRepository = new MapRepositoryImplementation();
+    private MapRepository mapRepository;
+    private MessageGenerator messageGenerator;
+
+    private  ErrorLogger consoleErrorLogger;
+
 
     @Override
     public void start() {
         this.gui.start();
+        this.gui.addToSubscriberList();
+        errorLogger.addToSubscriberList();
+
     }
 
     private AppCore(){
-
+        mapRepository = new MapRepositoryImplementation();
+        messageGenerator = new MessageGeneratorImplementation();
+        consoleErrorLogger = new ConsoleLogger();
     }
     public static AppCore getInstance() {
         if (instance == null){
@@ -30,9 +40,10 @@ public class AppCore extends ApplicationFramework {
 
 
     public static void main(String[] args) {
-        Gui gui = new SwingGui();
+
         ApplicationFramework appCore = AppCore.getInstance();
-        appCore.initialize(gui, getInstance().mapRepository);
+        Gui gui = new SwingGui();
+        appCore.initialize(gui, getInstance().mapRepository, getInstance().consoleErrorLogger, getInstance().getMessageGenerator());
         appCore.start();
     }
 

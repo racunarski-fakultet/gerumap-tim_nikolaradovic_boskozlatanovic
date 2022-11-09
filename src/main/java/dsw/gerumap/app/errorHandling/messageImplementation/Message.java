@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Message {
-    String message;
-    EventType eventType;
+    private String message;
+    private EventType eventType;
 
     public Message(String message, EventType eventType) {
         this.message = message;
