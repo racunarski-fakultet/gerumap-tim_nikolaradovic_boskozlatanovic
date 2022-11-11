@@ -24,12 +24,14 @@ public class AddAuthorAction extends AbstractGerumapAction {
     public void actionPerformed(ActionEvent e) {
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Ime autora");
-
-        if (!name.isEmpty()){
+        if(name == null){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
+        }
+        else if (!name.isEmpty()){
             MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
             MainFrame.getIntance().getMapTree().setAuthor(selected,name);
         }
-        if(name.isEmpty()){
+        else if(name.isEmpty()){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
 
         }
