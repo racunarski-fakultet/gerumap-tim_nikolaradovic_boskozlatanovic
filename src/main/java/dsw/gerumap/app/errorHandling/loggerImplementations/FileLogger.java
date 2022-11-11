@@ -34,8 +34,10 @@ public class FileLogger implements ErrorLogger, Subscriber {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
-            FileWriter fw = new FileWriter("log.txt");
+            FileWriter fw = new FileWriter("log.txt",true);
             fw.write("ERROR: "+ dtf.format(now) + " " + message.getMessage()+ " naziv greske: " +message.getEventType().toString().replace('_',' ') + "\n");
+            fw.flush();
+            fw.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

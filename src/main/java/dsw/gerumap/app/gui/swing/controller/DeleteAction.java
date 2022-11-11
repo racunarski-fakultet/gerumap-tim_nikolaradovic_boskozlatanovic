@@ -30,5 +30,5 @@ public class DeleteAction extends AbstractGerumapAction{
 
 
         AppCore.getInstance().getMapRepository().removeChild(selected.getMapNode());
-    }
+     }
 }

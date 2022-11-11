@@ -29,7 +29,7 @@ public class AppCore extends ApplicationFramework {
     private AppCore(){
         mapRepository = new MapRepositoryImplementation();
         messageGenerator = new MessageGeneratorImplementation();
-        consoleErrorLogger = new ConsoleLogger();
+        consoleErrorLogger = new FileLogger();
     }
     public static AppCore getInstance() {
         if (instance == null){
