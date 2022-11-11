@@ -6,12 +6,18 @@ import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.errorHandling.messageImplementation.Message;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
 public class ConsoleLogger implements ErrorLogger, Subscriber {
 
 
     @Override
-    public void log() {
-
+    public void log(Message message) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("ERROR: "+ dtf.format(now) + " " + message.getMessage()+ " naziv greske: " +message.getEventType().toString().replace('_',' '));
     }
 
     @Override
@@ -21,6 +27,6 @@ public class ConsoleLogger implements ErrorLogger, Subscriber {
 
     @Override
     public void update(Object obj, Enum e) {
-        System.out.println("ERROR: " + ((Message)obj).getMessage()+ " " +((Message)obj).getEventType().toString().replace('_',' '));
+        log((Message) obj);
     }
 }

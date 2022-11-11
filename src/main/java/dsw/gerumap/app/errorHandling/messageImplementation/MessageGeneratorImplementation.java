@@ -22,7 +22,7 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
     public void generateMessage(Enum e) {
 
         if(e.equals(EventType.NAME_EXISTS)){
-            message = new Message("Nije moguce izabrati isto ime", (EventType) e);
+            message = new Message("Data komponenta vec postoji", (EventType) e);
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.NO_AUTHOR)){
@@ -30,11 +30,15 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.ONLY_FOR_PROJECT)){
-            message = new Message("Nije moguce izbrisati project explorer",(EventType) e);
+            message = new Message("Autora mozete dodati samo za projekat",(EventType) e);
             notifySubscribers(message,e);
         }
-        if(e.equals(EventType.DELETE_PROJECT_EXPLORER)){
-            message = new Message("Nije moguce izbrisati project explorer",(EventType) e);
+        if(e.equals(EventType.NODE_CANNOT_BE_DELETED)){
+            message = new Message("Nije moguce izbrisati selektovan cvor",(EventType) e);
+            notifySubscribers(message,e);
+        }
+        if(e.equals(EventType.NO_NODE_SELECTED)){
+            message = new Message("Niste izabrali element",(EventType) e);
             notifySubscribers(message,e);
         }
 

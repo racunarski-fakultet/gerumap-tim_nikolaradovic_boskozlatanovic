@@ -24,7 +24,7 @@ public class DeleteAction extends AbstractGerumapAction{
 
         MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
         if(selected == null){
-            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.DELETE_PROJECT_EXPLORER);// samo test
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_NODE_SELECTED);
             return;
         }
 

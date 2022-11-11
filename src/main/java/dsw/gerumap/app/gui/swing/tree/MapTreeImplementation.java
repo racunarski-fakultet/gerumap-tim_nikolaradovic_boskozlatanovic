@@ -2,6 +2,7 @@ package dsw.gerumap.app.gui.swing.tree;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.tree.view.MapTreeView;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
@@ -25,6 +26,10 @@ public class MapTreeImplementation implements MapTree, Subscriber {
             Project p = (Project) node.getMapNode();
             p.setAutor(name);
             System.out.println(name);
+        }
+        else {
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.ONLY_FOR_PROJECT);
+            return;
         }
     }
 

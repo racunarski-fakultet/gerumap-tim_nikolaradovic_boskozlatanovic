@@ -1,8 +1,10 @@
 package dsw.gerumap.app.mapRepository;
 
+import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
@@ -48,17 +50,19 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
             newNode = new Project(parent, "Project" + new Random().nextInt(100));
         }
 
-        if (parent instanceof MapNodeComposite){
-            ((MapNodeComposite) parent).addChildren(newNode);
-        }
+        ((MapNodeComposite) parent).addChildren(newNode);
+
        this.notifySubscribers(newNode,Actions.ADD);
 
     }
 
     @Override
     public void removeChild(MapNode child) {
-        if (!(child instanceof MapNodeComposite) || child == null)
+        if (!(child instanceof MapNodeComposite) || child instanceof ProjectExplorer){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NODE_CANNOT_BE_DELETED);
             return;
+        }
+
         MapNodeComposite parent = (MapNodeComposite) child.getParent();
         parent.removeChildren(child);
         this.notifySubscribers(child, Actions.DELETE);
