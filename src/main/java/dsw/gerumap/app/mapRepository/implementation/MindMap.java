@@ -38,4 +38,6 @@ public class MindMap extends MapNodeComposite {
         }
 
     }
+
+
 }

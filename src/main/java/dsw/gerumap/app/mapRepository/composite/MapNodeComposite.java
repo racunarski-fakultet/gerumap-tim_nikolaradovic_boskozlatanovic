@@ -1,6 +1,7 @@
 package dsw.gerumap.app.mapRepository.composite;
 
 import dsw.gerumap.app.core.MapRepository;
+import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,18 @@ public abstract class MapNodeComposite extends MapNode {
     public abstract void addChildren(MapNode child);
 
     public abstract void removeChildren(MapNode child);
+
+    public boolean containsChild(String name){
+
+        for (MapNode m: getChildren()){
+
+            if (m.getName().equals(name)){
+                    return true;
+            }
+        }
+        return false;
+
+    }
 
     public MapNode getChildByName(String name){
         for (MapNode child: children){

@@ -1,6 +1,7 @@
 package dsw.gerumap.app.gui.swing.tabbedPane;
 
 import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.tabbedPane.model.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
@@ -17,6 +18,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane, Subscriber {
@@ -36,7 +39,6 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
 
         lb.setVerticalAlignment(JLabel.TOP);
 
-        // currently not positioned well
 
         if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
             TabItemModel tab;
@@ -50,8 +52,6 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 container.put(i, tab);
             }
 
-            MainFrame.getIntance().getDesktop().add(this, BoxLayout.class);
-            MainFrame.getIntance().getDesktop().updateUI();
         }
         else{
             this.removeAll();
@@ -59,12 +59,12 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             for(MapNode i: ((MapNodeComposite)mp).getChildren()){
                 this.addTab(i.getName(), container.get(i).getPanel());
             }
-            MainFrame.getIntance().getDesktop().add(this, BoxLayout.class);
-            MainFrame.getIntance().getDesktop().updateUI();
         }
-
+        MainFrame.getIntance().getDesktop().add(this, BoxLayout.class);
+        MainFrame.getIntance().getDesktop().updateUI();
 
     }
+
     private boolean containsKey(MapNodeComposite mapNode){
         for(MapNode mp: mapNode.getChildren()){
             if(!container.containsKey(mp)){
@@ -80,20 +80,47 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     }
 
     @Override
+    public void deleteNode(MapNode mp) {
+
+        if (mp instanceof MindMap){
+            this.remove(container.get(mp).getPanel());
+            container.remove(mp);
+            return;
+        }
+
+        for (MapNode mapNode: ((MapNodeComposite)mp).getChildren()){
+
+            this.remove(container.get(mapNode).getPanel());
+            container.remove(mapNode);
+        }
+        if (mp.getParent().equals(MainFrame.getIntance().getMapTree().getSelectedNode())){
+            MainFrame.getIntance().getDesktop().remove(lb);
+        }
+        MainFrame.getIntance().getDesktop().updateUI();
+
+
+    }
+
+    @Override
     public void update(Object obj, Enum e) {
         if(e.equals(Actions.ADD)){
             if(obj instanceof MindMap) {
                 addToPanel(((MapNode) obj).getParent());
             }
         }
-        if (e.equals(Actions.SETAUTHOR)){
+        if (e.equals(Actions.SETAUTHOR)&& lb != null){
             setAuthor((MapNode) obj);
         }
 
-        if(e.equals(Actions.RENAME)){
+        if(e.equals(Actions.RENAME) ){
             MapNodeComposite mapNode = (MapNodeComposite) ((MapNodeComposite)obj).getParent();
             MainFrame.getIntance().getDesktop().removeAll();
             addToPanel(mapNode);
+        }
+        if(e.equals(Actions.DELETE)){
+
+            deleteNode((MapNode) obj);
+
         }
     }
 }
