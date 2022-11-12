@@ -21,8 +21,7 @@ public class NewProjectAction extends AbstractGerumapAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String response = JOptionPane.showInputDialog
-                (null,"<html>Whats your name?"+ "<br>Enter your name:",JOptionPane.QUESTION_MESSAGE);
+       // custom selection
         MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
         if(selected == null){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_NODE_SELECTED);

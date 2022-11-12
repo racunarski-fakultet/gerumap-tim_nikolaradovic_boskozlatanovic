@@ -9,6 +9,7 @@ import dsw.gerumap.app.gui.swing.factory.utils.NewNodeAction;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
+import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 import lombok.Getter;
 import lombok.Setter;
