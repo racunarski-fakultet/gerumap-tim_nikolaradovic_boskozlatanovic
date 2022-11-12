@@ -1,12 +1,14 @@
 package dsw.gerumap.app.mapRepository;
 
+import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.errorHandling.EventType;
+import dsw.gerumap.app.gui.swing.factory.utils.NewNodeAction;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
-import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,45 +22,42 @@ import java.util.Random;
 
 public class MapRepositoryImplementation implements MapRepository, Publisher {
 
-    private ProjectExplorer projectExplorer;
+    private MapNode projectExplorer;
     List<Subscriber> subscribers;
 
     public MapRepositoryImplementation() {
-        projectExplorer = new ProjectExplorer("My Project Explorer");
+        projectExplorer = NewNodeAction.getInstance().returnNodeFactory(null).getNode(null, "MyProjectExplorer");
         subscribers = new ArrayList<>();
     }
 
     @Override
-    public ProjectExplorer getProjectExplorer() {
+    public MapNode getProjectExplorer() {
         return projectExplorer;
     }
 
     @Override
     public void addChild(MapNode parent) {
 
-
-        MapNode newNode;
+        Random r = new Random();
         if (!(parent instanceof MapNodeComposite) || parent instanceof MindMap)
             return;
 
-        if (parent instanceof Project){
-             newNode = new MindMap(parent, "MindMap" + new Random().nextInt(100));
-        }
-        else{
-            newNode = new Project(parent, "Project" + new Random().nextInt(100));
-        }
+        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent, "MapNode" + r.nextInt(100)) ;
 
-        if (parent instanceof MapNodeComposite){
-            ((MapNodeComposite) parent).addChildren(newNode);
-        }
+
+        ((MapNodeComposite) parent).addChildren(newNode);
+
        this.notifySubscribers(newNode,Actions.ADD);
 
     }
 
     @Override
     public void removeChild(MapNode child) {
-        if (!(child instanceof MapNodeComposite) || child == null)
+        if (!(child instanceof MapNodeComposite) || child instanceof ProjectExplorer){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NODE_CANNOT_BE_DELETED);
             return;
+        }
+
         MapNodeComposite parent = (MapNodeComposite) child.getParent();
         parent.removeChildren(child);
         this.notifySubscribers(child, Actions.DELETE);
@@ -104,6 +103,8 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
             s.update(obj,e);
         }
     }
+
+
 
 
 }

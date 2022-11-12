@@ -2,15 +2,14 @@ package dsw.gerumap.app.gui.swing.tree;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.tree.view.MapTreeView;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.Actions;
 import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
-import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.Project;
-import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -26,6 +25,10 @@ public class MapTreeImplementation implements MapTree, Subscriber {
             p.setAutor(name);
             System.out.println(name);
         }
+        else {
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.ONLY_FOR_PROJECT);
+            return;
+        }
     }
 
     @Override
@@ -37,7 +40,7 @@ public class MapTreeImplementation implements MapTree, Subscriber {
 
 
     @Override
-    public MapTreeView generateTree(ProjectExplorer projectExplorer) {
+    public MapTreeView generateTree(MapNode projectExplorer) {
 
         MapTreeItem root = new MapTreeItem(projectExplorer);
         treeModel = new DefaultTreeModel(root);
