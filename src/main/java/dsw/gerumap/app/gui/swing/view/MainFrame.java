@@ -3,14 +3,13 @@ package dsw.gerumap.app.gui.swing.view;
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.controller.ActionManager;
 import dsw.gerumap.app.gui.swing.tabbedPane.TabbedPaneImplementation;
-import dsw.gerumap.app.gui.swing.tabbedPane.view.Tab;
+import dsw.gerumap.app.gui.swing.tabbedPane.model.TabItemModel;
 import dsw.gerumap.app.gui.swing.tree.MapTree;
 import dsw.gerumap.app.gui.swing.tree.MapTreeImplementation;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
-import javax.swing.text.Position;
 import java.awt.*;
 
 @Getter
@@ -27,7 +26,7 @@ public class MainFrame extends JFrame {
 
     private MapTree mapTree;
 
-    private Tab tab;
+    private TabItemModel tab;
     private JPanel desktop = new JPanel();
     private TabbedPaneImplementation tabbedPane;
     private MainFrame(){
@@ -77,7 +76,8 @@ public class MainFrame extends JFrame {
         scroll.setMinimumSize(new Dimension(200, 150));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
         getContentPane().add(split, BorderLayout.CENTER);
-//        desktop.add(tab);
+        desktop.setLayout(new BoxLayout(desktop, BoxLayout.Y_AXIS));
+
 
 //        desktop.add(t1);
 //        getContentPane().add(tab, BorderLayout.EAST);
