@@ -20,22 +20,22 @@ public class CustomPopUp {
 
         if (mapNode instanceof ProjectExplorer){
             inputs = new JComponent[] {
-                    new JLabel("Ime"),
+                    new JLabel("Project"),
                     name,
-                    new JLabel("Autor"),
+                    new JLabel("Author"),
                     author,
 
             };
         }
         else {
             inputs = new JComponent[] {
-                    new JLabel("Ime"),
+                    new JLabel("Name"),
                     name,
             };
         }
 
 
-        return JOptionPane.showConfirmDialog(MainFrame.getIntance(), inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showConfirmDialog(MainFrame.getIntance(), inputs, "ProjectName and Author", JOptionPane.PLAIN_MESSAGE);
     }
 
 

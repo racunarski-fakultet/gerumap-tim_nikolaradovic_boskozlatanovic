@@ -11,6 +11,7 @@ import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
+import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,10 +35,10 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     public void addToPanel(MapNode mp) {
 
         MainFrame.getIntance().getDesktop().removeAll();
-        lb = new JLabel(mp.getName() + " " + ((Project)mp).getAutor());
+        lb = new JLabel("ProjectName: " + mp.getName() + " " + "\n" + "Author: " + ((Project)mp).getAutor());
         MainFrame.getIntance().getDesktop().add(lb);
-
-        lb.setVerticalAlignment(JLabel.TOP);
+        lb.setBounds(0, 0, 15, 15);
+        //lb.setVerticalAlignment(JLabel.TOP);
 
 
         if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
@@ -75,7 +76,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     }
     @Override
     public void setAuthor(MapNode mp) {
-        lb.setText(mp.getName() + " " + ((Project)mp).getAutor());
+        lb.setText("ProjectName: " + mp.getName() + " " + "Author: " + ((Project)mp).getAutor());
 
     }
 
@@ -87,20 +88,31 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             container.remove(mp);
             return;
         }
+        if (currentSelectedPane(mp)){
+            MainFrame.getIntance().getDesktop().remove(lb);
 
+        }
         for (MapNode mapNode: ((MapNodeComposite)mp).getChildren()){
 
             this.remove(container.get(mapNode).getPanel());
             container.remove(mapNode);
         }
-        if (mp.getParent().equals(MainFrame.getIntance().getMapTree().getSelectedNode())){
-            MainFrame.getIntance().getDesktop().remove(lb);
-        }
+
         MainFrame.getIntance().getDesktop().updateUI();
 
 
     }
 
+    private boolean currentSelectedPane(MapNode mapNode){
+        Component cp = this.getComponentAt(this.getSelectedIndex());
+        for(MapNode mp:  ((MapNodeComposite)mapNode).getChildren()){
+            TabItemModel tb = container.get(mp);
+            if(tb.getPanel().equals(cp)){
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public void update(Object obj, Enum e) {
         if(e.equals(Actions.ADD)){
@@ -108,14 +120,18 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 addToPanel(((MapNode) obj).getParent());
             }
         }
-        if (e.equals(Actions.SETAUTHOR)&& lb != null){
-            setAuthor((MapNode) obj);
+        if (e.equals(Actions.SETAUTHOR)&& lb != null) {
+            if (!(MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode() instanceof ProjectExplorer)) {
+                if (currentSelectedPane((MapNode) obj))
+                    setAuthor((MapNode) obj);
+            }
         }
-
         if(e.equals(Actions.RENAME) ){
-            MapNodeComposite mapNode = (MapNodeComposite) ((MapNodeComposite)obj).getParent();
-            MainFrame.getIntance().getDesktop().removeAll();
-            addToPanel(mapNode);
+
+                MapNodeComposite mapNode = (MapNodeComposite) ((MapNodeComposite) obj).getParent();
+                MainFrame.getIntance().getDesktop().removeAll();
+                addToPanel(mapNode);
+
         }
         if(e.equals(Actions.DELETE)){
 
