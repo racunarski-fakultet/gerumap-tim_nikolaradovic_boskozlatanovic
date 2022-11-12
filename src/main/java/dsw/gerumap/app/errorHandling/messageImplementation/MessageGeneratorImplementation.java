@@ -22,7 +22,7 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
     public void generateMessage(Enum e) {
 
         if(e.equals(EventType.NAME_EXISTS)){
-            message = new Message("Data komponenta vec postoji", (EventType) e);
+            message = new Message("Data komponenta sa istim imenom vec postoji", (EventType) e);
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.NO_AUTHOR)){
@@ -39,6 +39,10 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
         }
         if(e.equals(EventType.NO_NODE_SELECTED)){
             message = new Message("Niste izabrali element",(EventType) e);
+            notifySubscribers(message,e);
+        }
+        if(e.equals(EventType.NAME_CANNOT_BE_EMPTY)){
+            message = new Message("Ime ne moze biti prazno",(EventType) e);
             notifySubscribers(message,e);
         }
 

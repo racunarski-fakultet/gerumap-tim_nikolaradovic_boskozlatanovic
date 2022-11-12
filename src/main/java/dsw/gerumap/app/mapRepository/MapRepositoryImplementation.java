@@ -37,14 +37,14 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     }
 
     @Override
-    public void addChild(MapNode parent) {
+    public void addChild(MapNode parent,String name, String author) {
 
-        Random r = new Random();
         if (!(parent instanceof MapNodeComposite) || parent instanceof MindMap)
             return;
 
-        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent, "MapNode" + r.nextInt(100)) ;
+        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name) ;
 
+        this.setAuthoer(newNode,author);
 
         ((MapNodeComposite) parent).addChildren(newNode);
 

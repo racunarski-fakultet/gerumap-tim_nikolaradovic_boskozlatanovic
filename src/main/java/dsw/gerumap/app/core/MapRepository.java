@@ -7,7 +7,7 @@ import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 public interface MapRepository {
 
     MapNode getProjectExplorer();
-    void addChild( MapNode child);
+    void addChild(MapNode child,String name,String author);
     void removeChild(MapNode child);
 
     void setAuthoer(MapNode mapNode,String name);
