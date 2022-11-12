@@ -43,8 +43,10 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
             return;
 
         MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name) ;
-
-        this.setAuthoer(newNode,author);
+//        if(newNode instanceof Project){
+//            ((Project) newNode).setAutor(author);
+//        }
+       this.setAuthoer(newNode,author);
 
         ((MapNodeComposite) parent).addChildren(newNode);
 

@@ -1,5 +1,6 @@
 package dsw.gerumap.app.gui.swing.controller;
 
+import com.sun.tools.javac.Main;
 import dsw.gerumap.app.AppCore;
 
 import dsw.gerumap.app.core.MessageGenerator;
@@ -8,6 +9,7 @@ import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.Actions;
+import dsw.gerumap.app.mapRepository.implementation.Project;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,19 +26,26 @@ public class AddAuthorAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(!(MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode() instanceof Project)){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.ONLY_FOR_PROJECT);
+            return;
+        }
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Ime autora");
         if(name == null){
-            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
+           // AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
+            return;
         }
         else if (!name.isEmpty()){
             MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
+
             AppCore.getInstance().getMapRepository().setAuthoer(selected.getMapNode(),name);
         }
         else if(name.isEmpty()){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
 
         }
+
 
 
     }
