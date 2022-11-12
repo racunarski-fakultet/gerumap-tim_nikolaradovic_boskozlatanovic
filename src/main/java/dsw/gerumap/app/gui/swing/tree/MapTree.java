@@ -12,5 +12,7 @@ public interface MapTree {
     void removeChild();
 
     void setAuthor(MapTreeItem node,String name);
+    void renameMapTreeItem();
+
     MapTreeItem getSelectedNode();
 }

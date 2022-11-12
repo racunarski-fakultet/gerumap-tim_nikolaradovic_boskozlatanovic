@@ -1,8 +1,10 @@
 package dsw.gerumap.app.gui.swing.controller;
 
 import dsw.gerumap.app.AppCore;
+
 import dsw.gerumap.app.core.MessageGenerator;
 import dsw.gerumap.app.errorHandling.EventType;
+
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.Actions;
@@ -29,7 +31,7 @@ public class AddAuthorAction extends AbstractGerumapAction {
         }
         else if (!name.isEmpty()){
             MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
-            MainFrame.getIntance().getMapTree().setAuthor(selected,name);
+            AppCore.getInstance().getMapRepository().setAuthoer(selected.getMapNode(),name);
         }
         else if(name.isEmpty()){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);

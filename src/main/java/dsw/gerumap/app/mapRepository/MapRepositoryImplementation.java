@@ -64,6 +64,26 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     }
 
     @Override
+    public void setAuthoer(MapNode mapNode,String name) {
+
+
+        if (!(mapNode instanceof Project)) {
+            return;
+        }
+
+        ((Project) mapNode).setAutor(name);
+
+        notifySubscribers(mapNode,Actions.SETAUTHOR);
+    }
+
+    @Override
+    public void rename(MapNode mapNode, String name) {
+        mapNode.setName(name);
+        this.notifySubscribers(mapNode, Actions.RENAME);
+    }
+
+
+    @Override
     public void addSubscriber(Object obj) {
         if(obj != null && !subscribers.contains(obj) && obj instanceof Subscriber){
             subscribers.add((Subscriber) obj);
