@@ -1,15 +1,13 @@
-package dsw.gerumap.app.gui.swing.factory.utils;
+package dsw.gerumap.app.mapRepository.factory.utils;
 
-import dsw.gerumap.app.gui.swing.factory.NodeFactory;
-import dsw.gerumap.app.gui.swing.factory.factoryInstance.ElementFactory;
-import dsw.gerumap.app.gui.swing.factory.factoryInstance.MindMapFactory;
-import dsw.gerumap.app.gui.swing.factory.factoryInstance.ProjectExplorerFactory;
-import dsw.gerumap.app.gui.swing.factory.factoryInstance.ProjectFactory;
+import dsw.gerumap.app.mapRepository.factory.NodeFactory;
+import dsw.gerumap.app.mapRepository.factory.factoryInstance.ElementFactory;
+import dsw.gerumap.app.mapRepository.factory.factoryInstance.MindMapFactory;
+import dsw.gerumap.app.mapRepository.factory.factoryInstance.ProjectExplorerFactory;
+import dsw.gerumap.app.mapRepository.factory.factoryInstance.ProjectFactory;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
-import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
-import lombok.Getter;
 import lombok.Setter;
 
 

@@ -1,4 +1,4 @@
-package dsw.gerumap.app.gui.swing.factory;
+package dsw.gerumap.app.mapRepository.factory;
 
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 

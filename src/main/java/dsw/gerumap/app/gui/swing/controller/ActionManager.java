@@ -14,13 +14,13 @@ public class  ActionManager {
 
     private AddAuthorAction addAuthorAction;
 
-
+    private RenameAction renameAction;
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();
         addAuthorAction = new AddAuthorAction();
-
+        renameAction = new RenameAction();
     }
 
     public ActionManager(){

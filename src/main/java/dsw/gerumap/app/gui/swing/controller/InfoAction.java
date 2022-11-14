@@ -19,7 +19,7 @@ public class InfoAction extends AbstractGerumapAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-       JOptionPane.showMessageDialog(MainFrame.getIntance(),"Bosko Zlatanovic 36/21 i Nikola Radovic 49/21","Info",JOptionPane.INFORMATION_MESSAGE,loadIcon("/images/Info.png"));
+       JOptionPane.showMessageDialog(MainFrame.getIntance(),"Bosko Zlatanovic 36/21 i Nikola Radovic 49/21","Info",JOptionPane.INFORMATION_MESSAGE,loadIcon("/images/photoInfo.png"));
 
     }
 }

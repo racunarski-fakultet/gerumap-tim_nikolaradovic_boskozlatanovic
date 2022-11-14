@@ -5,9 +5,10 @@ import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.errorHandling.EventType;
-import dsw.gerumap.app.gui.swing.factory.utils.NewNodeAction;
+import dsw.gerumap.app.mapRepository.factory.utils.NewNodeAction;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
@@ -16,7 +17,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Getter
 @Setter
@@ -39,13 +39,11 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     @Override
     public void addChild(MapNode parent,String name, String author) {
 
-        if (!(parent instanceof MapNodeComposite) || parent instanceof MindMap)
+        if (!(parent instanceof MapNodeComposite) || parent instanceof Element)//treba error
             return;
 
         MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name) ;
-//        if(newNode instanceof Project){
-//            ((Project) newNode).setAutor(author);
-//        }
+
        this.setAuthoer(newNode,author);
 
         ((MapNodeComposite) parent).addChildren(newNode);

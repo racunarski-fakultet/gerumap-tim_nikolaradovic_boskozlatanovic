@@ -1,6 +1,6 @@
-package dsw.gerumap.app.gui.swing.factory.factoryInstance;
+package dsw.gerumap.app.mapRepository.factory.factoryInstance;
 
-import dsw.gerumap.app.gui.swing.factory.NodeFactory;
+import dsw.gerumap.app.mapRepository.factory.NodeFactory;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 

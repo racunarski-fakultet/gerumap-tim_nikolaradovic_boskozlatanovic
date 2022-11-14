@@ -128,10 +128,10 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         }
         if(e.equals(Actions.RENAME) ){
 
-                MapNodeComposite mapNode = (MapNodeComposite) ((MapNodeComposite) obj).getParent();
-                MainFrame.getIntance().getDesktop().removeAll();
-                addToPanel(mapNode);
-
+            if (obj instanceof Project)
+                addToPanel((MapNode) obj);
+            else if(obj instanceof MindMap)
+                addToPanel(((MapNode) obj).getParent());
         }
         if(e.equals(Actions.DELETE)){
 
