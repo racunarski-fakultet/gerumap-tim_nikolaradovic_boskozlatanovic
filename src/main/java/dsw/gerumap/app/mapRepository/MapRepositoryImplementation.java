@@ -39,7 +39,7 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     @Override
     public void addChild(MapNode parent,String name, String author) {
 
-        if (!(parent instanceof MapNodeComposite) || parent instanceof Element)//treba error
+        if (!(parent instanceof MapNodeComposite) || parent instanceof Element)
             return;
 
         MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name) ;

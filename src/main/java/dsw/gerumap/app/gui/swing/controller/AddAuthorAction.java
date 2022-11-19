@@ -26,10 +26,17 @@ public class AddAuthorAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (MainFrame.getIntance().getMapTree().getSelectedNode() == null){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_NODE_SELECTED);
+            return;
+        }
+
         if(!(MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode() instanceof Project)){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.ONLY_FOR_PROJECT);
             return;
         }
+
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Ime autora");
         if(name == null){
@@ -42,7 +49,7 @@ public class AddAuthorAction extends AbstractGerumapAction {
             AppCore.getInstance().getMapRepository().setAuthoer(selected.getMapNode(),name);
         }
         else if(name.isEmpty()){
-            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NAME_CANNOT_BE_EMPTY);
 
         }
 

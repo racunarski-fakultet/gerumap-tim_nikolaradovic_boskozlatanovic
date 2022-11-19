@@ -25,10 +25,7 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
             message = new Message("Data komponenta sa istim imenom vec postoji", (EventType) e);
             notifySubscribers(message,e);
         }
-        if(e.equals(EventType.NO_AUTHOR)){
-            message = new Message("Molim vas dodajte ime autora",(EventType) e);
-            notifySubscribers(message,e);
-        }
+
         if(e.equals(EventType.ONLY_FOR_PROJECT)){
             message = new Message("Autora mozete dodati samo za projekat",(EventType) e);
             notifySubscribers(message,e);
@@ -42,7 +39,7 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.NAME_CANNOT_BE_EMPTY)){
-            message = new Message("Ime ne moze biti prazno",(EventType) e);
+            message = new Message("Polje ne moze biti prazno",(EventType) e);
             notifySubscribers(message,e);
         }
 

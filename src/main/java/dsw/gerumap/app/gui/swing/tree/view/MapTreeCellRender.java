@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class MapTreeCellRender extends DefaultTreeCellRenderer {
 
-    public Component GetTreeCellRendererCompononent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus){
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus){
 
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
         URL imageURL = null;

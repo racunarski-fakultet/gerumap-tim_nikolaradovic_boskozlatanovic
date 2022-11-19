@@ -88,6 +88,16 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             container.remove(mp);
             return;
         }
+
+        if (this.getSelectedIndex() == -1 && container.isEmpty()){
+
+            if(lb != null){
+                MainFrame.getIntance().getDesktop().remove(lb);
+                MainFrame.getIntance().getDesktop().updateUI();
+            }
+
+            return;
+        }
         if (currentSelectedPane(mp)){
             MainFrame.getIntance().getDesktop().remove(lb);
 
@@ -103,7 +113,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
 
     }
 
-    private boolean currentSelectedPane(MapNode mapNode){
+    private boolean currentSelectedPane(MapNode mapNode){// radi samo ako su tabovi napravljeni odnosno ako postoje u slucaju da ne postoje vraca error ali zast ranije nije vracalo tro
         Component cp = this.getComponentAt(this.getSelectedIndex());
         for(MapNode mp:  ((MapNodeComposite)mapNode).getChildren()){
             TabItemModel tb = container.get(mp);

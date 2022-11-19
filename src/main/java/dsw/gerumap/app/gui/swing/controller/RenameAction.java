@@ -4,6 +4,7 @@ import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,19 +22,33 @@ public class RenameAction extends AbstractGerumapAction{
     public void actionPerformed(ActionEvent e) {
         MapTreeItem selected = MainFrame.getIntance().getMapTree().getSelectedNode();
 
+        if (MainFrame.getIntance().getMapTree().getSelectedNode() == null){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_NODE_SELECTED);
+            return;
+        }
+
+
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Promeni ime");
 
         if(name == null){
-
+            return;
+            // for cancel button
         }
         else if (!name.isEmpty()){
+            if (((MapNodeComposite)selected.getMapNode().getParent()).containsChild(name)){
+                AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NAME_EXISTS);
+                return;
+            }
+            else{
+                AppCore.getInstance().getMapRepository().rename(selected.getMapNode(),name);
+            }
 
-            AppCore.getInstance().getMapRepository().rename(selected.getMapNode(),name);
 
         }
         else if(name.isEmpty()){
-            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_AUTHOR);
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NAME_CANNOT_BE_EMPTY);
+
 
         }
 

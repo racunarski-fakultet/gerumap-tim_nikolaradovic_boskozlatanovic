@@ -71,7 +71,7 @@ public class MainFrame extends JFrame {
 
 
 
-//        TextArea t1 = new TextArea("String");
+
         JScrollPane scroll = new JScrollPane(projectExplorer);
         scroll.setMinimumSize(new Dimension(200, 150));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
@@ -79,9 +79,7 @@ public class MainFrame extends JFrame {
         desktop.setLayout(new BoxLayout(desktop, BoxLayout.Y_AXIS));
 
 
-//        desktop.add(t1);
-//        getContentPane().add(tab, BorderLayout.EAST);
-//        split.setRightComponent(tab);
+
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
 
