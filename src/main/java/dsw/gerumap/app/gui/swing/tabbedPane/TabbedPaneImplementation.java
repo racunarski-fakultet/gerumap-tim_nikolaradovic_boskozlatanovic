@@ -130,10 +130,20 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 addToPanel(((MapNode) obj).getParent());
             }
         }
-        if (e.equals(Actions.SETAUTHOR)&& lb != null) {
+        if (e.equals(Actions.SETAUTHOR) && lb != null) {
             if (!(MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode() instanceof ProjectExplorer)) {
-                if (currentSelectedPane((MapNode) obj))
+
+                if (MainFrame.getIntance().getTabbedPane().getSelectedIndex() != -1){
+
+                    if (currentSelectedPane((MapNode) obj)){
+                        setAuthor((MapNode) obj);
+                    }
+
+                }
+                else if(container.size() == 0 && lb != null && ((MapNodeComposite)MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode().getParent()).getChildren().size() <= 1){
                     setAuthor((MapNode) obj);
+                }
+
             }
         }
         if(e.equals(Actions.RENAME) ){
