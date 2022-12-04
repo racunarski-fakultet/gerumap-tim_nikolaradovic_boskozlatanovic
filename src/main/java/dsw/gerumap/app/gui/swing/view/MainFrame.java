@@ -27,7 +27,10 @@ public class MainFrame extends JFrame {
     private MapTree mapTree;
 
     private TabItemModel tab;
-    private JPanel desktop = new JPanel();
+
+    private ProjectViewToolBar projectViewToolBar;
+
+    private ProjectView projectView;
     private TabbedPaneImplementation tabbedPane;
     private MainFrame(){
 
@@ -38,6 +41,7 @@ public class MainFrame extends JFrame {
         mapTree = new MapTreeImplementation();
         tabbedPane = new TabbedPaneImplementation();
         initialiseGUI();
+
     }
 
     public static MainFrame getIntance() {
@@ -69,17 +73,14 @@ public class MainFrame extends JFrame {
 
         JTree projectExplorer = mapTree.generateTree(AppCore.getInstance().getMapRepository().getProjectExplorer());
 
-
-
+        projectView = new ProjectView();
+        projectViewToolBar = new ProjectViewToolBar();
 
         JScrollPane scroll = new JScrollPane(projectExplorer);
         scroll.setMinimumSize(new Dimension(200, 150));
-        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, projectView);
         getContentPane().add(split, BorderLayout.CENTER);
-        desktop.setLayout(new BoxLayout(desktop, BoxLayout.Y_AXIS));
-
-
-
+        getContentPane().add(projectViewToolBar,BorderLayout.EAST);
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
 

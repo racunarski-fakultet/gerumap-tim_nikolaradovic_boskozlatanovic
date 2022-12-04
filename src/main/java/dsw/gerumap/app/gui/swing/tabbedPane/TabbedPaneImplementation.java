@@ -34,11 +34,11 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     @Override
     public void addToPanel(MapNode mp) {
 
-        MainFrame.getIntance().getDesktop().removeAll();
+        MainFrame.getIntance().getProjectView().removeAll();
         lb = new JLabel("ProjectName: " + mp.getName() + " " + "\n" + "Author: " + ((Project)mp).getAutor());
-        MainFrame.getIntance().getDesktop().add(lb);
+        MainFrame.getIntance().getProjectView().add(lb);
         lb.setBounds(0, 0, 15, 15);
-        //lb.setVerticalAlignment(JLabel.TOP);
+
 
 
         if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
@@ -61,8 +61,8 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 this.addTab(i.getName(), container.get(i).getPanel());
             }
         }
-        MainFrame.getIntance().getDesktop().add(this, BoxLayout.class);
-        MainFrame.getIntance().getDesktop().updateUI();
+        MainFrame.getIntance().getProjectView().add(this, BoxLayout.class);
+        MainFrame.getIntance().getProjectView().updateUI();
 
     }
 
@@ -92,14 +92,14 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         if (this.getSelectedIndex() == -1 && container.isEmpty()){
 
             if(lb != null){
-                MainFrame.getIntance().getDesktop().remove(lb);
-                MainFrame.getIntance().getDesktop().updateUI();
+                MainFrame.getIntance().getProjectView().remove(lb);
+                MainFrame.getIntance().getProjectView().updateUI();
             }
 
             return;
         }
         if (this.getSelectedIndex() != -1 && currentSelectedPane(mp)){
-            MainFrame.getIntance().getDesktop().remove(lb);
+            MainFrame.getIntance().getProjectView().remove(lb);
 
         }
         for (MapNode mapNode: ((MapNodeComposite)mp).getChildren()){
@@ -108,7 +108,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             container.remove(mapNode);
         }
 
-        MainFrame.getIntance().getDesktop().updateUI();
+        MainFrame.getIntance().getProjectView().updateUI();
 
 
     }
