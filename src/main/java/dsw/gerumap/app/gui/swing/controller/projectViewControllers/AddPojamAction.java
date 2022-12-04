@@ -15,10 +15,12 @@ public class AddPojamAction extends AbstractGerumapAction {
         putValue(NAME,"Add concept");
         putValue(SHORT_DESCRIPTION,"Concept");
         putValue(SMALL_ICON,loadIcon("/images/Ellipse.png"));
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         MainFrame.getIntance().getProjectView().switchToAddPojamState();
+
     }
 }

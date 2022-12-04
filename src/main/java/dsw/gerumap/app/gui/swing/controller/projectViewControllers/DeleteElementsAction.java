@@ -1,6 +1,7 @@
 package dsw.gerumap.app.gui.swing.controller.projectViewControllers;
 
 import dsw.gerumap.app.gui.swing.controller.AbstractGerumapAction;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,6 @@ public class DeleteElementsAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        MainFrame.getIntance().getProjectView().switchToDeleteState();
     }
 }
