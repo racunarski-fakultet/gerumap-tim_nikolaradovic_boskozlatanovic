@@ -1,7 +1,8 @@
-package dsw.gerumap.app.gui.swing.controller;
+package dsw.gerumap.app.gui.swing.controller.upperSide;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.errorHandling.EventType;
+import dsw.gerumap.app.gui.swing.controller.AbstractGerumapAction;
 import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 
@@ -10,7 +11,7 @@ import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class DeleteAction extends AbstractGerumapAction{
+public class DeleteAction extends AbstractGerumapAction {
 
     public DeleteAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.CTRL_MASK));

@@ -1,5 +1,6 @@
-package dsw.gerumap.app.gui.swing.controller;
+package dsw.gerumap.app.gui.swing.controller.upperSide;
 
+import dsw.gerumap.app.gui.swing.controller.AbstractGerumapAction;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 
 import javax.swing.*;
