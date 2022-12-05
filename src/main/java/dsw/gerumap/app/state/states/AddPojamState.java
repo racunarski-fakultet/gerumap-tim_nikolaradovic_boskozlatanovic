@@ -20,7 +20,7 @@ public class AddPojamState extends State {
         DevicePainter painter = new PojamPainter(el);
 
         painter.paint((Graphics2D) tb.getPanel().getGraphics());
-
+        tb.getPainters().add(painter);
        // tb.getPanel().updateUI();
     }
 }
