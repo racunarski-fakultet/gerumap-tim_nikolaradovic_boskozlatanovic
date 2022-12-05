@@ -15,7 +15,6 @@ public class Element extends MapNodeComposite {
     protected int stroke = 5;
     protected float x;
     protected float y;
-    protected String name;
     protected String description;
 
     public Element(MapNode parent, String name) {

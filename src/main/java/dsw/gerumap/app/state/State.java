@@ -1,6 +1,10 @@
 package dsw.gerumap.app.state;
 
-public abstract class State {
+import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 
+import java.awt.*;
+
+public abstract class State {
+    public abstract void execute(TabItemModel tb, Point point);
 
 }

@@ -1,9 +1,12 @@
 package dsw.gerumap.app.gui.swing.view;
 
 import dsw.gerumap.app.state.StateManager;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
-
+@Getter
+@Setter
 public class ProjectView extends JPanel {
 
     private StateManager stateManager;
