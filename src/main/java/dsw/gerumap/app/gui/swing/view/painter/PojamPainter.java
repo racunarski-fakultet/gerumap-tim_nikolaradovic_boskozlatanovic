@@ -10,7 +10,7 @@ import java.awt.geom.Ellipse2D;
 @Getter
 @Setter
 public class PojamPainter extends DevicePainter{
-    private Shape ln;
+
     public PojamPainter(Element element) {
         super(element);
     }
@@ -21,9 +21,9 @@ public class PojamPainter extends DevicePainter{
         g.setStroke(stroke);
         g.setColor(Color.gray);
         g.drawString(element.getName(), element.getX()+20, element.getY()+10);
-        ln = new Ellipse2D.Float(element.getX(), element.getY(), ((PojamElement)element).getWidth(),((PojamElement)element).getHeight());
+        shape = new Ellipse2D.Float(element.getX(), element.getY(), ((PojamElement)element).getWidth(),((PojamElement)element).getHeight());
 
 
-        g.draw(ln);
+        g.draw(shape);
     }
 }

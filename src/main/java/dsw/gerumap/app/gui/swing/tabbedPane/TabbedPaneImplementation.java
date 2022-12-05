@@ -46,7 +46,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 tab = new TabItemModel(i);
 
 
-                this.addTab(tab.getMapNode().getName(), tab.getPanel());
+                this.addTab(tab.getMapNode().getName(), tab);
                 container.put(i, tab);
             }
 
@@ -55,7 +55,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             this.removeAll();
 
             for(MapNode i: ((MapNodeComposite)mp).getChildren()){
-                this.addTab(i.getName(), container.get(i).getPanel());
+                this.addTab(i.getName(), container.get(i));
             }
         }
         MainFrame.getIntance().getProjectView().add(this, BoxLayout.class);
@@ -81,7 +81,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     public void deleteNode(MapNode mp) {
 
         if (mp instanceof MindMap){
-            this.remove(container.get(mp).getPanel());
+            this.remove(container.get(mp));
             container.remove(mp);
             return;
         }
@@ -101,7 +101,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         }
         for (MapNode mapNode: ((MapNodeComposite)mp).getChildren()){
 
-            this.remove(container.get(mapNode).getPanel());
+            this.remove(container.get(mapNode));
             container.remove(mapNode);
         }
 
@@ -114,7 +114,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         Component cp = this.getComponentAt(this.getSelectedIndex());
         for(MapNode mp:  ((MapNodeComposite)mapNode).getChildren()){
             TabItemModel tb = container.get(mp);
-            if(tb.getPanel().equals(cp)){
+            if(tb.equals(cp)){
                 return true;
             }
         }

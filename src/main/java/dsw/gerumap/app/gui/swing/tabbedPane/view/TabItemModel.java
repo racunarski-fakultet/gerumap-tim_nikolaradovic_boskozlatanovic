@@ -14,18 +14,38 @@ import java.util.Random;
 
 @Getter
 @Setter
-public class TabItemModel {
+public class TabItemModel extends JPanel{
     private MapNode mapNode;
-    private JPanel panel;
+    //private JPanel panel;
     Random r = new Random();
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
     public TabItemModel(MapNode mapNode) {
 
         this.mapNode = mapNode;
-        this.panel = new JPanel();
-        panel.addMouseListener(new MousePainter(this));
-        panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panel.setBackground(Color.WHITE);
+        //this.panel = new JPanel();
+        this.addMouseListener(new MousePainter(this));
+        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.setBackground(Color.WHITE);
       //  panel.add(new Label("string" + r.nextInt(100)));
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        if(painters.size() == 0){
+            super.paint(g);
+        }
+        else{
+            for (DevicePainter p: painters){
+                p.paint((Graphics2D) g);
+            }
+        }
+    }
+
+    public boolean overlaps(Point point){
+
+        for(DevicePainter p: painters){
+            if(p.getShape().contains(point)) return true;
+        }
+        return false;
     }
 }

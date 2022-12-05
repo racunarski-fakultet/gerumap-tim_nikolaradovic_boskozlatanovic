@@ -16,7 +16,7 @@ public class DeleteElementsState extends State {
         Iterator painter = (Iterator) tb.getPainters();
 
         while(painter.hasNext()){
-            if(((PojamPainter)painter).getLn().contains(point)){
+            if(((PojamPainter)painter).getShape().contains(point)){
                 painter.remove();
             }
         }
