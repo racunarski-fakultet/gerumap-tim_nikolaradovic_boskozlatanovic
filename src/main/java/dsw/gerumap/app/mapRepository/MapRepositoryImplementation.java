@@ -8,6 +8,7 @@ import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.mapRepository.factory.utils.NewNodeAction;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
+import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
@@ -37,12 +38,12 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     }
 
     @Override
-    public void addChild(MapNode parent,String name, String author) {
+    public MapNode addChild(MapNode parent,String name, String author) {
 
         if (!(parent instanceof MapNodeComposite) || parent instanceof Element)
-            return;
+            return null;
 
-        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name) ;
+        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent).getNode(parent,name);
 
        this.setAuthoer(newNode,author);
 
@@ -50,6 +51,16 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
 
        this.notifySubscribers(newNode,Actions.ADD);
 
+       return newNode;
+    }
+
+    @Override
+    public MapNode addChild(MapNode parent, String name, Enum e) {
+
+        MapNode newNode = NewNodeAction.getInstance().returnNodeFactory(parent,(SubElements) e).getNode(parent,name);
+        ((MapNodeComposite) parent).addChildren(newNode);
+        this.notifySubscribers(newNode,Actions.ADD);
+        return newNode;
     }
 
     @Override

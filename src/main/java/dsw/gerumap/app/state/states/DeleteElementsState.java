@@ -11,7 +11,10 @@ import java.util.Iterator;
 public class DeleteElementsState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
+
+
         Iterator painter = (Iterator) tb.getPainters();
+
         while(painter.hasNext()){
             if(((PojamPainter)painter).getLn().contains(point)){
                 painter.remove();

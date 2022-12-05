@@ -1,10 +1,7 @@
 package dsw.gerumap.app.mapRepository.factory.utils;
 
 import dsw.gerumap.app.mapRepository.factory.NodeFactory;
-import dsw.gerumap.app.mapRepository.factory.factoryInstance.ElementFactory;
-import dsw.gerumap.app.mapRepository.factory.factoryInstance.MindMapFactory;
-import dsw.gerumap.app.mapRepository.factory.factoryInstance.ProjectExplorerFactory;
-import dsw.gerumap.app.mapRepository.factory.factoryInstance.ProjectFactory;
+import dsw.gerumap.app.mapRepository.factory.factoryInstance.*;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
@@ -15,14 +12,16 @@ import lombok.Setter;
 
 public class NewNodeAction {
     private static NewNodeAction instance;
-    private NodeFactory elementFactory;
+    private static NodeFactory pojamFactory;
+    private static NodeFactory vezaFactory;
     private NodeFactory mindMapFactory;
     private NodeFactory projectFactory;
     private NodeFactory projectExplorerFactory;
 
 
     private NewNodeAction(){
-        elementFactory = new ElementFactory();
+        pojamFactory = new PojamFactory();
+        vezaFactory = new VezaFactory();
         mindMapFactory = new MindMapFactory();
         projectFactory = new ProjectFactory();
         projectExplorerFactory = new ProjectExplorerFactory();
@@ -43,7 +42,14 @@ public class NewNodeAction {
         }
         else if(mapNode == null)
             return projectExplorerFactory;
-        return elementFactory;
+        return null;
+    }
+    public NodeFactory returnNodeFactory(MapNode mapNode,SubElements subElements){
+
+        if(subElements.equals(SubElements.POJAM)){
+            return pojamFactory;
+        }
+        return vezaFactory;
     }
 
 
