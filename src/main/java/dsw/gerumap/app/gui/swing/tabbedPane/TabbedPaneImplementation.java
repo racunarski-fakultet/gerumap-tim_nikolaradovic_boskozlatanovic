@@ -1,9 +1,8 @@
 package dsw.gerumap.app.gui.swing.tabbedPane;
 
 import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.core.observer.Subscriber;
-import dsw.gerumap.app.gui.swing.tabbedPane.model.TabItemModel;
+import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.Actions;
 import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
@@ -17,9 +16,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 @Setter

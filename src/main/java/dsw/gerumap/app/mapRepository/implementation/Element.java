@@ -4,13 +4,19 @@ import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.*;
 import java.util.List;
 
 @Getter
 @Setter
 
 public class Element extends MapNodeComposite {
-
+    protected String paint = "Black";
+    protected int stroke = 5;
+    protected float x;
+    protected float y;
+    protected String name;
+    protected String description;
 
     public Element(MapNode parent, String name) {
         super(parent, name);

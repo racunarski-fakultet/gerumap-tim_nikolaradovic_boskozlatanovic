@@ -1,4 +1,4 @@
-package dsw.gerumap.app.gui.swing.tabbedPane.model;
+package dsw.gerumap.app.gui.swing.tabbedPane.view;
 
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import lombok.Getter;
