@@ -25,12 +25,14 @@ public class AddPojamState extends State {
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Ime pojma");
 
-        if(name.isEmpty()){
+        if(name == null)return;
+
+        else if(name.isEmpty()){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NAME_CANNOT_BE_EMPTY);
             return;
 
         }
-        else if(name == null)return;
+
 
 
         Element el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), name,SubElements.POJAM);
