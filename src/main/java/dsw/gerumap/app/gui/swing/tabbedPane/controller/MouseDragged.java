@@ -16,7 +16,7 @@ public class MouseDragged implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, e.getPoint());
+        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().drag(tb, e.getPoint());
     }
 
     @Override

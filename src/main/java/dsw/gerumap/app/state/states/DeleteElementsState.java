@@ -21,4 +21,9 @@ public class DeleteElementsState extends State {
             }
         }
     }
+
+    @Override
+    public void drag(TabItemModel tb, Point point) {
+
+    }
 }

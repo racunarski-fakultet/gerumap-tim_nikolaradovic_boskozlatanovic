@@ -17,6 +17,8 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public void paint(Graphics2D g) {
+
+
         BasicStroke stroke = new BasicStroke(element.getStroke());
         g.setStroke(stroke);
         g.setColor(Color.gray);

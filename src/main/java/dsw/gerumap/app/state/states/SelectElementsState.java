@@ -10,6 +10,11 @@ public class SelectElementsState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
 
+    }
+
+    @Override
+    public void drag(TabItemModel tb, Point point) {
+
         DevicePainter painter = tb.returnSelected(point);
 
         if (painter == null){
@@ -20,6 +25,5 @@ public class SelectElementsState extends State {
         painter.getElement().setY(point.y);
 
         tb.repaint();
-
     }
 }

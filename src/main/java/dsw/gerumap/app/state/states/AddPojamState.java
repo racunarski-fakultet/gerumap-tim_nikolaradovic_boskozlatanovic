@@ -45,4 +45,9 @@ public class AddPojamState extends State {
         tb.getPainters().add(painter);
         tb.repaint();
     }
+
+    @Override
+    public void drag(TabItemModel tb, Point point) {
+
+    }
 }
