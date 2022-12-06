@@ -13,11 +13,11 @@ public class MousePainter implements MouseListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, e.getPoint());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, e.getPoint());
 
     }
 

@@ -16,6 +16,8 @@ public class VezaPainter extends DevicePainter{
         BasicStroke stroke = new BasicStroke(element.getStroke());
         g.setStroke(stroke);
         g.setColor(Color.BLACK);
+
         shape = new Line2D.Float(element.getX(),element.getY(),((VezaElement)element).getX2(),((VezaElement)element).getY2());
+        g.draw(shape);
     }
 }

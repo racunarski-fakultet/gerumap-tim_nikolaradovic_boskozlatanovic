@@ -7,6 +7,7 @@ import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
+import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.state.State;
@@ -31,7 +32,7 @@ public class AddLinijaState extends State {
 
         el.setX(point.x);
         el.setY(point.y);
-        DevicePainter painter = new PojamPainter(el);
+        DevicePainter painter = new VezaPainter(el);
         ((VezaElement)el).setX2(el.getX());
         ((VezaElement)el).setY2(el.getY());
 
@@ -45,9 +46,12 @@ public class AddLinijaState extends State {
     @Override
     public void drag(TabItemModel tb, Point point) {
 
+  //      Element el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), "", SubElements.VEZA);
+  //      ((VezaElement)el).setX2(point.x);
+  //      ((VezaElement)el).setY2(point.y);
 
         ((VezaElement)currentPainter.getElement()).setX2(point.x);
-        ((VezaElement)currentPainter.getElement()).setX2(point.y);
+        ((VezaElement)currentPainter.getElement()).setY2(point.y);
 
         tb.repaint();
     }
