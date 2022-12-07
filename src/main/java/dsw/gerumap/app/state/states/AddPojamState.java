@@ -13,12 +13,13 @@ import dsw.gerumap.app.state.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 public class AddPojamState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
 
-        if (tb.overlaps(point) != null) {
+        if (tb.overlaps(point)) {
             return;
         }
 

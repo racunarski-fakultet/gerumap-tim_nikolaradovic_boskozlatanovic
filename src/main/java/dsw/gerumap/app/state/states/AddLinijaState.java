@@ -24,20 +24,22 @@ public class AddLinijaState extends State {
 
     private DevicePainter currentPainter;
     private DevicePainter startPainter;
+    private Element el;
     @Override
     public void execute(TabItemModel tb, Point point) {
-        startPainter = tb.overlaps(point);
+        startPainter = tb.returnSelected(point);
         if (startPainter == null) {
             return;
         }
 
-        Element el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), "", SubElements.VEZA);
+        el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), "Od " + startPainter.getElement().getName() + " do ", SubElements.VEZA);
 
         el.setX(point.x);
         el.setY(point.y);
         DevicePainter painter = new VezaPainter(el);
         ((VezaElement)el).setX2(el.getX());
         ((VezaElement)el).setY2(el.getY());
+        ((VezaElement)el).getElements().add(startPainter.getElement());
 
 
 
@@ -60,15 +62,17 @@ public class AddLinijaState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        if (currentPainter != null && startPainter != null && (tb.overlaps(point) == null || tb.overlaps(point).equals(startPainter))){
+        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.hasPainter(tb.returnSelected(point)))) {
             tb.getPainters().remove(currentPainter);
-            ((MapNodeComposite)tb.getMapNode()).removeChildren(currentPainter.getElement());
+            ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
             tb.repaint();
-
+            AppCore.getInstance().getMapRepository().removeChild(el);
             return false;
         }
+        AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
         currentPainter = null;
         startPainter = null;
+        ((VezaElement)el).getElements().add(tb.returnSelected(point).getElement());
         return true;
 
     }

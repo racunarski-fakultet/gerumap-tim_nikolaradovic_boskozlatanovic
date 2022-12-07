@@ -29,4 +29,9 @@ public class PojamPainter extends DevicePainter{
 
         g.draw(shape);
     }
+
+    @Override
+    public boolean overlaps(Point point) {
+        return shape.intersects(point.x, point.y, 100,50);
+    }
 }

@@ -21,4 +21,9 @@ public class VezaPainter extends DevicePainter{
         shape = new Line2D.Float(element.getX(),element.getY(),((VezaElement)element).getX2(),((VezaElement)element).getY2());
         g.draw(shape);
     }
+
+    @Override
+    public boolean overlaps(Point point) {
+        return shape.contains(point);
+    }
 }

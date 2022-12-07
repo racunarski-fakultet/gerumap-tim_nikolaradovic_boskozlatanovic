@@ -1,14 +1,17 @@
 package dsw.gerumap.app.gui.swing.tabbedPane.view;
 
+import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,17 +50,31 @@ public class TabItemModel extends JPanel{
     }
 
 
-    public DevicePainter overlaps(Point point){
+    public boolean overlaps(Point point){
 
         for(DevicePainter p: painters){
-            if(p.getShape().contains(point)) return p;
+            if(p.overlaps(point)) return true;
         }
-        return null;
+        return false;
     }
+
+
     public DevicePainter returnSelected(Point point){
         for(DevicePainter p: painters){
             if(p.getShape().contains(point)) return p;
         }
         return null;
+    }
+
+    public boolean hasPainter(DevicePainter painter){
+        if(painter == null) return false;
+
+        for (DevicePainter p: painters){
+            if(p.getElement() instanceof VezaElement){
+                if(((VezaElement)p.getElement()).getElements().contains(painter.getElement())) return true;
+            }
+        }
+        return false;
+
     }
 }

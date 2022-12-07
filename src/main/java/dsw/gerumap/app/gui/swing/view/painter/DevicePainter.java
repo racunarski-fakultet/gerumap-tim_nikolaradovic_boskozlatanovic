@@ -16,5 +16,6 @@ public abstract class DevicePainter{
         this.element = element;
     }
     public abstract void paint(Graphics2D g);
-
+    public abstract boolean overlaps(Point point);
+    
 }

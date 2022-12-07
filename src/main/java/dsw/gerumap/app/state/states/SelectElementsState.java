@@ -10,24 +10,25 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 public class SelectElementsState extends State {
+
+    private DevicePainter currentylSelected;
     @Override
     public void execute(TabItemModel tb, Point point) {
-
+        currentylSelected = tb.returnSelected(point);
     }
 
     @Override
     public void drag(TabItemModel tb, Point point) {
 
-        DevicePainter painter = tb.returnSelected(point);
 
-        if (painter == null){
+        if (currentylSelected == null){
             return;
         }
-        float dx = point.x - ((PojamElement)painter.getElement()).getWidth()/2.f;
-        float dy = point.y - ((PojamElement)painter.getElement()).getHeight()/2.f;
+        float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
+        float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
 
-        painter.getElement().setX(dx);
-        painter.getElement().setY(dy);
+        currentylSelected.getElement().setX(dx);
+        currentylSelected.getElement().setY(dy);
 
 
         tb.repaint();
@@ -35,6 +36,7 @@ public class SelectElementsState extends State {
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
-        return false;
+        currentylSelected = null;
+        return true;
     }
 }
