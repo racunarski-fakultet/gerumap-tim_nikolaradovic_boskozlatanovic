@@ -26,4 +26,9 @@ public class DeleteElementsState extends State {
     public void drag(TabItemModel tb, Point point) {
 
     }
+
+    @Override
+    public boolean isConnected(TabItemModel tb, Point point) {
+        return false;
+    }
 }

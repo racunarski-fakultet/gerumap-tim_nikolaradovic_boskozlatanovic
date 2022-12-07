@@ -13,8 +13,8 @@ public class PojamElement extends Element {
     private int height;
     public PojamElement(MapNode parent, String name) {
         super(parent, name);
-        width = 70;
-        height = 50;
+        width = 100;
+        height =50 ;
     }
 
     public PojamElement(MapNode parent, String name, List<MapNode> children) {

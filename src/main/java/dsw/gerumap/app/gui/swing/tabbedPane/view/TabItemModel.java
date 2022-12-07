@@ -40,7 +40,6 @@ public class TabItemModel extends JPanel{
         else{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.8f));
             for (DevicePainter p: painters){
                 p.paint(g2);
             }
@@ -48,12 +47,12 @@ public class TabItemModel extends JPanel{
     }
 
 
-    public boolean overlaps(Point point){
+    public DevicePainter overlaps(Point point){
 
         for(DevicePainter p: painters){
-            if(p.getShape().contains(point)) return true;
+            if(p.getShape().contains(point)) return p;
         }
-        return false;
+        return null;
     }
     public DevicePainter returnSelected(Point point){
         for(DevicePainter p: painters){

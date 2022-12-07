@@ -23,6 +23,7 @@ public class MousePainter implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().isConnected(tb, e.getPoint());
 
     }
 

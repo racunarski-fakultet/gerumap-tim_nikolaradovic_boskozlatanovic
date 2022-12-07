@@ -8,6 +8,7 @@ import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
+import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.state.State;
@@ -22,9 +23,11 @@ import java.awt.*;
 public class AddLinijaState extends State {
 
     private DevicePainter currentPainter;
+    private DevicePainter startPainter;
     @Override
     public void execute(TabItemModel tb, Point point) {
-        if (!tb.overlaps(point)) {
+        startPainter = tb.overlaps(point);
+        if (startPainter == null) {
             return;
         }
 
@@ -46,13 +49,27 @@ public class AddLinijaState extends State {
     @Override
     public void drag(TabItemModel tb, Point point) {
 
-  //      Element el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), "", SubElements.VEZA);
-  //      ((VezaElement)el).setX2(point.x);
-  //      ((VezaElement)el).setY2(point.y);
+        if (currentPainter == null) return;
 
         ((VezaElement)currentPainter.getElement()).setX2(point.x);
         ((VezaElement)currentPainter.getElement()).setY2(point.y);
 
         tb.repaint();
+    }
+
+    @Override
+    public boolean isConnected(TabItemModel tb, Point point) {
+
+        if (currentPainter != null && startPainter != null && (tb.overlaps(point) == null || tb.overlaps(point).equals(startPainter))){
+            tb.getPainters().remove(currentPainter);
+            ((MapNodeComposite)tb.getMapNode()).removeChildren(currentPainter.getElement());
+            tb.repaint();
+
+            return false;
+        }
+        currentPainter = null;
+        startPainter = null;
+        return true;
+
     }
 }
