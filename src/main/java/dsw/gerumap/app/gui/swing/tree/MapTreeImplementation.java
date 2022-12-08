@@ -70,7 +70,9 @@ public class MapTreeImplementation implements MapTree, Subscriber {
 
     @Override
     public void removeChild(MapNode node) {
+
         MapTreeItem child = getPassedNode(node);
+        if (child == null) return;
         treeModel.removeNodeFromParent(child);
         items.remove(child);
     }

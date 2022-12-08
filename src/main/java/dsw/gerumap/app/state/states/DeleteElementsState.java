@@ -10,6 +10,7 @@ import dsw.gerumap.app.state.State;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class DeleteElementsState extends State {
@@ -21,7 +22,7 @@ public class DeleteElementsState extends State {
                 tb.getPainters().remove(painter);
                 if(painter instanceof PojamPainter){
 
-                    //((PojamPainter) painter).getVeze().removeAll(null);
+                    ((PojamPainter) painter).getVeze().removeAll(Collections.singletonList(null));
 
                     tb.getPainters().removeAll(((PojamPainter) painter).getVeze());
 

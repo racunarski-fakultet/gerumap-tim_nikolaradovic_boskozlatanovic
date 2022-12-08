@@ -18,6 +18,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 @Getter
 @Setter
@@ -29,7 +30,9 @@ public class AddLinijaState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
         startPainter = tb.returnSelected(point);
-        if (startPainter == null) {
+        if (startPainter == null || startPainter instanceof VezaPainter) {
+            startPainter = null;
+
             return;
         }
 
@@ -65,14 +68,19 @@ public class AddLinijaState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.containsInLinePainter(tb.returnSelected(point)))) {
+        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.containsInLinePainter(tb.returnSelected(point)) || tb.returnSelected(point) instanceof VezaPainter)) {
             tb.getPainters().remove(currentPainter);
             ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
             tb.repaint();
             AppCore.getInstance().getMapRepository().removeChild(el);
             return false;
         }
+        if(currentPainter == null && startPainter == null && (tb.returnSelected(point) == null || tb.returnSelected(point) instanceof VezaPainter))return false;
+        DevicePainter cp = tb.returnSelected(point);
+        if (tb.returnSelected(point) == null || cp instanceof VezaPainter) return false;
         ((PojamPainter)tb.returnSelected(point)).getVeze().add(currentPainter);
+
+
 
         AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
         currentPainter = null;
