@@ -6,6 +6,7 @@ import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
 import dsw.gerumap.app.gui.swing.tabbedPane.model.TabSelectionModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
+import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +50,7 @@ public class TabItemModel extends JPanel implements Subscriber {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             for (DevicePainter p: painters){
-                if(tabSelectionModel.getSelected().contains(p.getElement())){
+                if(tabSelectionModel.getSelected().contains(p)){
                     p.paintSelected(g2);
                 }
                 else{
@@ -80,9 +82,26 @@ public class TabItemModel extends JPanel implements Subscriber {
         if(painter == null) return false;
 
         for (DevicePainter p: painters){
+
+            if(p.getElement() instanceof VezaElement && painter instanceof PojamPainter){
+                if(((VezaElement)p.getElement()).getElements().contains(painter.getElement())) return true;
+            }
+            else{
+               if(p.equals(painter)) return true;
+            }
+        }
+        return false;
+
+    }
+    public boolean containsInLinePainter(DevicePainter painter){
+        if(painter == null) return false;
+
+        for (DevicePainter p: painters){
+
             if(p.getElement() instanceof VezaElement){
                 if(((VezaElement)p.getElement()).getElements().contains(painter.getElement())) return true;
             }
+
         }
         return false;
 
@@ -92,4 +111,5 @@ public class TabItemModel extends JPanel implements Subscriber {
     public void update(Object obj, Enum e) {
         this.repaint();
     }
+
 }

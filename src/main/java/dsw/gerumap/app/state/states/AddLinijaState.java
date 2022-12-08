@@ -2,6 +2,7 @@ package dsw.gerumap.app.state.states;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.errorHandling.EventType;
+import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
@@ -43,9 +44,11 @@ public class AddLinijaState extends State {
 
 
 
+
         tb.getPainters().add(painter);
         tb.repaint();
         currentPainter = painter;
+        ((PojamPainter)startPainter).getVeze().add(currentPainter);
     }
 
     @Override
@@ -62,13 +65,15 @@ public class AddLinijaState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.hasPainter(tb.returnSelected(point)))) {
+        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.containsInLinePainter(tb.returnSelected(point)))) {
             tb.getPainters().remove(currentPainter);
             ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
             tb.repaint();
             AppCore.getInstance().getMapRepository().removeChild(el);
             return false;
         }
+        ((PojamPainter)tb.returnSelected(point)).getVeze().add(currentPainter);
+
         AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
         currentPainter = null;
         startPainter = null;

@@ -2,6 +2,7 @@ package dsw.gerumap.app.gui.swing.tabbedPane.model;
 
 import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.mapRepository.Actions;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 public class TabSelectionModel implements Publisher {
 
     List<Subscriber> subscribers;
-    List<Element> selected;
+    List<DevicePainter> selected;
 
     public TabSelectionModel() {
         subscribers = new ArrayList<>();
@@ -41,7 +42,7 @@ public class TabSelectionModel implements Publisher {
         }
     }
 
-    public void addSelection(Element e){
+    public void addSelection(DevicePainter e){
         if(e == null || selected.contains(e))return;
         selected.add(e);
         notifySubscribers(e,Actions.SELECTED);

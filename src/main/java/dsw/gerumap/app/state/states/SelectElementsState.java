@@ -20,7 +20,7 @@ public class SelectElementsState extends State {
             tb.getTabSelectionModel().removeAll();
             return;
         }
-        tb.getTabSelectionModel().addSelection(currentylSelected.getElement());
+        tb.getTabSelectionModel().addSelection(currentylSelected);
     }
 
     @Override

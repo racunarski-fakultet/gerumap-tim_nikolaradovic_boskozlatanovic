@@ -7,12 +7,17 @@ import lombok.Setter;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class PojamPainter extends DevicePainter{
 
+    private List<DevicePainter> veze;
     public PojamPainter(Element element) {
         super(element);
+        veze = new ArrayList<>();
     }
 
     @Override
