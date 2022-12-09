@@ -43,7 +43,7 @@ public class AddLinijaState extends State {
         DevicePainter painter = new VezaPainter(el);
         ((VezaElement)el).setX2(el.getX());
         ((VezaElement)el).setY2(el.getY());
-        ((VezaElement)el).getElements().add(startPainter.getElement());
+
 
 
 
@@ -51,7 +51,7 @@ public class AddLinijaState extends State {
         tb.getPainters().add(painter);
         tb.repaint();
         currentPainter = painter;
-       // ((PojamPainter)startPainter).getVeze().add(currentPainter);
+
     }
 
     @Override
@@ -71,8 +71,8 @@ public class AddLinijaState extends State {
         DevicePainter endPinter  = tb.returnSelected(point);
 
         if(startPainter != null && endPinter != null){
-            boolean b1 = tb.hasPainter(startPainter,endPinter);
-            if (startPainter.equals(endPinter) || endPinter instanceof VezaPainter && tb.hasPainter(startPainter,endPinter)){
+
+            if ((startPainter.equals(endPinter) || endPinter instanceof VezaPainter) || tb.hasPainter(startPainter,endPinter)){
                 tb.getPainters().remove(currentPainter);
                 ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
                 tb.repaint();
@@ -81,7 +81,6 @@ public class AddLinijaState extends State {
                 startPainter = null;
             }
 
-            return false;
         }
 
         if(endPinter == null){
@@ -94,13 +93,14 @@ public class AddLinijaState extends State {
         if(currentPainter ==null && startPainter == null) return false;
 
         ((PojamPainter)tb.returnSelected(point)).getVeze().add(currentPainter);
-        ((VezaElement)currentPainter.getElement()).getElements().add(startPainter.getElement());
-        ((VezaElement)currentPainter.getElement()).getElements().add(endPinter.getElement());
+        ((VezaElement)el).getElements().add(startPainter.getElement());
+        ((VezaElement)el).getElements().add(endPinter.getElement());
+
 
         AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
         currentPainter = null;
         startPainter = null;
-        ((VezaElement)el).getElements().add(tb.returnSelected(point).getElement());
+
         return true;
 
     }
