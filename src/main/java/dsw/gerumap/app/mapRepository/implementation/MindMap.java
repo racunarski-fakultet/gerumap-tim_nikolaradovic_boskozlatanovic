@@ -33,7 +33,7 @@ public class MindMap extends MapNodeComposite {
 
     @Override
     public void removeChildren(MapNode child) {
-        if (child instanceof Element && !this.getChildren().contains((Element)child)){
+        if (child instanceof Element && this.getChildren().contains((Element)child)){
             this.getChildren().remove(child);
         }
 

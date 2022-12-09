@@ -1,34 +1,44 @@
 package dsw.gerumap.app.gui.swing.tabbedPane.view;
 
+import dsw.gerumap.app.core.observer.Subscriber;
+import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
+import dsw.gerumap.app.gui.swing.tabbedPane.model.TabSelectionModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
+import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
+import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 @Getter
 @Setter
-public class TabItemModel extends JPanel{
+public class TabItemModel extends JPanel implements Subscriber {
     private MapNode mapNode;
     //private JPanel panel;
-    Random r = new Random();
+    private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
     public TabItemModel(MapNode mapNode) {
 
+        tabSelectionModel = new TabSelectionModel();
+        tabSelectionModel.addSubscriber(this);
         this.mapNode = mapNode;
-        //this.panel = new JPanel();
+
         this.addMouseListener(new MousePainter(this));
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.setBackground(Color.WHITE);
         this.addMouseMotionListener(new MouseDragged(this));
-      //  panel.add(new Label("string" + r.nextInt(100)));
+
     }
 
     @Override
@@ -41,23 +51,52 @@ public class TabItemModel extends JPanel{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             for (DevicePainter p: painters){
-                p.paint(g2);
+                if(tabSelectionModel.getSelected().contains(p)){
+                    p.paintSelected(g2);
+                }
+                else{
+                    p.paint(g2);
+                }
+
             }
         }
     }
 
 
-    public DevicePainter overlaps(Point point){
+    public boolean overlaps(Point point){
 
         for(DevicePainter p: painters){
-            if(p.getShape().contains(point)) return p;
+            if(p.overlaps(point)) return true;
         }
-        return null;
+        return false;
     }
+
+
     public DevicePainter returnSelected(Point point){
         for(DevicePainter p: painters){
-            if(p.getShape().contains(point)) return p;
+            if(p.contains(point)) return p;
         }
         return null;
     }
+
+    public boolean hasPainter(DevicePainter startPainter,DevicePainter endPainter){
+
+        if(startPainter == null || endPainter == null) return false;
+
+        for (DevicePainter p: painters){
+
+            if(p.getElement() instanceof VezaElement && startPainter instanceof PojamPainter && endPainter instanceof PojamPainter){
+                if(((VezaPainter)p).hasElements(startPainter,endPainter)) return true;
+            }
+
+        }
+        return false;
+
+    }
+
+    @Override
+    public void update(Object obj, Enum e) {
+        this.repaint();
+    }
+
 }

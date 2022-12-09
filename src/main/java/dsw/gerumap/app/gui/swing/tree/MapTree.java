@@ -9,7 +9,7 @@ public interface MapTree {
     MapTreeView generateTree(MapNode projectExplorer);
     void addChild(MapTreeItem parent);
 
-    void removeChild();
+    void removeChild(MapNode node);
 
     void setAuthor(MapTreeItem node,String name);
     void renameMapTreeItem();
