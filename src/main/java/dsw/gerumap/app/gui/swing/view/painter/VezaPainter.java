@@ -37,7 +37,7 @@ public class VezaPainter extends DevicePainter{
     @Override
     public boolean contains(Point point) {
 
-        //float res = (float) Line2D.ptLineDist(element.getX(), element.getY(), ((VezaElement) element).getX2(), ((VezaElement) element).getY2(), point.x, point.y);
+
         return shape.getBounds().contains(point);
     }
 
@@ -57,8 +57,6 @@ public class VezaPainter extends DevicePainter{
     }
 
     public boolean hasElements(DevicePainter startPainter, DevicePainter endPainter){
-        boolean b = (((VezaElement)this.getElement()).getElements().contains(startPainter.getElement())) && (((VezaElement)this.getElement()).getElements().contains(endPainter.getElement()));
-
 
         return (((VezaElement)this.getElement()).getElements().contains(startPainter.getElement())) && (((VezaElement)this.getElement()).getElements().contains(endPainter.getElement()));
 
