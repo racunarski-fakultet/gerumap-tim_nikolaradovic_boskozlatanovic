@@ -51,7 +51,7 @@ public class AddLinijaState extends State {
         tb.getPainters().add(painter);
         tb.repaint();
         currentPainter = painter;
-        ((PojamPainter)startPainter).getVeze().add(currentPainter);
+       // ((PojamPainter)startPainter).getVeze().add(currentPainter);
     }
 
     @Override
@@ -68,19 +68,34 @@ public class AddLinijaState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        if (currentPainter != null && startPainter != null && (!tb.overlaps(point) || tb.returnSelected(point).equals(startPainter) || tb.containsInLinePainter(tb.returnSelected(point)) || tb.returnSelected(point) instanceof VezaPainter)) {
-            tb.getPainters().remove(currentPainter);
-            ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
-            tb.repaint();
-            AppCore.getInstance().getMapRepository().removeChild(el);
+        DevicePainter endPinter  = tb.returnSelected(point);
+
+        if(startPainter != null && endPinter != null){
+            boolean b1 = tb.hasPainter(startPainter,endPinter);
+            if (startPainter.equals(endPinter) || endPinter instanceof VezaPainter && tb.hasPainter(startPainter,endPinter)){
+                tb.getPainters().remove(currentPainter);
+                ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
+                tb.repaint();
+                AppCore.getInstance().getMapRepository().removeChild(el);
+                currentPainter = null;
+                startPainter = null;
+            }
+
             return false;
         }
-        if(currentPainter == null && startPainter == null && (tb.returnSelected(point) == null || tb.returnSelected(point) instanceof VezaPainter))return false;
-        DevicePainter cp = tb.returnSelected(point);
-        if (tb.returnSelected(point) == null || cp instanceof VezaPainter) return false;
+
+        if(endPinter == null){
+            tb.getPainters().remove(currentPainter);
+            tb.repaint();
+            currentPainter = null;
+            startPainter = null;
+            return false;
+        }
+        if(currentPainter ==null && startPainter == null) return false;
+
         ((PojamPainter)tb.returnSelected(point)).getVeze().add(currentPainter);
-
-
+        ((VezaElement)currentPainter.getElement()).getElements().add(startPainter.getElement());
+        ((VezaElement)currentPainter.getElement()).getElements().add(endPinter.getElement());
 
         AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
         currentPainter = null;

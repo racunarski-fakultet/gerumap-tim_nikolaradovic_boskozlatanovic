@@ -7,6 +7,7 @@ import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
 import dsw.gerumap.app.gui.swing.tabbedPane.model.TabSelectionModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
+import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
@@ -78,28 +79,14 @@ public class TabItemModel extends JPanel implements Subscriber {
         return null;
     }
 
-    public boolean hasPainter(DevicePainter painter){
-        if(painter == null) return false;
+    public boolean hasPainter(DevicePainter startPainter,DevicePainter endPainter){
+
+        if(startPainter == null || endPainter == null) return false;
 
         for (DevicePainter p: painters){
 
-            if(p.getElement() instanceof VezaElement && painter instanceof PojamPainter){
-                if(((VezaElement)p.getElement()).getElements().contains(painter.getElement())) return true;
-            }
-            else{
-               if(p.equals(painter)) return true;
-            }
-        }
-        return false;
-
-    }
-    public boolean containsInLinePainter(DevicePainter painter){
-        if(painter == null) return false;
-
-        for (DevicePainter p: painters){
-
-            if(p.getElement() instanceof VezaElement){
-                if(((VezaElement)p.getElement()).getElements().contains(painter.getElement())) return true;
+            if(p.getElement() instanceof VezaElement && startPainter instanceof PojamPainter && endPainter instanceof PojamPainter){
+                if(((VezaPainter)p).hasElements(startPainter,endPainter)) return true;
             }
 
         }

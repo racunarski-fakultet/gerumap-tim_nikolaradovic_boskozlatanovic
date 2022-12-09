@@ -20,10 +20,10 @@ public class VezaPainter extends DevicePainter{
 
     @Override
     public void paint(Graphics2D g) {
-        BasicStroke stroke = new BasicStroke(10f);
+        BasicStroke stroke = new BasicStroke(3f);
         g.setStroke(stroke);
         g.setColor(Color.BLACK);
-        g.setComposite(AlphaComposite.getInstance((AlphaComposite.DST_OUT)));
+        g.setComposite(AlphaComposite.getInstance((AlphaComposite.DST_OUT),1f));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         shape = new Line2D.Float(element.getX(),element.getY(),((VezaElement)element).getX2(),((VezaElement)element).getY2());
         g.draw(shape);
@@ -56,4 +56,11 @@ public class VezaPainter extends DevicePainter{
         g.draw(shape);
     }
 
+    public boolean hasElements(DevicePainter startPainter, DevicePainter endPainter){
+        boolean b = (((VezaElement)this.getElement()).getElements().contains(startPainter.getElement())) && (((VezaElement)this.getElement()).getElements().contains(endPainter.getElement()));
+
+
+        return (((VezaElement)this.getElement()).getElements().contains(startPainter.getElement())) && (((VezaElement)this.getElement()).getElements().contains(endPainter.getElement()));
+
+    }
 }
