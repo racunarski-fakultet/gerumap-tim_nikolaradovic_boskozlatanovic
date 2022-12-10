@@ -15,40 +15,53 @@ import java.util.List;
 public class MoveState extends State {
 
     Shape rectangle;
+
     int startX;
     int startY;
 
+    int endX;
+
+    int endY;
+
+    boolean realesed = false;
     private DevicePainter currentylSelected;
-    DevicePainter rectanglePainter = new SelectioElements(null);;
+    DevicePainter rectanglePainter = new SelectioElements(null);
     @Override
     public void execute(TabItemModel tb, Point point) {
 
-        if(rectangle == null && tb.returnSelected(point) == null){
+        if(rectangle == null && tb.returnSelected(point) == null && currentylSelected == null){
 
-            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
             startX = point.x;
             startY = point.y;
             drawRectangle(point);
             tb.getPainters().add(rectanglePainter);
             tb.repaint();
 
+
+        }
+        else if(rectangle == null && tb.returnSelected(point) == null && currentylSelected != null){
+            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
+            currentylSelected = null;
+            tb.repaint();
         }
         else if(tb.returnSelected(point) != null && tb.returnSelected(point) instanceof PojamPainter){
 
             tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
             tb.getTabSelectionModel().getSelected().add(tb.returnSelected(point));
-            tb.getPainters().remove(rectanglePainter);
-            rectangle = null;
-            tb.repaint();
-
             currentylSelected = tb.returnSelected(point);
+            realesed = false;
+            if(rectangle != null){
+                tb.getPainters().remove(rectanglePainter);
+                rectangle = null;
+                tb.repaint();
+            }
         }
 
         else if(rectangle != null && !rectangle.contains(point)){
             tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
             tb.getPainters().remove(rectanglePainter);
             rectangle = null;
-
+            tb.repaint();
         }
 
     }
@@ -56,7 +69,7 @@ public class MoveState extends State {
     @Override
     public void drag(TabItemModel tb, Point point) {
 
-        if(rectangle == null && currentylSelected != null) {
+        if(rectangle == null && currentylSelected != null && !realesed) {
 
             float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
             float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
@@ -66,35 +79,38 @@ public class MoveState extends State {
 
 
             tb.repaint();
-            return;
-        }
-        tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
-        drawRectangle(point);
 
-        List<DevicePainter> newPainters = addSelected(tb);
-        if(newPainters.size() != 0){
-            tb.getTabSelectionModel().getSelected().addAll(newPainters);
         }
-        tb.repaint();
+        else if(rectangle != null){
+
+            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
+            drawRectangle(point);
+
+            List<DevicePainter> newPainters = addSelected(tb);
+            if(newPainters.size() != 0){
+                tb.getTabSelectionModel().getSelected().addAll(newPainters);
+            }
+            tb.repaint();
+        }
+
 
     }
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
-        currentylSelected = null;
+
+        realesed = true;
         return true;
     }
 
     private void drawRectangle(Point point){
 
-        float[] dash = {5f,5f};
+        endX = point.x;
+        endY = point.y;
 
-        Stroke dashedStroke = new BasicStroke(2f,BasicStroke.CAP_SQUARE,BasicStroke.JOIN_MITER,3f,dash,0f);
-
-        rectangle = new Rectangle2D.Float(startX,startY,point.x-startX,point.y- startY);
+        rectangle = new Rectangle2D.Float(startX,startY,Math.abs(endX-startX),Math.abs(endY-startY));
 
         rectanglePainter.setShape(rectangle);
-        ((SelectioElements)rectanglePainter).setDashedStroke(dashedStroke);
     }
     private List<DevicePainter> addSelected(TabItemModel tb){
 

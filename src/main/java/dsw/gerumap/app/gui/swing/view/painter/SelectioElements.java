@@ -21,8 +21,10 @@ public class SelectioElements extends  DevicePainter{
     @Override
     public void paint(Graphics2D g) {
 
-        g.fill(dashedStroke.createStrokedShape(shape));
-
+        dashedStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, new float[]{10}, 0);
+        g.setColor(Color.BLACK);
+        g.setStroke(dashedStroke);
+        g.draw(shape);
     }
 
     @Override
