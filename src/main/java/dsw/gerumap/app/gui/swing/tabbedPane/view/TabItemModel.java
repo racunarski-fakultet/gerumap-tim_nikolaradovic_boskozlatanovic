@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +26,14 @@ import java.util.Random;
 @Setter
 public class TabItemModel extends JPanel implements Subscriber {
     private MapNode mapNode;
-    //private JPanel panel;
+
+    private AffineTransform transform = new AffineTransform();
+
+    private double scailingFactor = 1;
+
+    private double xMove;
+    private double yMove;
+
     private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
 
@@ -46,11 +54,15 @@ public class TabItemModel extends JPanel implements Subscriber {
     public void paintComponent(Graphics g) {
         if(painters.size() == 0){
             super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+            //g2.setTransform(transform);
 
         }
         else{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
+            //g2.setTransform(transform);
+
             for (DevicePainter p: painters){
                 if(tabSelectionModel.getSelected().contains(p)){
                     p.paintSelected(g2);
@@ -95,6 +107,27 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     }
 
+    public void zoomIn(){
+        if(scailingFactor > 5){
+            scailingFactor = 5;
+            return;
+        }
+        scailingFactor *= 1.2;
+        setupTransform();
+    }
+    public void zoomOut(){
+        if(scailingFactor < 0.2){
+            scailingFactor = 0.2;
+            return;
+        }
+        scailingFactor /= 1.2;
+        setupTransform();
+    }
+
+    private void setupTransform(){
+        transform.scale(scailingFactor,scailingFactor);
+        repaint();
+    }
     @Override
     public void update(Object obj, Enum e) {
         this.repaint();

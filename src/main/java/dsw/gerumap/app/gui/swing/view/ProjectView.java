@@ -27,4 +27,8 @@ public class ProjectView extends JPanel {
     public void switchToAddLinijaState(){
         stateManager.setAddLinijaState();
     }
+
+    public void switchToMoveState(){
+        stateManager.setMoveState();
+    }
 }

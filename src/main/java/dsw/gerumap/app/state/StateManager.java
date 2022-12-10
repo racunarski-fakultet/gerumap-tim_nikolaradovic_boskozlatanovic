@@ -1,17 +1,18 @@
 package dsw.gerumap.app.state;
 
-import dsw.gerumap.app.state.states.AddLinijaState;
-import dsw.gerumap.app.state.states.AddPojamState;
-import dsw.gerumap.app.state.states.DeleteElementsState;
-import dsw.gerumap.app.state.states.SelectElementsState;
+import dsw.gerumap.app.state.states.*;
 
 public class StateManager {
 
     private AddLinijaState addLinijaState;
     private AddPojamState addPojamState;
     private DeleteElementsState deleteElementsState;
+
+    private MoveState moveState;
     private SelectElementsState selectElementsState;
     private State currentState;
+
+
 
 
     public StateManager() {
@@ -23,6 +24,7 @@ public class StateManager {
         addPojamState = new AddPojamState();
         selectElementsState = new SelectElementsState();
         deleteElementsState = new DeleteElementsState();
+        moveState = new MoveState();
         currentState = selectElementsState;
     }
 
@@ -40,6 +42,10 @@ public class StateManager {
 
     public void setSelectElementsState() {
         currentState = selectElementsState;
+    }
+
+    public void setMoveState() {
+        currentState = moveState;
     }
 
     public State getCurrentState() {

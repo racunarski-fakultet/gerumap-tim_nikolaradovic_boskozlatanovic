@@ -18,7 +18,7 @@ public class SelectElementsState extends State {
 
         if (currentylSelected == null){
             tb.getTabSelectionModel().removeAll();
-            return;
+
         }
         tb.getTabSelectionModel().addSelection(currentylSelected);
     }
