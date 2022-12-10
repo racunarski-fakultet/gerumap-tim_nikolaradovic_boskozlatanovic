@@ -28,23 +28,26 @@ public class PojamPainter extends DevicePainter{
 
         BasicStroke stroke = new BasicStroke(element.getStroke());
         g.setColor(new Color(150, 200, 100));
-        g.setStroke(stroke);
-
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-
         int width = g.getFontMetrics().stringWidth(element.getName());
         if(width < ((PojamElement)element).getWidth()){
             width = ((PojamElement)element).getWidth();
         }
-
-
         shape = new Ellipse2D.Float(element.getX(), element.getY(), width+7,((PojamElement)element).getHeight());
 
         g.fill(shape);
+
+
+        g.setStroke(stroke);
+        g.setColor(Color.BLACK);
+        g.draw(shape);
+
+
+
+
+        g.setColor(Color.BLACK);
         drawString(g,g.getFont(),shape.getBounds2D(), element.getName());
 
-        g.draw(shape);
 
 
     }
@@ -61,26 +64,28 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public void paintSelected(Graphics2D g) {
-
         BasicStroke stroke = new BasicStroke(element.getStroke());
-        g.setStroke(stroke);
         g.setColor(Color.RED);
-
-
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         int width = g.getFontMetrics().stringWidth(element.getName());
         if(width < ((PojamElement)element).getWidth()){
             width = ((PojamElement)element).getWidth();
         }
-
-
         shape = new Ellipse2D.Float(element.getX(), element.getY(), width+7,((PojamElement)element).getHeight());
+
         g.fill(shape);
 
+        g.setStroke(stroke);
+
+        g.setColor(Color.BLACK);
+        g.draw(shape);
+
+
+
+
+        g.setColor(Color.BLACK);
         drawString(g,g.getFont(),shape.getBounds2D(), element.getName());
 
-        g.draw(shape);
     }
 
     private void drawString(Graphics2D g, Font font, Rectangle2D r, String s){
@@ -100,7 +105,6 @@ public class PojamPainter extends DevicePainter{
 
         g2.setFont(font);
         g2.setColor(Color.BLACK);
-
         g2.drawString(s, (int) (r.getX() + a), (int) (r.getY() + b));
 
     }

@@ -1,11 +1,8 @@
 package dsw.gerumap.app.state.states;
 
 import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.errorHandling.EventType;
-import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
-import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
@@ -16,9 +13,7 @@ import dsw.gerumap.app.state.State;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 @Getter
 @Setter
@@ -68,11 +63,11 @@ public class AddLinijaState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        DevicePainter endPinter  = tb.returnSelected(point);
+        DevicePainter endPainter = tb.returnSelected(point);
 
-        if(startPainter != null && endPinter != null){
+        if(startPainter != null && endPainter != null){
 
-            if ((startPainter.equals(endPinter) || endPinter instanceof VezaPainter) || tb.hasPainter(startPainter,endPinter)){
+            if ((startPainter.equals(endPainter) || endPainter instanceof VezaPainter) || tb.hasPainter(startPainter, endPainter)){
                 tb.getPainters().remove(currentPainter);
                 ((MapNodeComposite)tb.getMapNode()).removeChildren(el);
                 tb.repaint();
@@ -83,7 +78,7 @@ public class AddLinijaState extends State {
 
         }
 
-        if(endPinter == null){
+        if(endPainter == null){
             tb.getPainters().remove(currentPainter);
             tb.repaint();
             currentPainter = null;
@@ -91,10 +86,10 @@ public class AddLinijaState extends State {
             return false;
         }
         if(currentPainter ==null && startPainter == null) return false;
-
-        ((PojamPainter)tb.returnSelected(point)).getVeze().add(currentPainter);
+        ((PojamPainter)endPainter).getVeze().add(currentPainter);
+        ((PojamPainter)startPainter).getVeze().add(currentPainter);
         ((VezaElement)el).getElements().add(startPainter.getElement());
-        ((VezaElement)el).getElements().add(endPinter.getElement());
+        ((VezaElement)el).getElements().add(endPainter.getElement());
 
 
         AppCore.getInstance().getMapRepository().rename(el,"Od " + startPainter.getElement().getName() + " do " +tb.returnSelected(point).getElement().getName());
