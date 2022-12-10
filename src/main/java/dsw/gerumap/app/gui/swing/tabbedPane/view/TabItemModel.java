@@ -28,6 +28,7 @@ public class TabItemModel extends JPanel implements Subscriber {
     //private JPanel panel;
     private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
+
     public TabItemModel(MapNode mapNode) {
 
         tabSelectionModel = new TabSelectionModel();
