@@ -31,14 +31,7 @@ public class SelectElementsState extends State {
 
             return;
         }
-        float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
-        float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
 
-        currentylSelected.getElement().setX(dx);
-        currentylSelected.getElement().setY(dy);
-
-
-        tb.repaint();
     }
 
     @Override
