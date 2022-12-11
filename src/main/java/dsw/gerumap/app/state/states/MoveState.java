@@ -1,9 +1,12 @@
 package dsw.gerumap.app.state.states;
 
 import dsw.gerumap.app.gui.swing.elements.PojamElement;
+import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
+import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
+import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.state.State;
 
 import java.awt.*;
@@ -60,11 +63,31 @@ public class MoveState extends State {
 
             for (DevicePainter p: tb.getTabSelectionModel().getSelected()){
 
-                float newElipseX = p.getElement().getX() - dx;
-                float  newElipseY = p.getElement().getY() - dy;
+                if (p instanceof PojamPainter){
+                    float newEllipseX = p.getElement().getX() - dx;
+                    float newEllipseY = p.getElement().getY() - dy;
 
-                p.getElement().setX(newElipseX);
-                p.getElement().setY(newElipseY);
+
+                    p.getElement().setX(newEllipseX);
+                    p.getElement().setY(newEllipseY);
+                }
+                else if (p instanceof VezaPainter){
+
+                    float newLineX1 = p.getElement().getX() - dx;
+                    float newLineY1 = p.getElement().getY() - dy;
+
+                    float newLineX2 = ((VezaElement)p.getElement()).getX2() - dx;
+                    float newLineY2 = ((VezaElement)p.getElement()).getY2() - dy;
+
+                    p.getElement().setX(newLineX1);
+                    p.getElement().setY(newLineY1);
+                    ((VezaElement) p.getElement()).setX2(newLineX2);
+                    ((VezaElement) p.getElement()).setY2(newLineY2);
+
+                    System.out.println("x1: " + newLineX1 + " x2: "+newLineX2 + " y1: " + newLineY1 + " y2: " + newLineY2);
+                }
+
+
 
                 tb.repaint();
             }
