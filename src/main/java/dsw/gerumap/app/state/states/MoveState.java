@@ -3,6 +3,7 @@ package dsw.gerumap.app.state.states;
 import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
@@ -18,6 +19,8 @@ public class MoveState extends State {
     private Integer startX;
     private Integer startY;
     private DevicePainter rectangle;
+    DevicePainter currentylSelected;
+    private boolean released = true;
 
     @Override
     public void execute(TabItemModel tb, Point point) {
@@ -26,6 +29,18 @@ public class MoveState extends State {
         if(rectangle != null && rectangle.contains(point)){
             startX = point.x;
             startY = point.y;
+            released = false;
+        }
+        else if(tb.returnSelected(point) == null){
+            MainFrame.getIntance().getProjectView().switchToSelectState();
+            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
+        }
+        else if (!tb.returnSelected(point).equals(currentylSelected) && currentylSelected != null && !(currentylSelected instanceof SelectioElements)) {
+            MainFrame.getIntance().getProjectView().switchToSelectState();
+            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
+
+        } else{
+            released = false;
         }
     }
 
@@ -34,9 +49,9 @@ public class MoveState extends State {
 
 
 
-        if(tb.getTabSelectionModel().getSelected().size() == 1){
+        if(tb.getTabSelectionModel().getSelected().size() == 1 && !released){
 
-            DevicePainter currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
+           currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
 
             float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
             float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
@@ -47,7 +62,7 @@ public class MoveState extends State {
 
             tb.repaint();
         }
-        else{
+        else if(!released && rectangle.contains(point)){
 
             if(rectangle == null) return;
 
@@ -84,7 +99,6 @@ public class MoveState extends State {
                     ((VezaElement) p.getElement()).setX2(newLineX2);
                     ((VezaElement) p.getElement()).setY2(newLineY2);
 
-                    System.out.println("x1: " + newLineX1 + " x2: "+newLineX2 + " y1: " + newLineY1 + " y2: " + newLineY2);
                 }
 
 
@@ -104,6 +118,7 @@ public class MoveState extends State {
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
+        released = true;
         return false;
     }
 

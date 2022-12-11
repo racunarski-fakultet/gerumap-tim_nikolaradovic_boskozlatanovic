@@ -78,6 +78,7 @@ public class SelectionElementsState extends State {
         if(rectangle == null && currentylSelected != null && !realesed) {
 
             MainFrame.getIntance().getProjectView().switchToMoveState();
+            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
 
         }
         else if(rectangle != null){
