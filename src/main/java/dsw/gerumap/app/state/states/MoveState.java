@@ -3,73 +3,37 @@ package dsw.gerumap.app.state.states;
 import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
-import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
 import dsw.gerumap.app.state.State;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MoveState extends State {
 
-    Shape rectangle;
+    private Integer startX;
+    private Integer startY;
+    private DevicePainter rectangle;
 
-    int startX;
-    int startY;
-
-    int endX;
-
-    int endY;
-
-    boolean realesed = false;
-    private DevicePainter currentylSelected;
-    DevicePainter rectanglePainter = new SelectioElements(null);
     @Override
     public void execute(TabItemModel tb, Point point) {
+        rectangle = findSelectionElement(tb);
 
-        if(rectangle == null && tb.returnSelected(point) == null && currentylSelected == null){
-
+        if(rectangle != null && rectangle.contains(point)){
             startX = point.x;
             startY = point.y;
-            drawRectangle(point);
-            tb.getPainters().add(rectanglePainter);
-            tb.repaint();
-
-
         }
-        else if(rectangle == null && tb.returnSelected(point) == null && currentylSelected != null){
-            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
-            currentylSelected = null;
-            tb.repaint();
-        }
-        else if(tb.returnSelected(point) != null && tb.returnSelected(point) instanceof PojamPainter){
-
-            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
-            tb.getTabSelectionModel().getSelected().add(tb.returnSelected(point));
-            currentylSelected = tb.returnSelected(point);
-            realesed = false;
-            if(rectangle != null){
-                tb.getPainters().remove(rectanglePainter);
-                rectangle = null;
-                tb.repaint();
-            }
-        }
-
-        else if(rectangle != null && !rectangle.contains(point)){
-            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
-            tb.getPainters().remove(rectanglePainter);
-            rectangle = null;
-            tb.repaint();
-        }
-
     }
 
     @Override
     public void drag(TabItemModel tb, Point point) {
 
-        if(rectangle == null && currentylSelected != null && !realesed) {
+
+
+        if(tb.getTabSelectionModel().getSelected().size() == 1){
+
+            DevicePainter currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
 
             float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
             float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
@@ -79,48 +43,55 @@ public class MoveState extends State {
 
 
             tb.repaint();
-
         }
-        else if(rectangle != null){
+        else{
 
-            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
-            drawRectangle(point);
+            if(rectangle == null) return;
 
-            List<DevicePainter> newPainters = addSelected(tb);
-            if(newPainters.size() != 0){
-                tb.getTabSelectionModel().getSelected().addAll(newPainters);
+            int dx = startX - point.x;
+            int dy = startY - point.y;
+
+            double newX = ((Rectangle2D) rectangle.getShape()).getX() - dx;
+            double newY = ((Rectangle2D) rectangle.getShape()).getY() - dy;
+
+
+
+            ((Rectangle2D)rectangle.getShape()).setFrame(newX,newY,((Rectangle2D) rectangle.getShape()).getWidth(),((Rectangle2D) rectangle.getShape()).getHeight());
+
+            for (DevicePainter p: tb.getTabSelectionModel().getSelected()){
+
+                float newElipseX = p.getElement().getX() - dx;
+                float  newElipseY = p.getElement().getY() - dy;
+
+                p.getElement().setX(newElipseX);
+                p.getElement().setY(newElipseY);
+
+                tb.repaint();
             }
+
+
+            startX = point.x;
+
+            startY = point.y;
             tb.repaint();
+
+
         }
-
-
     }
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
-
-        realesed = true;
-        return true;
+        return false;
     }
 
-    private void drawRectangle(Point point){
 
-        endX = point.x;
-        endY = point.y;
-
-        rectangle = new Rectangle2D.Float(startX,startY,Math.abs(endX-startX),Math.abs(endY-startY));
-
-        rectanglePainter.setShape(rectangle);
-    }
-    private List<DevicePainter> addSelected(TabItemModel tb){
-
-        List<DevicePainter> dv = new ArrayList<>();
-
+    private DevicePainter findSelectionElement(TabItemModel tb){
         for (DevicePainter p: tb.getPainters()){
-            if (rectangle.contains(p.getShape().getBounds2D()) && !(p instanceof SelectioElements)){
-                dv.add(p);
+            if(p instanceof SelectioElements){
+                return p;
             }
         }
-        return dv;
+        return null;
     }
 }
+

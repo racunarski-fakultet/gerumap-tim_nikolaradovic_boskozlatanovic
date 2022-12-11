@@ -8,8 +8,8 @@ public class StateManager {
     private AddPojamState addPojamState;
     private DeleteElementsState deleteElementsState;
 
+    private SelectionElementsState selectionElementsState;
     private MoveState moveState;
-    private SelectElementsState selectElementsState;
     private State currentState;
 
 
@@ -22,10 +22,11 @@ public class StateManager {
     private void initialise(){
         addLinijaState = new AddLinijaState();
         addPojamState = new AddPojamState();
-        selectElementsState = new SelectElementsState();
-        deleteElementsState = new DeleteElementsState();
         moveState = new MoveState();
-        currentState = selectElementsState;
+        deleteElementsState = new DeleteElementsState();
+        selectionElementsState = new SelectionElementsState();
+        MoveState moveState = new MoveState();
+        currentState = selectionElementsState;
     }
 
     public void setAddLinijaState() {
@@ -41,11 +42,11 @@ public class StateManager {
     }
 
     public void setSelectElementsState() {
-        currentState = selectElementsState;
+        currentState = selectionElementsState;
     }
 
     public void setMoveState() {
-        currentState = moveState;
+        currentState = moveState ;
     }
 
     public State getCurrentState() {

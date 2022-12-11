@@ -18,6 +18,6 @@ public class SelectElementAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MainFrame.getIntance().getProjectView().switchToMoveState();
+        MainFrame.getIntance().getProjectView().switchToSelectState();
     }
 }

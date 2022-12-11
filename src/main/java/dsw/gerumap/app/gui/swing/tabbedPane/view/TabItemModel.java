@@ -65,7 +65,8 @@ public class TabItemModel extends JPanel implements Subscriber {
 
             for (DevicePainter p: painters){
                 if(tabSelectionModel.getSelected().contains(p)){
-                    p.paintSelected(g2);
+                    int index = tabSelectionModel.getSelected().indexOf(p);
+                    tabSelectionModel.getSelected().get(index).paintSelected(g2);
                 }
                 else{
                     p.paint(g2);

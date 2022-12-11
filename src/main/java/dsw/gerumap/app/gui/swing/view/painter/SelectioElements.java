@@ -34,7 +34,7 @@ public class SelectioElements extends  DevicePainter{
 
     @Override
     public boolean contains(Point point) {
-        return false;
+        return shape.contains(point);
     }
 
     @Override
