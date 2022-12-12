@@ -1,4 +1,4 @@
-package dsw.gerumap.app.state.states;
+package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
@@ -8,10 +8,9 @@ import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
-import dsw.gerumap.app.state.State;
+import dsw.gerumap.app.gui.swing.state.State;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 public class MoveState extends State {
@@ -25,21 +24,28 @@ public class MoveState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
         rectangle = findSelectionElement(tb);
-
+        //currentylSelected = tb.returnSelected(point);
         if(rectangle != null && rectangle.contains(point)){
             startX = point.x;
             startY = point.y;
             released = false;
         }
-        else if(tb.returnSelected(point) == null){
+        else if(tb.returnSelected(point) == null && currentylSelected != null){
+            MainFrame.getIntance().getProjectView().switchToSelectState();
+            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
+            currentylSelected = null;
+        }
+        else if (currentylSelected != null && !tb.returnSelected(point).equals(currentylSelected)  && !(currentylSelected instanceof SelectioElements)) {
+            MainFrame.getIntance().getProjectView().switchToSelectState();
+            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
+            currentylSelected = null;
+
+        }
+        else if (currentylSelected == null && tb.returnSelected(point) == null){
             MainFrame.getIntance().getProjectView().switchToSelectState();
             MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
         }
-        else if (!tb.returnSelected(point).equals(currentylSelected) && currentylSelected != null && !(currentylSelected instanceof SelectioElements)) {
-            MainFrame.getIntance().getProjectView().switchToSelectState();
-            MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
-
-        } else{
+        else{
             released = false;
         }
     }
@@ -90,7 +96,6 @@ public class MoveState extends State {
 
                     float newLineX1 = p.getElement().getX() - dx;
                     float newLineY1 = p.getElement().getY() - dy;
-
                     float newLineX2 = ((VezaElement)p.getElement()).getX2() - dx;
                     float newLineY2 = ((VezaElement)p.getElement()).getY2() - dy;
 

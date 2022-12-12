@@ -1,0 +1,19 @@
+package dsw.gerumap.app.gui.swing.controller.upperSide;
+
+import dsw.gerumap.app.gui.swing.controller.AbstractGerumapAction;
+
+import java.awt.event.ActionEvent;
+
+public class ZoomInAction extends AbstractGerumapAction {
+
+    public ZoomInAction() {
+        putValue(NAME,"Zoom in ");
+        putValue(SHORT_DESCRIPTION,"Zoom in");
+        putValue(SMALL_ICON,loadIcon("/images/Zoom in.png"));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}

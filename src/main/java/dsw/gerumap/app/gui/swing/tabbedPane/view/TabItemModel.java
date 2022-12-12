@@ -114,7 +114,7 @@ public class TabItemModel extends JPanel implements Subscriber {
             return;
         }
         scailingFactor *= 1.2;
-        setupTransform();
+        //setupTransform();
     }
     public void zoomOut(){
         if(scailingFactor < 0.2){
@@ -122,10 +122,10 @@ public class TabItemModel extends JPanel implements Subscriber {
             return;
         }
         scailingFactor /= 1.2;
-        setupTransform();
+        //setupTransform();
     }
 
-    private void setupTransform(){
+    public void setupTransform(Point oldPoint){
         transform.scale(scailingFactor,scailingFactor);
         repaint();
     }

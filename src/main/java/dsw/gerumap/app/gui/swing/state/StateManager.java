@@ -1,6 +1,6 @@
-package dsw.gerumap.app.state;
+package dsw.gerumap.app.gui.swing.state;
 
-import dsw.gerumap.app.state.states.*;
+import dsw.gerumap.app.gui.swing.state.states.*;
 
 public class StateManager {
 

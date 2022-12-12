@@ -29,6 +29,10 @@ public class  ActionManager {
 
     private SelectElementAction selectElementAction;
 
+    private ZoomOutAction zoomOutAction;
+
+    private ZoomInAction zoomInAction;
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
@@ -39,6 +43,8 @@ public class  ActionManager {
         deleteElementsAction = new DeleteElementsAction();
         selectElementAction = new SelectElementAction();
         addPojamAction = new AddPojamAction();
+        zoomOutAction = new ZoomOutAction();
+        zoomInAction = new ZoomInAction();
     }
 
     public ActionManager(){

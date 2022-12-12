@@ -1,4 +1,4 @@
-package dsw.gerumap.app.state;
+package dsw.gerumap.app.gui.swing.state;
 
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 

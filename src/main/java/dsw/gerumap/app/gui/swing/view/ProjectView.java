@@ -1,6 +1,6 @@
 package dsw.gerumap.app.gui.swing.view;
 
-import dsw.gerumap.app.state.StateManager;
+import dsw.gerumap.app.gui.swing.state.StateManager;
 import lombok.Getter;
 import lombok.Setter;
 
