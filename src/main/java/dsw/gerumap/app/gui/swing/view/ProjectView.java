@@ -27,6 +27,12 @@ public class ProjectView extends JPanel {
     public void switchToAddLinijaState(){
         stateManager.setAddLinijaState();
     }
+    public void switchToZoomInState(){
+        stateManager.setZoomInState();
+    }
+    public void switchToZoomOutState(){
+        stateManager.setZoomOutState();
+    }
 
     public void switchToMoveState(){
         stateManager.setMoveState();

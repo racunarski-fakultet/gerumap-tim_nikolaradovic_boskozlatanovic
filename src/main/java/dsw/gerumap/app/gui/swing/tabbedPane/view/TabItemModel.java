@@ -16,6 +16,8 @@ import lombok.Setter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +35,9 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     private double xMove;
     private double yMove;
+
+    private double oldX;
+    private double oldY;
 
     private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
@@ -55,13 +60,16 @@ public class TabItemModel extends JPanel implements Subscriber {
         if(painters.size() == 0){
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            //g2.setTransform(transform);
+            g2.setTransform(transform);
+
+
 
         }
         else{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            //g2.setTransform(transform);
+            g2.setTransform(transform);
+
 
             for (DevicePainter p: painters){
                 if(tabSelectionModel.getSelected().contains(p)){
@@ -113,20 +121,39 @@ public class TabItemModel extends JPanel implements Subscriber {
             scailingFactor = 5;
             return;
         }
-        scailingFactor *= 1.2;
-        //setupTransform();
+        if(scailingFactor < 1) scailingFactor =1;
+        scailingFactor *= 1.05;
+        setupTransform();
+
     }
     public void zoomOut(){
         if(scailingFactor < 0.2){
             scailingFactor = 0.2;
             return;
         }
-        scailingFactor /= 1.2;
-        //setupTransform();
+        if(scailingFactor > 1) scailingFactor = 1;
+        scailingFactor /= 1.05;
+        setupTransform();
+
     }
 
-    public void setupTransform(Point oldPoint){
+    public void mousePosition(){
+
+    }
+
+    public void transformToUSerSpace(Point2D deviceSpace){
+        try{
+            transform.inverseTransform(deviceSpace, deviceSpace);
+        }catch (NoninvertibleTransformException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setupTransform(){
         transform.scale(scailingFactor,scailingFactor);
+        xMove = (1-scailingFactor) * oldX;
+        yMove = (1-scailingFactor) * oldY;
+        transform.translate(xMove, yMove);
         repaint();
     }
     @Override

@@ -9,7 +9,9 @@ import java.awt.*;
 public class ZoomOutState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
-
+        tb.setOldX(tb.getWidth()/2);
+        tb.setOldY(tb.getHeight()/2);
+        tb.zoomOut();
     }
 
     @Override

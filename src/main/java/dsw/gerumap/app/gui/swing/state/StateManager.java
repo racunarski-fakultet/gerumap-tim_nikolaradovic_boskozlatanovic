@@ -11,7 +11,8 @@ public class StateManager {
     private SelectionElementsState selectionElementsState;
     private MoveState moveState;
     private State currentState;
-
+    private ZoomInState zoomInState;
+    private ZoomOutState zoomOutState;
 
 
 
@@ -26,6 +27,8 @@ public class StateManager {
         deleteElementsState = new DeleteElementsState();
         selectionElementsState = new SelectionElementsState();
         MoveState moveState = new MoveState();
+        zoomInState = new ZoomInState();
+        zoomOutState = new ZoomOutState();
         currentState = selectionElementsState;
     }
 
@@ -47,6 +50,13 @@ public class StateManager {
 
     public void setMoveState() {
         currentState = moveState ;
+    }
+
+    public void setZoomInState(){
+        currentState = zoomInState;
+    }
+    public void setZoomOutState(){
+        currentState = zoomOutState;
     }
 
     public State getCurrentState() {
