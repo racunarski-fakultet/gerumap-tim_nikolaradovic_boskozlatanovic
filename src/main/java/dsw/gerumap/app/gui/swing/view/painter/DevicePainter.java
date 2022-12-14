@@ -12,6 +12,7 @@ public abstract class DevicePainter{
 
     protected Element element;
     protected Shape shape;
+    protected Color color;
     public DevicePainter(Element element){
         this.element = element;
     }

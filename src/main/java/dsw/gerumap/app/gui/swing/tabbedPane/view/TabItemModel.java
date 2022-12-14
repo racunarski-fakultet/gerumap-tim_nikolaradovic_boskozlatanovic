@@ -70,16 +70,26 @@ public class TabItemModel extends JPanel implements Subscriber {
             Graphics2D g2 = (Graphics2D) g;
             g2.setTransform(transform);
 
+            for (DevicePainter p: painters){
+                if(p instanceof VezaPainter) {
+                    if (tabSelectionModel.getSelected().contains(p)) {
+                        int index = tabSelectionModel.getSelected().indexOf(p);
+                        p.paintSelected(g2);
+                        // tabSelectionModel.getSelected().get(index).paintSelected(g2);
+                    } else {
+                        p.paint(g2);
+                    }
+                }
+            }
 
             for (DevicePainter p: painters){
-                if(tabSelectionModel.getSelected().contains(p)){
-                    int index = tabSelectionModel.getSelected().indexOf(p);
-                    tabSelectionModel.getSelected().get(index).paintSelected(g2);
+                if(!(p instanceof VezaPainter)) {
+                    if (tabSelectionModel.getSelected().contains(p)) {
+                        p.paintSelected(g2);
+                    } else {
+                        p.paint(g2);
+                    }
                 }
-                else{
-                    p.paint(g2);
-                }
-
             }
         }
     }
@@ -137,8 +147,12 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     }
 
-    public void mousePosition(){
-
+    public void setupTransform(){
+        transform.scale(scailingFactor,scailingFactor);
+        xMove = (1-scailingFactor) * oldX;
+        yMove = (1-scailingFactor) * oldY;
+        transform.translate(xMove, yMove);
+        repaint();
     }
 
     public void transformToUSerSpace(Point2D deviceSpace){
@@ -147,14 +161,6 @@ public class TabItemModel extends JPanel implements Subscriber {
         }catch (NoninvertibleTransformException e){
             e.printStackTrace();
         }
-    }
-
-    public void setupTransform(){
-        transform.scale(scailingFactor,scailingFactor);
-        xMove = (1-scailingFactor) * oldX;
-        yMove = (1-scailingFactor) * oldY;
-        transform.translate(xMove, yMove);
-        repaint();
     }
     @Override
     public void update(Object obj, Enum e) {

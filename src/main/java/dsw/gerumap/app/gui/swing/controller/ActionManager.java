@@ -33,6 +33,8 @@ public class  ActionManager {
 
     private ZoomInAction zoomInAction;
 
+    private ChangeColorAction changeColorAction;
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
@@ -45,6 +47,7 @@ public class  ActionManager {
         addPojamAction = new AddPojamAction();
         zoomOutAction = new ZoomOutAction();
         zoomInAction = new ZoomInAction();
+        changeColorAction = new ChangeColorAction();
     }
 
     public ActionManager(){

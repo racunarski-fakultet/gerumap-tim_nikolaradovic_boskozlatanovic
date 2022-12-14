@@ -68,6 +68,10 @@ public class SelectionElementsState extends State {
             MainFrame.getIntance().getProjectView().switchToMoveState();
             MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
         }
+        else if(rectangle == null && tb.returnSelected(point) != null ){
+            tb.getTabSelectionModel().getSelected().add(tb.returnSelected(point));
+            tb.repaint();
+        }
 
     }
 

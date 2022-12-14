@@ -11,6 +11,8 @@ public class ZoomOutState extends State {
     public void execute(TabItemModel tb, Point point) {
         tb.setOldX(tb.getWidth()/2);
         tb.setOldY(tb.getHeight()/2);
+//        tb.setOldX((point.x + Math.abs(tb.getXMove())) / tb.getScailingFactor());
+////        tb.setOldY((point.y + Math.abs(tb.getYMove())) / tb.getScailingFactor());
         tb.zoomOut();
     }
 

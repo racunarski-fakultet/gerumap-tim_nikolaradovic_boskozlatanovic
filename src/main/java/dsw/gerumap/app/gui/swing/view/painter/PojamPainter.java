@@ -28,7 +28,7 @@ public class PojamPainter extends DevicePainter{
     public void paint(Graphics2D g) {
 
         BasicStroke stroke = new BasicStroke(element.getStroke());
-        g.setColor(new Color(150, 200, 100));
+        g.setColor(new Color(element.getPaint()[0], element.getPaint()[1], element.getPaint()[2]));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int width = g.getFontMetrics().stringWidth(element.getName());
         if(width < ((PojamElement)element).getWidth()){

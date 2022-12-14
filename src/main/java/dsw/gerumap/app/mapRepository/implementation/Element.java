@@ -11,11 +11,12 @@ import java.util.List;
 @Setter
 
 public class Element extends MapNodeComposite {
-    protected String paint = "Black";
+    protected int[] paint = {150, 200, 100};
     protected int stroke = 5;
     protected float x;
     protected float y;
     protected String description;
+
 
     public Element(MapNode parent, String name) {
         super(parent, name);
