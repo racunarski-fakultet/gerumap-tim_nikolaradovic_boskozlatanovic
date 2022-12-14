@@ -60,7 +60,7 @@ public class TabItemModel extends JPanel implements Subscriber {
         if(painters.size() == 0){
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            g2.setTransform(transform);
+            //g2.setTransform(transform);
 
 
 
@@ -68,14 +68,13 @@ public class TabItemModel extends JPanel implements Subscriber {
         else{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            g2.setTransform(transform);
+            //g2.setTransform(transform);
 
             for (DevicePainter p: painters){
                 if(p instanceof VezaPainter) {
                     if (tabSelectionModel.getSelected().contains(p)) {
-                        int index = tabSelectionModel.getSelected().indexOf(p);
                         p.paintSelected(g2);
-                        // tabSelectionModel.getSelected().get(index).paintSelected(g2);
+
                     } else {
                         p.paint(g2);
                     }
@@ -153,6 +152,13 @@ public class TabItemModel extends JPanel implements Subscriber {
         yMove = (1-scailingFactor) * oldY;
         transform.translate(xMove, yMove);
         repaint();
+    }
+
+    public DevicePainter getPainerByElement(Element element){
+        for (DevicePainter d: painters){
+            if(d.getElement().equals(element)) return d;
+        }
+        return null;
     }
 
     public void transformToUSerSpace(Point2D deviceSpace){

@@ -15,8 +15,8 @@ import java.awt.geom.Rectangle2D;
 
 public class MoveState extends State {
 
-    private Integer startX;
-    private Integer startY;
+    private Integer startX = 0;
+    private Integer startY = 0;
     private DevicePainter rectangle;
     DevicePainter currentylSelected;
     private boolean released = true;
@@ -55,9 +55,30 @@ public class MoveState extends State {
 
 
 
-        if(tb.getTabSelectionModel().getSelected().size() == 1 && !released){
+        if(tb.getTabSelectionModel().getSelected().size() == 1 && !released && findSelectionElement(tb) == null){
+
 
            currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
+
+           for (DevicePainter v : ((PojamPainter)currentylSelected).getVeze()){
+
+               int dx = startX - point.x;
+               int dy = startY - point.y;
+
+
+               if (((VezaElement)v.getElement()).getElements().indexOf(currentylSelected.getElement()) == 0){
+
+
+                   v.getElement().setX(point.x);
+                   v.getElement().setY(point.y);
+
+               }
+               else {
+
+                   ((VezaElement) v.getElement()).setX2(point.x);
+                   ((VezaElement) v.getElement()).setY2(point.y);
+               }
+           }
 
             float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
             float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
