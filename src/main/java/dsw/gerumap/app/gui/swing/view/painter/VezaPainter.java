@@ -39,7 +39,7 @@ public class VezaPainter extends DevicePainter{
     @Override
     public boolean contains(Point point) {
 
-        boolean b = ((Line2D) shape).ptLineDist(point) < 8;
+        boolean b = ((Line2D) shape).ptSegDist(point) < 8;
         return b;
     }
 

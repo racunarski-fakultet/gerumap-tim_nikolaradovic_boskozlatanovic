@@ -60,7 +60,7 @@ public class TabItemModel extends JPanel implements Subscriber {
         if(painters.size() == 0){
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            //g2.setTransform(transform);
+            g2.transform(transform);
 
 
 
@@ -68,7 +68,7 @@ public class TabItemModel extends JPanel implements Subscriber {
         else{
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            //g2.setTransform(transform);
+            g2.transform(transform);
 
             for (DevicePainter p: painters){
                 if(p instanceof VezaPainter) {
