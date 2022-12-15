@@ -9,8 +9,7 @@ import java.awt.geom.Point2D;
 public class ZoomInState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
-        tb.setOldX(tb.getWidth()/2);
-        tb.setOldY(tb.getHeight()/2);
+
         tb.zoomIn();
 
     }

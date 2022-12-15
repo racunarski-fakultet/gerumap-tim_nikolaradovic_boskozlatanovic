@@ -16,22 +16,19 @@ import lombok.Setter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 @Getter
 @Setter
 public class TabItemModel extends JPanel implements Subscriber {
     private MapNode mapNode;
 
-    private AffineTransform transform = new AffineTransform();
 
-    private double scailingFactor = 1;
+
+    private double scalingFactor = 1.2;
+
+    private double scaling = 1;
 
     private double xMove;
     private double yMove;
@@ -57,40 +54,38 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     @Override
     public void paintComponent(Graphics g) {
-        if(painters.size() == 0){
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.transform(transform);
 
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        AffineTransform affineTransform = AffineTransform.getTranslateInstance(xMove, yMove);
+        affineTransform.scale(scaling, scaling);
+        g2.transform(affineTransform);
 
-
-        }
-        else{
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.transform(transform);
-
-            for (DevicePainter p: painters){
-                if(p instanceof VezaPainter) {
-                    if (tabSelectionModel.getSelected().contains(p)) {
+        for (DevicePainter p: painters){
+            if(p instanceof VezaPainter) {
+                if (tabSelectionModel.getSelected().contains(p)) {
                         p.paintSelected(g2);
 
-                    } else {
-                        p.paint(g2);
-                    }
                 }
-            }
-
-            for (DevicePainter p: painters){
-                if(!(p instanceof VezaPainter)) {
-                    if (tabSelectionModel.getSelected().contains(p)) {
-                        p.paintSelected(g2);
-                    } else {
+                else {
                         p.paint(g2);
-                    }
                 }
             }
         }
+
+        for (DevicePainter p: painters){
+            if(!(p instanceof VezaPainter)) {
+                if (tabSelectionModel.getSelected().contains(p)) {
+                    p.paintSelected(g2);
+                }
+                else {
+                    p.paint(g2);
+
+                }
+            }
+        }
+
+
     }
 
 
@@ -126,48 +121,29 @@ public class TabItemModel extends JPanel implements Subscriber {
     }
 
     public void zoomIn(){
-        if(scailingFactor > 5){
-            scailingFactor = 5;
+
+        if(scaling > 5){
+            scaling = 5;
+            repaint();
             return;
         }
-        if(scailingFactor < 1) scailingFactor =1;
-        scailingFactor *= 1.05;
-        setupTransform();
+        scaling *= scalingFactor;
+        repaint();
 
     }
     public void zoomOut(){
-        if(scailingFactor < 0.2){
-            scailingFactor = 0.2;
+        if(scalingFactor < 0.2){
+            scalingFactor = 0.2;
+            repaint();
             return;
         }
-        if(scailingFactor > 1) scailingFactor = 1;
-        scailingFactor /= 1.05;
-        setupTransform();
 
-    }
-
-    public void setupTransform(){
-        transform.scale(scailingFactor,scailingFactor);
-        xMove = (1-scailingFactor) * oldX;
-        yMove = (1-scailingFactor) * oldY;
-        transform.translate(xMove, yMove);
+        scaling /= scalingFactor;
         repaint();
+
     }
 
-    public DevicePainter getPainerByElement(Element element){
-        for (DevicePainter d: painters){
-            if(d.getElement().equals(element)) return d;
-        }
-        return null;
-    }
 
-    public void transformToUSerSpace(Point2D deviceSpace){
-        try{
-            transform.inverseTransform(deviceSpace, deviceSpace);
-        }catch (NoninvertibleTransformException e){
-            e.printStackTrace();
-        }
-    }
     @Override
     public void update(Object obj, Enum e) {
         this.repaint();
