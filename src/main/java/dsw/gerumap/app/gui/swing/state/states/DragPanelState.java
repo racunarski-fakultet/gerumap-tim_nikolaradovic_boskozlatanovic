@@ -28,25 +28,25 @@ public class DragPanelState extends State {
     @Override
     public void drag(TabItemModel tb, Point point) {
 
-        int offsetX = (int) - (startPoint.x - point.getX());
-        int offsetY = (int) - (startPoint.y - point.getY());
+        double offsetX = - (startPoint.x - point.x);
+        double offsetY = - (startPoint.y - point.y);
+
+        if(((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getScaling() != 1 && tb.getTabSelectionModel().getSelected().size() == 0) {
+            double x = ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getXMove() + offsetX * ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getScaling();
+
+            double y = ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getYMove() + offsetY * ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getScaling();
 
 
+            if (x <= 0) {
+                ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).setXMove(x);
+            }
+            if (y <= 0) {
+                ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).setYMove(y);
+            }
 
-        double x = ((TabItemModel)MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getXMove() + offsetX* ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getScaling();
 
-        double y =  ((TabItemModel)MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getYMove() + offsetY* ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).getScaling();
-
-
-        if (x <= 0) {
-            ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).setXMove(x);
         }
-        if (y <= 0) {
-            ((TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent()).setYMove(y);
-        }
-        startPoint = PointMultiply(point);
         tb.repaint();
-
     }
 
     @Override
