@@ -10,6 +10,7 @@ public abstract class State {
     public abstract void drag(TabItemModel tb, Point point);
     public abstract boolean isConnected(TabItemModel tb, Point point);
 
+
     public static Point PointMultiply(Point p){
         TabItemModel model = (TabItemModel) MainFrame.getIntance().getTabbedPane().getSelectedComponent();
 

@@ -37,4 +37,8 @@ public class ProjectView extends JPanel {
     public void switchToMoveState(){
         stateManager.setMoveState();
     }
+
+    public void switchToMovePanelState(){
+        stateManager.setDragPanelState();
+    }
 }

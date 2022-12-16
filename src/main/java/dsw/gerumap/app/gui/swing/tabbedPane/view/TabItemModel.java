@@ -61,6 +61,7 @@ public class TabItemModel extends JPanel implements Subscriber {
         affineTransform.scale(scaling, scaling);
         g2.transform(affineTransform);
 
+
         for (DevicePainter p: painters){
             if(p instanceof VezaPainter) {
                 if (tabSelectionModel.getSelected().contains(p)) {

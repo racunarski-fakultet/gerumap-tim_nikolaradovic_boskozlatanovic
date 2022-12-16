@@ -14,7 +14,7 @@ public class StateManager {
     private ZoomInState zoomInState;
     private ZoomOutState zoomOutState;
 
-
+    private DragPanelState dragPanelState;
 
     public StateManager() {
         initialise();
@@ -30,6 +30,7 @@ public class StateManager {
         zoomInState = new ZoomInState();
         zoomOutState = new ZoomOutState();
         currentState = selectionElementsState;
+        dragPanelState = new DragPanelState();
     }
 
     public void setAddLinijaState() {
@@ -58,8 +59,12 @@ public class StateManager {
     public void setZoomOutState(){
         currentState = zoomOutState;
     }
-
+    public void setDragPanelState(){
+        currentState = dragPanelState;
+    }
     public State getCurrentState() {
         return currentState;
     }
+
+
 }

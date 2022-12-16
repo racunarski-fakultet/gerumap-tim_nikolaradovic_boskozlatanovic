@@ -132,7 +132,6 @@ public class MoveState extends State {
                 tb.repaint();
             }
 
-
             startX = point.x;
 
             startY = point.y;
