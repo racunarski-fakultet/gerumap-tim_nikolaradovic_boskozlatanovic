@@ -1,9 +1,6 @@
 package dsw.gerumap.app.gui.swing.controller;
 
-import dsw.gerumap.app.gui.swing.controller.projectViewControllers.AddLinijaAction;
-import dsw.gerumap.app.gui.swing.controller.projectViewControllers.AddPojamAction;
-import dsw.gerumap.app.gui.swing.controller.projectViewControllers.DeleteElementsAction;
-import dsw.gerumap.app.gui.swing.controller.projectViewControllers.SelectElementAction;
+import dsw.gerumap.app.gui.swing.controller.projectViewControllers.*;
 import dsw.gerumap.app.gui.swing.controller.upperSide.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +26,14 @@ public class  ActionManager {
 
     private SelectElementAction selectElementAction;
 
+    private ZoomOutAction zoomOutAction;
+
+    private ZoomInAction zoomInAction;
+
+    private ChangeColorAction changeColorAction;
+
+    private MovePanelAction movePanelAction;
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
@@ -39,6 +44,10 @@ public class  ActionManager {
         deleteElementsAction = new DeleteElementsAction();
         selectElementAction = new SelectElementAction();
         addPojamAction = new AddPojamAction();
+        zoomOutAction = new ZoomOutAction();
+        zoomInAction = new ZoomInAction();
+        changeColorAction = new ChangeColorAction();
+        movePanelAction = new MovePanelAction();
     }
 
     public ActionManager(){

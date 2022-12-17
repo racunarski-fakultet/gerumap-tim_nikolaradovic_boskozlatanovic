@@ -1,4 +1,4 @@
-package dsw.gerumap.app.state.states;
+package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
@@ -9,7 +9,7 @@ import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 import dsw.gerumap.app.mapRepository.implementation.Element;
-import dsw.gerumap.app.state.State;
+import dsw.gerumap.app.gui.swing.state.State;
 import lombok.Getter;
 import lombok.Setter;
 

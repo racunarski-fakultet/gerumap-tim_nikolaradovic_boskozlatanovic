@@ -1,19 +1,17 @@
-package dsw.gerumap.app.state.states;
+package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.errorHandling.EventType;
-import dsw.gerumap.app.gui.swing.elements.PojamElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 import dsw.gerumap.app.mapRepository.implementation.Element;
-import dsw.gerumap.app.state.State;
+import dsw.gerumap.app.gui.swing.state.State;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 public class AddPojamState extends State {
     @Override

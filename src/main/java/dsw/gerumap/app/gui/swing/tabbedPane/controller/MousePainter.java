@@ -1,8 +1,10 @@
 package dsw.gerumap.app.gui.swing.tabbedPane.controller;
 
+import dsw.gerumap.app.gui.swing.state.State;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -17,7 +19,8 @@ public class MousePainter implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, e.getPoint());
+        Point point = State.PointMultiply(e.getPoint());
+        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, point);
 
     }
 

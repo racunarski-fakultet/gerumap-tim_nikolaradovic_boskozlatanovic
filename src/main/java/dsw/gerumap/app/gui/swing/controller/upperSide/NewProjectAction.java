@@ -7,7 +7,9 @@ import dsw.gerumap.app.gui.swing.tree.model.MapTreeItem;
 import dsw.gerumap.app.gui.swing.view.CustomPopUp;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
+import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
+import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class NewProjectAction extends AbstractGerumapAction {
        // custom selection
         MapTreeItem selected = (MapTreeItem) MainFrame.getIntance().getMapTree().getSelectedNode();
         CustomPopUp customPopUp = new CustomPopUp();
-        if(selected == null){
+        if(selected == null || selected.getMapNode() instanceof MindMap){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NO_NODE_SELECTED);
             return;
         }

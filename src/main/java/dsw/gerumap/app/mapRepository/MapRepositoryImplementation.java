@@ -17,7 +17,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -83,6 +85,7 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
             return;
         }
 
+
         ((Project) mapNode).setAutor(name);
 
         notifySubscribers(mapNode,Actions.SETAUTHOR);
@@ -90,11 +93,24 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
 
     @Override
     public void rename(MapNode mapNode, String name) {
+
+        if(nodeExists(mapNode,name)){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NAME_EXISTS);
+            return;
+        }
         mapNode.setName(name);
         this.notifySubscribers(mapNode, Actions.RENAME);
     }
 
+    private boolean nodeExists(MapNode node,String newName){
 
+        MapNode parent = node.getParent();
+
+        for (MapNode mp: ((MapNodeComposite)parent).getChildren()){
+            if(mp.getName().equals(newName)) return true;
+        }
+        return false;
+    }
     @Override
     public void addSubscriber(Object obj) {
         if(obj != null && !subscribers.contains(obj) && obj instanceof Subscriber){
@@ -111,8 +127,9 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
 
     @Override
     public void notifySubscribers(Object obj, Enum e) {
-        for (Subscriber s: subscribers){
-            s.update(obj,e);
+
+        for (int i = 0; i < subscribers.size(); i++){
+            subscribers.get(i).update(obj,e);
         }
     }
 

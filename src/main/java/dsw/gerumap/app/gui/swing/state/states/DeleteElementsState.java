@@ -1,17 +1,15 @@
-package dsw.gerumap.app.state.states;
+package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
-import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
-import dsw.gerumap.app.mapRepository.implementation.Element;
-import dsw.gerumap.app.state.State;
+import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
+import dsw.gerumap.app.gui.swing.state.State;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 public class DeleteElementsState extends State {
     @Override
@@ -31,6 +29,7 @@ public class DeleteElementsState extends State {
                     }
                 }
                 AppCore.getInstance().getMapRepository().removeChild(painter.getElement());
+                deleteSelectionRectangle(tb);
                 tb.repaint();
 
 
@@ -46,5 +45,17 @@ public class DeleteElementsState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
         return false;
+    }
+
+    public void deleteSelectionRectangle(TabItemModel tb){
+
+        int index = -1;
+
+        for (DevicePainter p: tb.getPainters()){
+            if (p instanceof SelectioElements) index = tb.getPainters().indexOf(p);
+        }
+        if (index != -1){
+            tb.getPainters().remove(index);
+        }
     }
 }

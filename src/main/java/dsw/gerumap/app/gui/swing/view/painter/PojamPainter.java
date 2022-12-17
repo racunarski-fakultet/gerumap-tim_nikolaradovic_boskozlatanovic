@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class PojamPainter extends DevicePainter{
     public void paint(Graphics2D g) {
 
         BasicStroke stroke = new BasicStroke(element.getStroke());
-        g.setColor(new Color(150, 200, 100));
+        g.setColor(new Color(element.getPaint()[0], element.getPaint()[1], element.getPaint()[2]));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int width = g.getFontMetrics().stringWidth(element.getName());
         if(width < ((PojamElement)element).getWidth()){
@@ -54,7 +55,7 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public boolean overlaps(Point point) {
-        return shape.intersects(point.x, point.y, 160,85);
+        return shape.intersects(point.x, point.y, ((Ellipse2D)shape).getWidth(),((Ellipse2D)shape).getHeight());
     }
 
     @Override
@@ -64,6 +65,7 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public void paintSelected(Graphics2D g) {
+
         BasicStroke stroke = new BasicStroke(element.getStroke());
         g.setColor(Color.RED);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

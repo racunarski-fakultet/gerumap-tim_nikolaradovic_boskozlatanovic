@@ -35,7 +35,7 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.NO_NODE_SELECTED)){
-            message = new Message("Niste izabrali element",(EventType) e);
+            message = new Message("Element nije moguce napraviti",(EventType) e);
             notifySubscribers(message,e);
         }
         if(e.equals(EventType.NAME_CANNOT_BE_EMPTY)){

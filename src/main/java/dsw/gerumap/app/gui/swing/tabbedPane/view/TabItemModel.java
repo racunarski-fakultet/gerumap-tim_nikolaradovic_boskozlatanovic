@@ -1,10 +1,13 @@
 package dsw.gerumap.app.gui.swing.tabbedPane.view;
 
+import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.elements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
 import dsw.gerumap.app.gui.swing.tabbedPane.model.TabSelectionModel;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
@@ -15,17 +18,27 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 @Getter
 @Setter
 public class TabItemModel extends JPanel implements Subscriber {
     private MapNode mapNode;
-    //private JPanel panel;
+
+
+
+    private double scalingFactor = 1.2;
+
+    private double scaling = 1;
+
+    private double xMove;
+    private double yMove;
+
+    private double oldX;
+    private double oldY;
+
     private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
 
@@ -44,23 +57,39 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     @Override
     public void paintComponent(Graphics g) {
-        if(painters.size() == 0){
-            super.paintComponent(g);
 
-        }
-        else{
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            for (DevicePainter p: painters){
-                if(tabSelectionModel.getSelected().contains(p)){
-                    p.paintSelected(g2);
-                }
-                else{
-                    p.paint(g2);
-                }
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        AffineTransform affineTransform = AffineTransform.getTranslateInstance(xMove, yMove);
+        affineTransform.scale(scaling, scaling);
+        g2.transform(affineTransform);
 
+
+        for (DevicePainter p: painters){
+            if(p instanceof VezaPainter) {
+                if (tabSelectionModel.getSelected().contains(p)) {
+                        p.paintSelected(g2);
+
+                }
+                else {
+                        p.paint(g2);
+                }
             }
         }
+
+        for (DevicePainter p: painters){
+            if(!(p instanceof VezaPainter)) {
+                if (tabSelectionModel.getSelected().contains(p)) {
+                    p.paintSelected(g2);
+                }
+                else {
+                    p.paint(g2);
+
+                }
+            }
+        }
+
+
     }
 
 
@@ -94,6 +123,30 @@ public class TabItemModel extends JPanel implements Subscriber {
         return false;
 
     }
+
+    public void zoomIn(){
+
+        if(scaling > 5){
+            scaling = 5;
+            repaint();
+            return;
+        }
+        scaling *= scalingFactor;
+        repaint();
+
+    }
+    public void zoomOut(){
+        if(scalingFactor < 0.2){
+            scalingFactor = 0.2;
+            repaint();
+            return;
+        }
+
+        scaling /= scalingFactor;
+        repaint();
+
+    }
+
 
     @Override
     public void update(Object obj, Enum e) {
