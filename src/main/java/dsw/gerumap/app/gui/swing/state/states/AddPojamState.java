@@ -3,6 +3,7 @@ package dsw.gerumap.app.gui.swing.state.states;
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
+import dsw.gerumap.app.gui.swing.view.CustomDrawingPopUp;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
@@ -40,6 +41,18 @@ public class AddPojamState extends State {
         el.setY(point.y);
         DevicePainter painter = new PojamPainter(el);
 
+        CustomDrawingPopUp cdw = new CustomDrawingPopUp();
+
+        int response = cdw.makePopUp();
+
+        if(response == JOptionPane.OK_OPTION){
+            if ( cdw.getStroke().getText() != null &&  !cdw.getStroke().getText().isEmpty() && !(cdw.getStroke().getText().matches(".*[a-zA-Z]+.*"))){
+
+                el.setStroke((int) Float.parseFloat(cdw.getStroke().getText()));
+
+            }
+            el.setPaint(new int[]{cdw.getC().getRed(), cdw.getC().getGreen(), cdw.getC().getBlue()});
+        }
 
         tb.getPainters().add(painter);
         tb.repaint();

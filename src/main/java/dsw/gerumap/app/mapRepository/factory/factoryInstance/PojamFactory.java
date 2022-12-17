@@ -1,6 +1,6 @@
 package dsw.gerumap.app.mapRepository.factory.factoryInstance;
 
-import dsw.gerumap.app.gui.swing.elements.PojamElement;
+import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.factory.NodeFactory;
 

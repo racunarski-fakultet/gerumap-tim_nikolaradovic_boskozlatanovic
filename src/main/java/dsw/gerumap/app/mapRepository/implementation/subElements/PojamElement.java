@@ -1,4 +1,4 @@
-package dsw.gerumap.app.gui.swing.elements;
+package dsw.gerumap.app.mapRepository.implementation.subElements;
 
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.implementation.Element;

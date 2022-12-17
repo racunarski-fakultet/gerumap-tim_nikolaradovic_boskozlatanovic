@@ -1,7 +1,8 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.gui.swing.elements.VezaElement;
+import dsw.gerumap.app.gui.swing.view.CustomDrawingPopUp;
+import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
@@ -13,6 +14,7 @@ import dsw.gerumap.app.gui.swing.state.State;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
 import java.awt.*;
 
 @Getter
@@ -86,6 +88,20 @@ public class AddLinijaState extends State {
             return false;
         }
         if(currentPainter ==null && startPainter == null) return false;
+
+        CustomDrawingPopUp cdw = new CustomDrawingPopUp();
+
+        int response = cdw.makePopUp();
+
+        if(response == JOptionPane.OK_OPTION){
+            if ( cdw.getStroke().getText() != null &&  !cdw.getStroke().getText().isEmpty() && !(cdw.getStroke().getText().matches(".*[a-zA-Z]+.*"))){
+
+                el.setStroke((int) Float.parseFloat(cdw.getStroke().getText()));
+
+            }
+            el.setPaint(new int[]{cdw.getC().getRed(), cdw.getC().getGreen(), cdw.getC().getBlue()});
+        }
+
         ((PojamPainter)endPainter).getVeze().add(currentPainter);
         ((PojamPainter)startPainter).getVeze().add(currentPainter);
         ((VezaElement)el).getElements().add(startPainter.getElement());
