@@ -51,7 +51,9 @@ public class AddPojamState extends State {
                 el.setStroke((int) Float.parseFloat(cdw.getStroke().getText()));
 
             }
-            el.setPaint(new int[]{cdw.getC().getRed(), cdw.getC().getGreen(), cdw.getC().getBlue()});
+            if(cdw.getC() != null){
+                el.setPaint(new int[]{cdw.getC().getRed(), cdw.getC().getGreen(), cdw.getC().getBlue()});
+            }
         }
 
         tb.getPainters().add(painter);
