@@ -55,7 +55,7 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public boolean overlaps(Point point) {
-        return shape.intersects(point.x, point.y, 160,85);
+        return shape.intersects(point.x, point.y, ((Ellipse2D)shape).getWidth(),((Ellipse2D)shape).getHeight());
     }
 
     @Override
@@ -65,6 +65,7 @@ public class PojamPainter extends DevicePainter{
 
     @Override
     public void paintSelected(Graphics2D g) {
+
         BasicStroke stroke = new BasicStroke(element.getStroke());
         g.setColor(Color.RED);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

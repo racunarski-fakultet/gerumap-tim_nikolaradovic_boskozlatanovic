@@ -15,6 +15,8 @@ public class ProjectViewToolBar extends JToolBar {
         this.addSeparator(new Dimension(1,2));
         add(MainFrame.getIntance().getActionManager().getAddLinijaAction());
         this.addSeparator(new Dimension(1,2));
+        add(MainFrame.getIntance().getActionManager().getMovePanelAction());
+        this.addSeparator(new Dimension(1,2));
         add(MainFrame.getIntance().getActionManager().getDeleteElementsAction());
         this.addSeparator(new Dimension(1,2));
         add(MainFrame.getIntance().getActionManager().getSelectElementAction());

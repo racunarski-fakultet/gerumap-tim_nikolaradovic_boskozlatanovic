@@ -101,7 +101,11 @@ public class SelectionElementsState extends State {
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
-
+        if(rectangle != null && tb.getTabSelectionModel().getSelected().size() == 0){
+            tb.getPainters().remove(rectanglePainter);
+            tb.repaint();
+            rectangle = null;
+        }
         realesed = true;
         return true;
     }
