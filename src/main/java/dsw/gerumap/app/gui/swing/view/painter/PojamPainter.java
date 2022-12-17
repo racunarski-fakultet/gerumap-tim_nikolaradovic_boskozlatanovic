@@ -1,15 +1,12 @@
 package dsw.gerumap.app.gui.swing.view.painter;
-import dsw.gerumap.app.gui.swing.elements.PojamElement;
-import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;

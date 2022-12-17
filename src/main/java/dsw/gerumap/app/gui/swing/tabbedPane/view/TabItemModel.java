@@ -1,18 +1,14 @@
 package dsw.gerumap.app.gui.swing.tabbedPane.view;
 
-import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
-import dsw.gerumap.app.gui.swing.elements.VezaElement;
+import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
 import dsw.gerumap.app.gui.swing.tabbedPane.model.TabSelectionModel;
-import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
-import dsw.gerumap.app.mapRepository.implementation.Element;
 import lombok.Getter;
 import lombok.Setter;
 
