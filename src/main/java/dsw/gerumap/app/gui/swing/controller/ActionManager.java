@@ -18,6 +18,8 @@ public class  ActionManager {
 
     private RenameAction renameAction;
 
+    private SaveAction saveAction;
+
     private AddLinijaAction addLinijaAction;
 
     private AddPojamAction addPojamAction;
@@ -34,12 +36,15 @@ public class  ActionManager {
 
     private MovePanelAction movePanelAction;
 
+
+
     private void initialliseActions(){
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();
         addAuthorAction = new AddAuthorAction();
         renameAction = new RenameAction();
+        saveAction = new SaveAction();
         addLinijaAction = new AddLinijaAction();
         deleteElementsAction = new DeleteElementsAction();
         selectElementAction = new SelectElementAction();

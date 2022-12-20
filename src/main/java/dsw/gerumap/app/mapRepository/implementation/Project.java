@@ -16,7 +16,6 @@ public class Project extends MapNodeComposite {
 
     private String autor;
 
-    private String putanjaResursi;
 
     public Project(MapNode parent, String name) {
         super(parent, name);

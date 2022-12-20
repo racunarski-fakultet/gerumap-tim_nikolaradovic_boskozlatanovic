@@ -32,6 +32,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
     @Override
     public void addToPanel(MapNode mp) {
 
+
         MainFrame.getIntance().getProjectView().removeAll();
         lb = new JLabel("ProjectName: " + mp.getName() + " " + "\n" + "Author: " + ((Project)mp).getAutor());
         MainFrame.getIntance().getProjectView().add(lb);
@@ -39,18 +40,31 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
 
 
 
+//        if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
+//            TabItemModel tab;
+//            this.removeAll();
+//
+//            for(MapNode i: ((MapNodeComposite)mp).getChildren()){
+//                tab = new TabItemModel(i);
+//
+//                ((Publisher)AppCore.getInstance().getMapRepository()).addSubscriber(tab);
+//
+//                this.addTab(tab.getMapNode().getName(), tab);
+//                container.put(i, tab);
+//            }
+//
+//        }
         if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
             TabItemModel tab;
-            this.removeAll();
+            tab = new TabItemModel(mp);
 
-            for(MapNode i: ((MapNodeComposite)mp).getChildren()){
-                tab = new TabItemModel(i);
 
-                ((Publisher)AppCore.getInstance().getMapRepository()).addSubscriber(tab);
-
-                this.addTab(tab.getMapNode().getName(), tab);
-                container.put(i, tab);
+            for(MapNode mapNode: ((Project) mp).getChildren()){
+                if(!container.containsKey(mapNode)){
+                    this.addTab(mapNode.getName(), tab);
+                }
             }
+            container.put(mp, tab);
 
         }
         else{

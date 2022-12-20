@@ -6,6 +6,7 @@ import dsw.gerumap.app.errorHandling.loggerImplementations.FileLogger;
 import dsw.gerumap.app.errorHandling.messageImplementation.MessageGeneratorImplementation;
 import dsw.gerumap.app.gui.swing.SwingGui;
 import dsw.gerumap.app.mapRepository.MapRepositoryImplementation;
+import dsw.gerumap.app.serializable.GSonSerializer;
 import lombok.Getter;
 
 @Getter
@@ -15,6 +16,7 @@ public class AppCore extends ApplicationFramework {
     private MapRepository mapRepository;
     private MessageGenerator messageGenerator;
 
+    private Serializer serializer;
     private  ErrorLogger consoleErrorLogger;
 
 
@@ -30,6 +32,7 @@ public class AppCore extends ApplicationFramework {
         mapRepository = new MapRepositoryImplementation();
         messageGenerator = new MessageGeneratorImplementation();
         consoleErrorLogger = new FileLogger();
+        serializer = new GSonSerializer();
     }
     public static AppCore getInstance() {
         if (instance == null){
@@ -42,8 +45,10 @@ public class AppCore extends ApplicationFramework {
     public static void main(String[] args) {
 
         ApplicationFramework appCore = AppCore.getInstance();
+
         Gui gui = new SwingGui();
-        appCore.initialize(gui, getInstance().mapRepository, getInstance().consoleErrorLogger, getInstance().getMessageGenerator());
+
+        appCore.initialize(gui, getInstance().mapRepository, getInstance().consoleErrorLogger, getInstance().getMessageGenerator(), getInstance().getSerializer());
         appCore.start();
     }
 
