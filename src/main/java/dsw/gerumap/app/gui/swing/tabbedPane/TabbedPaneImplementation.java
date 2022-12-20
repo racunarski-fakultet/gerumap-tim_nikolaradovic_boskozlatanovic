@@ -38,54 +38,43 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         MainFrame.getIntance().getProjectView().add(lb);
         lb.setBounds(0, 0, 15, 15);
 
+        if (container.isEmpty()){
+            TabItemModel tab = new TabItemModel(((Project) mp).getChildren().get(0));
+            MapNode m = ((Project) mp).getChildren().get(0);
+            this.addTab(m.getName(), tab);
+            container.put(m, tab);
+            addTabsByParent(mp);
+            MainFrame.getIntance().getProjectView().add(this, BoxLayout.class);
+            MainFrame.getIntance().getProjectView().updateUI();
 
+            return;
+        }
 
-//        if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
-//            TabItemModel tab;
-//            this.removeAll();
-//
-//            for(MapNode i: ((MapNodeComposite)mp).getChildren()){
-//                tab = new TabItemModel(i);
-//
-//                ((Publisher)AppCore.getInstance().getMapRepository()).addSubscriber(tab);
-//
-//                this.addTab(tab.getMapNode().getName(), tab);
-//                container.put(i, tab);
-//            }
-//
-//        }
-        if(container.isEmpty() || !this.containsKey((MapNodeComposite) mp)){
-            TabItemModel tab;
-            tab = new TabItemModel(mp);
-
-
-            for(MapNode mapNode: ((Project) mp).getChildren()){
+        for(MapNode mapNode: ((Project) mp).getChildren()){
                 if(!container.containsKey(mapNode)){
+                    TabItemModel tab = new TabItemModel(mapNode);
                     this.addTab(mapNode.getName(), tab);
+                    container.put(mapNode, tab);
                 }
             }
-            container.put(mp, tab);
-
-        }
-        else{
-            this.removeAll();
-
-            for(MapNode i: ((MapNodeComposite)mp).getChildren()){
-                this.addTab(i.getName(), container.get(i));
-            }
-        }
+        addTabsByParent(mp);
         MainFrame.getIntance().getProjectView().add(this, BoxLayout.class);
         MainFrame.getIntance().getProjectView().updateUI();
 
     }
 
-    private boolean containsKey(MapNodeComposite mapNode){
-        for(MapNode mp: mapNode.getChildren()){
-            if(!container.containsKey(mp)){
-                return false;
+    private void addTabsByParent(MapNode mp){
+
+        this.removeAll();
+
+        for (MapNode node: container.keySet()){
+
+            if(node.getParent().equals(mp)){
+                this.addTab(node.getName(), container.get(node));
             }
+
         }
-        return true;
+
     }
     @Override
     public void setAuthor(MapNode mp) {

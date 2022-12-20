@@ -28,6 +28,10 @@ public abstract class MapNode {
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof MapNode){
             MapNode otherObj = (MapNode) obj;
+
+            if (this.name.equals(otherObj.getName()) && this.getParent() !=null && otherObj.getParent() != null){
+                return this.getParent().getName().equals(otherObj.getParent().getName());
+            }
             return this.name.equals(otherObj.getName());
         }
         return false;
