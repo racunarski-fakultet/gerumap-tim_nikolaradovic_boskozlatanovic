@@ -28,13 +28,13 @@ public class ChangeColorAction extends AbstractGerumapAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         ArrayList<PojamPainter> pojmovi = new ArrayList<>();
-        ArrayList<VezaPainter> veze = new ArrayList<>();
+        ArrayList<VezaPainter> veze1 = new ArrayList<>();
         TabItemModel tb = ((TabItemModel)MainFrame.getIntance().getTabbedPane().getSelectedComponent());
         if(tb.getTabSelectionModel().getSelected().size() != 0){
 
           for(DevicePainter dp: tb.getTabSelectionModel().getSelected()){
                 if(dp instanceof VezaPainter) {
-                    veze.add((VezaPainter) dp);
+                    veze1.add((VezaPainter) dp);
                 } else{
                     pojmovi.add((PojamPainter) dp);
                 }
@@ -51,10 +51,10 @@ public class ChangeColorAction extends AbstractGerumapAction {
                 pp.getElement().getPaint()[2] = color.getBlue();
             }
             Color color2 = null;
-            if(veze.size() != 0) {
+            if(veze1.size() != 0) {
                 color2 = JColorChooser.showDialog(MainFrame.getIntance(), "Select VezeColor", Color.BLACK);
             }
-            for(VezaPainter vp: veze){
+            for(VezaPainter vp: veze1){
                 if (color2 == null)
                     return;
                 vp.getElement().getPaint()[0] = color2.getRed();

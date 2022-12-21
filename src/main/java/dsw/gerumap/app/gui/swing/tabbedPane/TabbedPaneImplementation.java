@@ -16,6 +16,7 @@ import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
 import dsw.gerumap.app.mapRepository.implementation.ProjectExplorer;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
+import dsw.gerumap.app.serializable.GSonSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -151,7 +152,9 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
                 addToPanel(((MapNode) obj).getParent());
             }
             else{
-                addToTabItem((MapNode) obj);
+                if(GSonSerializer.getElements().size() > 0){
+                    addToTabItem((MapNode) obj);
+                }
             }
         }
         if (e.equals(Actions.SETAUTHOR) && lb != null) {

@@ -29,6 +29,7 @@ public class ProjectLoader {
             }
 
         }
+        GSonSerializer.getElements().clear();
 
 
     }
