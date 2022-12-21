@@ -36,6 +36,8 @@ public class  ActionManager {
 
     private ChangeColorAction changeColorAction;
 
+    private ExportImageAction exportImageAction;
+
     private MovePanelAction movePanelAction;
 
 
@@ -56,6 +58,7 @@ public class  ActionManager {
         changeColorAction = new ChangeColorAction();
         movePanelAction = new MovePanelAction();
         loadAction = new LoadAction();
+        exportImageAction = new ExportImageAction();
     }
 
     public ActionManager(){

@@ -27,6 +27,8 @@ public class GSonSerializer implements Serializer {
 
     @Override
     public Project loadMindMap(File file) {
+
+
         try {
             FileReader fileReader = new FileReader(file);
             FileReader customFileReader = new FileReader(file);
@@ -50,6 +52,7 @@ public class GSonSerializer implements Serializer {
                     for (JsonElement elementJs: jsonArrayOfElements){
 
                         if (elementJs.getAsJsonObject().has("X2")){
+                            JsonArray pojmovi = (JsonArray) elementJs.getAsJsonObject().get("elements");
                             VezaElement veza = this.gson.fromJson(elementJs.toString(),VezaElement.class);
                             mindMapElements.get(mp).add(veza);
 

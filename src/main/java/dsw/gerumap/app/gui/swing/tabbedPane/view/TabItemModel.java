@@ -12,9 +12,12 @@ import dsw.gerumap.app.mapRepository.composite.MapNode;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +53,22 @@ public class TabItemModel extends JPanel implements Subscriber {
         this.addMouseMotionListener(new MouseDragged(this));
 
     }
+
+    /**
+     * Save the Panel as image with the name and the type in parameters
+     *
+     */
+    public void saveImage() {
+        BufferedImage image = new BufferedImage(getWidth(),getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        paint(g2);
+        try{
+            ImageIO.write(image, "jpg", new File("export"+"."+"jpg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void paintComponent(Graphics g) {
