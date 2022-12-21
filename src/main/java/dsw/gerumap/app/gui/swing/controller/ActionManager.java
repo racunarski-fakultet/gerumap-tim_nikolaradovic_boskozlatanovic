@@ -20,6 +20,8 @@ public class  ActionManager {
 
     private SaveAction saveAction;
 
+    private LoadAction loadAction;
+
     private AddLinijaAction addLinijaAction;
 
     private AddPojamAction addPojamAction;
@@ -53,6 +55,7 @@ public class  ActionManager {
         zoomInAction = new ZoomInAction();
         changeColorAction = new ChangeColorAction();
         movePanelAction = new MovePanelAction();
+        loadAction = new LoadAction();
     }
 
     public ActionManager(){

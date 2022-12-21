@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class MapNode {
+public class MapNode {
 
     private transient MapNode parent;
 

@@ -1,25 +1,81 @@
 package dsw.gerumap.app.serializable;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import dsw.gerumap.app.core.Serializer;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
+import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
+import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+
 
 public class GSonSerializer implements Serializer {
     private final Gson gson = new Gson();
-    @Override
-    public MindMap loadMindMap(File file) {
-        try(FileReader fileReader = new FileReader(file)){
-            return gson.fromJson(fileReader, MindMap.class);
 
-        }catch (IOException e){
-            e.printStackTrace();
+    private static HashMap<MapNode, List<Element>> mindMapElements = new HashMap<>();
+
+    @Override
+    public Project loadMindMap(File file) {
+        try {
+            FileReader fileReader = new FileReader(file);
+            FileReader customFileReader = new FileReader(file);
+            Project var3;
+            try {
+                var3 = (Project)this.gson.fromJson(fileReader, Project.class);
+
+                JsonElement fileElement = JsonParser.parseReader(customFileReader);
+                JsonObject fileObject = fileElement.getAsJsonObject();
+
+                JsonArray jsonArrayOfMindMap = (JsonArray) fileObject.get("children");
+
+                for (JsonElement mindMapJs: jsonArrayOfMindMap){
+
+                    JsonObject mindMap  = mindMapJs.getAsJsonObject();
+                    MindMap mp = this.gson.fromJson(mindMapJs.toString(), MindMap.class);
+                    mindMapElements.put(mp,new ArrayList<>());
+
+                    JsonArray jsonArrayOfElements = (JsonArray) mindMap.get("children");
+
+                    for (JsonElement elementJs: jsonArrayOfElements){
+
+                        if (elementJs.getAsJsonObject().has("X2")){
+                            VezaElement veza = this.gson.fromJson(elementJs.toString(),VezaElement.class);
+                            mindMapElements.get(mp).add(veza);
+
+                        }
+                        else {
+                            PojamElement pojam = this.gson.fromJson(elementJs.toString(),PojamElement.class);
+                            mindMapElements.get(mp).add(pojam);
+                        }
+
+                    }
+                }
+
+            } catch (Throwable var6) {
+                try {
+                    fileReader.close();
+                } catch (Throwable var5) {
+                    var6.addSuppressed(var5);
+                }
+
+                throw var6;
+            }
+
+            fileReader.close();
+            return var3;
+        } catch (IOException var7) {
+            var7.printStackTrace();
             return null;
         }
     }
@@ -34,4 +90,7 @@ public class GSonSerializer implements Serializer {
         }
     }
 
+    public static HashMap<MapNode,List<Element>> getElements(){
+        return mindMapElements;
+    }
 }

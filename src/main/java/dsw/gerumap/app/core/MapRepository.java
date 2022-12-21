@@ -10,6 +10,8 @@ public interface MapRepository {
     MapNode addChild(MapNode child,String name,String author);
 
     MapNode addChild(MapNode parent,String name, Enum e);
+
+    void addChild(MapNode parent,MapNode child);
     void removeChild(MapNode child);
 
     void setAuthoer(MapNode mapNode,String name);

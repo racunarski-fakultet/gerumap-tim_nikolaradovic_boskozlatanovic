@@ -66,6 +66,15 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
     }
 
     @Override
+    public void addChild(MapNode parent, MapNode child) {
+
+        child.setParent(parent);
+        ((MapNodeComposite)parent).addChildren(child);
+
+        this.notifySubscribers(child,Actions.ADD);
+    }
+
+    @Override
     public void removeChild(MapNode child) {
         if (!(child instanceof MapNodeComposite) || child instanceof ProjectExplorer){
             AppCore.getInstance().getMessageGenerator().generateMessage(EventType.NODE_CANNOT_BE_DELETED);
