@@ -56,7 +56,7 @@ public class AddPojamState extends State {
             }
         }
 
-        //tb.getPainters().add(painter);
+        tb.getPainters().add(painter);
         tb.repaint();
     }
 
