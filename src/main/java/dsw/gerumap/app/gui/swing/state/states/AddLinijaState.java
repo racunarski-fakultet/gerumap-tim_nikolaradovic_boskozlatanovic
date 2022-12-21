@@ -26,6 +26,7 @@ public class AddLinijaState extends State {
     private Element el;
     @Override
     public void execute(TabItemModel tb, Point point) {
+
         startPainter = tb.returnSelected(point);
         if (startPainter == null || startPainter instanceof VezaPainter) {
             startPainter = null;
@@ -45,7 +46,7 @@ public class AddLinijaState extends State {
 
 
 
-        tb.getPainters().add(painter);
+        //tb.getPainters().add(painter);
         tb.repaint();
         currentPainter = painter;
 
