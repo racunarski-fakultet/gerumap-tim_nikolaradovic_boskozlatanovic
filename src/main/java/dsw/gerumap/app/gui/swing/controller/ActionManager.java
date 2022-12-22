@@ -40,9 +40,14 @@ public class  ActionManager {
 
     private MovePanelAction movePanelAction;
 
+    private DoAction doAction;
+
+    private UndoAction undoAction;
 
 
     private void initialliseActions(){
+        doAction = new DoAction();
+        undoAction = new UndoAction();
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();

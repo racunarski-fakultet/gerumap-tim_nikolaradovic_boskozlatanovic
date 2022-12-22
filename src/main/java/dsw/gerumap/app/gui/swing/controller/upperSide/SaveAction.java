@@ -26,10 +26,10 @@ public class SaveAction extends AbstractGerumapAction {
 
         MapNode mp = MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode();
 
-        if(!mp.getFilePath().isEmpty()){
-            AppCore.getInstance().getSerializer().saveMindMap(mp, mp.getFilePath());
-            return;
-        }
+//        if(!mp.getFilePath().isEmpty()){
+//            AppCore.getInstance().getSerializer().saveMindMap(mp, mp.getFilePath());
+//            return;
+//        }
         if(((MainFrame.getIntance().getMapTree().getSelectedNode().getMapNode()) instanceof Element) || mp instanceof ProjectExplorer){
             return;
         }
