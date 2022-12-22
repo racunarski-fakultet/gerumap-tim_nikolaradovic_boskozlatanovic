@@ -1,6 +1,7 @@
 package dsw.gerumap.app.gui.swing.loader;
 
 import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
 import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.Element;
@@ -30,7 +31,7 @@ public class ProjectLoader {
 
         }
         GSonSerializer.getElements().clear();
-
+        MainFrame.getIntance().getTabbedPane().addVezaToPojam();
 
     }
 }
