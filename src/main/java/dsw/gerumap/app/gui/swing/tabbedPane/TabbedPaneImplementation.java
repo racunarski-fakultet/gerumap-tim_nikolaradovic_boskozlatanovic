@@ -43,7 +43,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
         MainFrame.getIntance().getProjectView().add(lb);
         lb.setBounds(0, 0, 15, 15);
 
-        if (container.isEmpty()){
+        if (container.isEmpty() && ((Project)mp).getChildren().size() > 0){
             TabItemModel tab = new TabItemModel(((Project) mp).getChildren().get(0));
             MapNode m = ((Project) mp).getChildren().get(0);
             this.addTab(m.getName(), tab);

@@ -19,6 +19,9 @@ public class ExportImageAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if(MainFrame.getIntance().getTabbedPane().getSelectedComponent() == null) return;
+
         ((TabItemModel)MainFrame.getIntance().getTabbedPane().getSelectedComponent()).saveImage();
     }
 }
