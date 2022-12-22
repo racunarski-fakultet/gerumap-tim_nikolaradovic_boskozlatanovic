@@ -4,16 +4,15 @@ import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.Command;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
-import dsw.gerumap.app.mapRepository.Actions;
-import dsw.gerumap.app.mapRepository.factory.utils.SubElements;
 
-public class AddPojamCommand implements Command {
+public class AddElementCommand implements Command {
 
-    PojamPainter pojamPainter;
+    DevicePainter pojamPainter;
     TabItemModel tab;
 
-    public AddPojamCommand(PojamPainter pojamPainter) {
+    public AddElementCommand(DevicePainter pojamPainter) {
 
 
         this.pojamPainter = pojamPainter;
