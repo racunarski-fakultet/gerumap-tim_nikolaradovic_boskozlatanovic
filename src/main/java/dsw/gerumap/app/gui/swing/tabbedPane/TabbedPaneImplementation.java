@@ -1,10 +1,10 @@
 package dsw.gerumap.app.gui.swing.tabbedPane;
 
 import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.VezaPainter;
 import dsw.gerumap.app.mapRepository.Actions;
@@ -135,6 +135,30 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
 
     }
 
+    public void addVezaToPojam(){
+        TabItemModel tab = ((TabItemModel)this.getSelectedComponent());
+        for(DevicePainter dp: tab.getPainters()){
+            if(dp instanceof VezaPainter){
+                for(Element el: ((VezaElement)dp.getElement()).getElements()){
+                    PojamPainter pp = pojamByVeza(el);
+                    if(!pp.getVeze().contains(el)){
+                        pp.getVeze().add(dp);
+                    }
+                }
+            }
+        }
+    }
+
+    private PojamPainter pojamByVeza(Element element){
+        TabItemModel tab = ((TabItemModel)this.getSelectedComponent());
+        for(DevicePainter dp: tab.getPainters()){
+            if(dp.getElement().equals(element)){
+                return (PojamPainter) dp;
+            }
+
+        }
+        return null;
+    }
     private boolean currentSelectedPane(MapNode mapNode){
         Component cp = this.getComponentAt(this.getSelectedIndex());
         for(MapNode mp:  ((MapNodeComposite)mapNode).getChildren()){

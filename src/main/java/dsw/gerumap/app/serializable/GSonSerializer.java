@@ -50,7 +50,14 @@ public class GSonSerializer implements Serializer {
                     for (JsonElement elementJs: jsonArrayOfElements){
 
                         if (elementJs.getAsJsonObject().has("X2")){
+                            ArrayList<Element> elements1 = new ArrayList<>();
+                            JsonArray pojmovi = (JsonArray) elementJs.getAsJsonObject().get("elements");
+                            for(JsonElement p: pojmovi){
+                                elements1.add(this.gson.fromJson(p.toString(), PojamElement.class));
+                            }
                             VezaElement veza = this.gson.fromJson(elementJs.toString(),VezaElement.class);
+                            veza.getElements().clear();
+                            veza.getElements().addAll(elements1);
                             mindMapElements.get(mp).add(veza);
 
                         }
