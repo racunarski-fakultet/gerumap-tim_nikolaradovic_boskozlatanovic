@@ -31,7 +31,8 @@ public class PojamPainter extends DevicePainter{
         if(width < ((PojamElement)element).getWidth()){
             width = ((PojamElement)element).getWidth();
         }
-        shape = new Ellipse2D.Float(element.getX(), element.getY(), width+7,((PojamElement)element).getHeight());
+//        shape = new Ellipse2D.Float(element.getX()-((PojamElement)element).getWidth()/2, element.getY()-((PojamElement)element).getHeight()/2, width,((PojamElement)element).getHeight());
+        shape = new Ellipse2D.Float(element.getX(), element.getY(), width,((PojamElement)element).getHeight());
 
         g.fill(shape);
 
@@ -63,21 +64,21 @@ public class PojamPainter extends DevicePainter{
     @Override
     public void paintSelected(Graphics2D g) {
 
-        BasicStroke stroke = new BasicStroke(element.getStroke());
+        BasicStroke stroke = new BasicStroke(3);
         g.setColor(Color.RED);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int width = g.getFontMetrics().stringWidth(element.getName());
         if(width < ((PojamElement)element).getWidth()){
             width = ((PojamElement)element).getWidth();
         }
-        shape = new Ellipse2D.Float(element.getX(), element.getY(), width+7,((PojamElement)element).getHeight());
+        shape = new Ellipse2D.Float(element.getX(), element.getY(), width,((PojamElement)element).getHeight());
 
         g.fill(shape);
 
         g.setStroke(stroke);
 
         g.setColor(Color.BLACK);
-        g.draw(shape);
+        g.draw(shape.getBounds2D());
 
 
 

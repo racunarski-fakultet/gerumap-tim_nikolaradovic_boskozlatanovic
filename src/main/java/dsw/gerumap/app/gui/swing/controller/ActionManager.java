@@ -26,6 +26,8 @@ public class  ActionManager {
 
     private AddPojamAction addPojamAction;
 
+    private GlavniPojamAction glavniPojamAction;
+
     private DeleteElementsAction deleteElementsAction;
 
     private SelectElementAction selectElementAction;
@@ -55,6 +57,7 @@ public class  ActionManager {
         renameAction = new RenameAction();
         saveAction = new SaveAction();
         addLinijaAction = new AddLinijaAction();
+        glavniPojamAction = new GlavniPojamAction();
         deleteElementsAction = new DeleteElementsAction();
         selectElementAction = new SelectElementAction();
         addPojamAction = new AddPojamAction();

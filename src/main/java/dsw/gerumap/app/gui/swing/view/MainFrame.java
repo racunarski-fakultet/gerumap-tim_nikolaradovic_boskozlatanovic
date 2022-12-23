@@ -66,6 +66,8 @@ public class MainFrame extends JFrame {
         int screenHeight = screensize.height;
 
         setSize(screenWidth / 2, screenHeight / 2);
+        System.out.println("scr width = " + screenWidth / 2);
+        System.out.println("scr height = " + screenHeight / 2);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Gerumap app");

@@ -5,6 +5,7 @@ import dsw.gerumap.app.gui.swing.state.states.*;
 public class StateManager {
 
     private AddLinijaState addLinijaState;
+    private GlavniPojamState glavniPojamState;
     private AddPojamState addPojamState;
     private DeleteElementsState deleteElementsState;
 
@@ -22,6 +23,7 @@ public class StateManager {
 
     private void initialise(){
         addLinijaState = new AddLinijaState();
+        glavniPojamState = new GlavniPojamState();
         addPojamState = new AddPojamState();
         moveState = new MoveState();
         deleteElementsState = new DeleteElementsState();
@@ -35,6 +37,10 @@ public class StateManager {
 
     public void setAddLinijaState() {
         currentState = addLinijaState;
+    }
+
+    public void setGlavniPojamState(){
+        currentState = glavniPojamState;
     }
 
     public void setAddPojamState() {

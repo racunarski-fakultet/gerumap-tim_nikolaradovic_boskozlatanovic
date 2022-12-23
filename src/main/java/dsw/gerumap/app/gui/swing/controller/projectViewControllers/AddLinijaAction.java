@@ -18,7 +18,6 @@ public class AddLinijaAction extends AbstractGerumapAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         MainFrame.getIntance().getProjectView().switchToAddLinijaState();
 
     }

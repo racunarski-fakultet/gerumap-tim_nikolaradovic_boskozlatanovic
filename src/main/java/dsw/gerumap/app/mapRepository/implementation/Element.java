@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Element extends MapNodeComposite {
     protected int[] paint = {150, 200, 100};
-    protected int stroke = 5;
+    protected int stroke = 2;
     protected float x;
     protected float y;
     protected String description;

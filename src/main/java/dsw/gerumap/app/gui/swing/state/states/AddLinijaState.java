@@ -2,6 +2,7 @@ package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.Command;
+import dsw.gerumap.app.errorHandling.EventType;
 import dsw.gerumap.app.gui.swing.commands.implementations.AddElementCommand;
 import dsw.gerumap.app.gui.swing.view.CustomDrawingPopUp;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
@@ -29,6 +30,11 @@ public class AddLinijaState extends State {
     private Element el;
     @Override
     public void execute(TabItemModel tb, Point point) {
+
+        if(tb.getPainters().size() == 0){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.GlAVNI_POJAM);
+            return;
+        }
         startPainter = tb.returnSelected(point);
         if (startPainter == null || startPainter instanceof VezaPainter) {
             startPainter = null;

@@ -61,6 +61,8 @@ public class ChangeColorAction extends AbstractGerumapAction {
                 vp.getElement().getPaint()[1] = color2.getGreen();
                 vp.getElement().getPaint()[2] = color2.getBlue();
             }
+
+
            tb.getTabSelectionModel().getSelected().removeAll(tb.getTabSelectionModel().getSelected());
            tb.repaint();
         }
