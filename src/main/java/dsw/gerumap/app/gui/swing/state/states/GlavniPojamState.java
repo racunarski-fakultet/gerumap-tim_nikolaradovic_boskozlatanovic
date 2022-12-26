@@ -35,12 +35,14 @@ public class GlavniPojamState extends State {
 
         }
         Element el = (Element) AppCore.getInstance().getMapRepository().addChild(tb.getMapNode(), name, SubElements.POJAM);
-        int x = MainFrame.getIntance().getTabbedPane().getWidth()/2;
-        int y = MainFrame.getIntance().getTabbedPane().getHeight()/2;
+        int wid = MainFrame.getIntance().getTabbedPane().getWidth()/2;
+        int hei = MainFrame.getIntance().getTabbedPane().getHeight()/2;
+        tb.setH(hei*2);
+        tb.setW(wid*2);
         ((PojamElement) el).setHeight(65);
         ((PojamElement) el).setWidth(130);
-        el.setX(x-((PojamElement)el).getWidth()/2);
-        el.setY(y-((PojamElement)el).getHeight()/2);
+        el.setX(wid-((PojamElement)el).getWidth()/2);
+        el.setY(hei-((PojamElement)el).getHeight()/2);
 
         DevicePainter painter = new PojamPainter(el);
 

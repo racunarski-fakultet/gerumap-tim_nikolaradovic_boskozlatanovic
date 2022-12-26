@@ -1,17 +1,23 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
+import dsw.gerumap.app.core.Command;
+import dsw.gerumap.app.gui.swing.commands.implementations.MoveElementsCommand;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
 import dsw.gerumap.app.gui.swing.state.State;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class SelectionElementsState extends State {
 
     Shape rectangle;
@@ -25,6 +31,8 @@ public class SelectionElementsState extends State {
 
     boolean realesed = false;
     private DevicePainter currentylSelected;
+
+    private Command moveElementsCommand;
     DevicePainter rectanglePainter = new SelectioElements(null);
     @Override
     public void execute(TabItemModel tb, Point point) {
@@ -65,6 +73,8 @@ public class SelectionElementsState extends State {
             tb.repaint();
         }
         else if(rectangle != null && rectangle.contains(point)){
+            moveElementsCommand = new MoveElementsCommand(tb.getTabSelectionModel().getSelected());
+            ((MoveElementsCommand)moveElementsCommand).getStartingPointElements().add(rectanglePainter);
             MainFrame.getIntance().getProjectView().switchToMoveState();
             MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
         }
@@ -80,6 +90,7 @@ public class SelectionElementsState extends State {
 
         if(rectangle == null && currentylSelected != null && !realesed) {
 
+            moveElementsCommand = new MoveElementsCommand(tb.getTabSelectionModel().getSelected());
             MainFrame.getIntance().getProjectView().switchToMoveState();
             MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb,point);
 

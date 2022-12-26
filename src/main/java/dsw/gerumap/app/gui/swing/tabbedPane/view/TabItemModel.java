@@ -27,7 +27,8 @@ public class TabItemModel extends JPanel implements Subscriber {
     private MapNode mapNode;
 
 
-
+    private int w;
+    private int h;
     private double scalingFactor = 1.2;
 
     private double scaling = 1;
@@ -103,7 +104,8 @@ public class TabItemModel extends JPanel implements Subscriber {
                 }
             }
         }
-
+        g.drawLine(0, (int) (this.getHeight()/1.5),this.getWidth(), (int) (this.getHeight()/1.5));
+        g.drawLine(0, (int) (this.getHeight()/3),this.getWidth(), (int) (this.getHeight()/3));
 
     }
 

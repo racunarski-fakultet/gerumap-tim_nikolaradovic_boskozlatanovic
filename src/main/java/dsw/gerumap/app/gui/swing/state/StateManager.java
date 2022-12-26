@@ -1,7 +1,11 @@
 package dsw.gerumap.app.gui.swing.state;
 
 import dsw.gerumap.app.gui.swing.state.states.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class StateManager {
 
     private AddLinijaState addLinijaState;
@@ -16,6 +20,8 @@ public class StateManager {
     private ZoomOutState zoomOutState;
 
     private DragPanelState dragPanelState;
+
+    private RepositionState repositionState;
 
     public StateManager() {
         initialise();
@@ -33,6 +39,7 @@ public class StateManager {
         zoomOutState = new ZoomOutState();
         currentState = selectionElementsState;
         dragPanelState = new DragPanelState();
+        repositionState = new RepositionState();
     }
 
     public void setAddLinijaState() {
@@ -70,6 +77,10 @@ public class StateManager {
     }
     public State getCurrentState() {
         return currentState;
+    }
+
+    public void setRepositionState(){
+        currentState = repositionState;
     }
 
 

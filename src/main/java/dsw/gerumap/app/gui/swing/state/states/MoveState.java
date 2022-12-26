@@ -1,5 +1,6 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
+import dsw.gerumap.app.gui.swing.commands.implementations.MoveElementsCommand;
 import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
@@ -61,9 +62,6 @@ public class MoveState extends State {
            currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
 
            for (DevicePainter v : ((PojamPainter)currentylSelected).getVeze()){
-
-               int dx = startX - point.x;
-               int dy = startY - point.y;
 
 
                if (((VezaElement)v.getElement()).getElements().indexOf(currentylSelected.getElement()) == 0){
@@ -143,6 +141,10 @@ public class MoveState extends State {
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
+
+        ((MoveElementsCommand)MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand()).setEndingPointElements(tb.getTabSelectionModel().getSelected());
+        MainFrame.getIntance().getCommandManager().addCommand(MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand());
+
         released = true;
         return false;
     }

@@ -175,6 +175,7 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             if(obj instanceof MindMap) {
                 addToPanel(((MapNode) obj).getParent());
             }
+
             else{
                 if(GSonSerializer.getElements().size() > 0){
                     addToTabItem((MapNode) obj);
