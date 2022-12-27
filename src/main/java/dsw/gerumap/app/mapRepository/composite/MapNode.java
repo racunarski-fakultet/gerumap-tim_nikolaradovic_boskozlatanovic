@@ -1,5 +1,6 @@
 package dsw.gerumap.app.mapRepository.composite;
 
+import com.google.gson.annotations.Expose;
 import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
@@ -11,12 +12,13 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class MapNode {
+public class MapNode {
 
     private transient MapNode parent;
-
+    @Expose()
     private String filePath;
     @ToString.Exclude
+    @Expose()
     private String name;
 
     public MapNode(MapNode parent, String name) {

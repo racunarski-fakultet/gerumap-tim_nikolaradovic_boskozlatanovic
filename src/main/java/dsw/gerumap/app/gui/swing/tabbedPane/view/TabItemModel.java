@@ -39,6 +39,8 @@ public class TabItemModel extends JPanel implements Subscriber {
     private double oldX;
     private double oldY;
 
+    float start = 0;
+    float start2 = 0;
     private TabSelectionModel tabSelectionModel;
     private List<DevicePainter> painters = new ArrayList<DevicePainter>();
 
@@ -104,8 +106,8 @@ public class TabItemModel extends JPanel implements Subscriber {
                 }
             }
         }
-        g.drawLine(0, (int) (this.getHeight()/1.5),this.getWidth(), (int) (this.getHeight()/1.5));
-        g.drawLine(0, (int) (this.getHeight()/3),this.getWidth(), (int) (this.getHeight()/3));
+        //g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
+        //g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4));
 
     }
 

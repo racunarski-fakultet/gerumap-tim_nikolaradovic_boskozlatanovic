@@ -1,5 +1,6 @@
 package dsw.gerumap.app.mapRepository.composite;
 
+import com.google.gson.annotations.Expose;
 import dsw.gerumap.app.core.MapRepository;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public abstract class MapNodeComposite extends MapNode {
 
+    @Expose(deserialize = false)
     List<MapNode> children;
 
     public MapNodeComposite(MapNode parent, String name) {

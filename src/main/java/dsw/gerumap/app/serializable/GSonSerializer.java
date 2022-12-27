@@ -21,13 +21,16 @@ import java.util.List;
 
 
 public class GSonSerializer implements Serializer {
-    private final Gson gson = new Gson();
+    private Gson gson = new Gson();
 
     private static HashMap<MapNode, List<Element>> mindMapElements = new HashMap<>();
 
     @Override
     public Project loadMindMap(File file) {
         try {
+//            GsonBuilder gsonBuilder = new GsonBuilder();
+//            gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+//            gson = gsonBuilder.create();
             FileReader fileReader = new FileReader(file);
             FileReader customFileReader = new FileReader(file);
             Project var3;
