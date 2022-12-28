@@ -28,16 +28,16 @@ public class GSonSerializer implements Serializer {
     @Override
     public Project loadMindMap(File file) {
         try {
-//            GsonBuilder gsonBuilder = new GsonBuilder();
-//            gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-//            gson = gsonBuilder.create();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.addDeserializationExclusionStrategy(new HiddenAnnotationExclusionStrategy());
+            gson = gsonBuilder.create();
             FileReader fileReader = new FileReader(file);
             FileReader customFileReader = new FileReader(file);
             Project var3;
             try {
                 var3 = (Project)this.gson.fromJson(fileReader, Project.class);
 
-                JsonElement fileElement = JsonParser.parseReader(customFileReader);
+                 JsonElement fileElement = JsonParser.parseReader(customFileReader);
                 JsonObject fileObject = fileElement.getAsJsonObject();
 
                 JsonArray jsonArrayOfMindMap = (JsonArray) fileObject.get("children");

@@ -1,29 +1,27 @@
 package dsw.gerumap.app.mapRepository.composite;
 
-import com.google.gson.annotations.Expose;
-import dsw.gerumap.app.core.MapRepository;
-import dsw.gerumap.app.gui.swing.view.MainFrame;
-import dsw.gerumap.app.mapRepository.implementation.MindMap;
+import dsw.gerumap.app.mapRepository.commands.CommandManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Map;
-
 @Getter
 @Setter
-public class MapNode {
+
+public abstract class MapNode {
 
     private transient MapNode parent;
-    @Expose()
+
+    private transient CommandManager commandManager;
+
     private String filePath;
     @ToString.Exclude
-    @Expose()
     private String name;
 
     public MapNode(MapNode parent, String name) {
         this.parent = parent;
         this.name = name;
+        commandManager = new CommandManager();
     }
 
     @Override

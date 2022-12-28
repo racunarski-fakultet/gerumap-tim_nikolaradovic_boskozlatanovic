@@ -177,8 +177,9 @@ public class TabbedPaneImplementation extends JTabbedPane implements TabbedPane,
             }
 
             else{
-                if(GSonSerializer.getElements().size() > 0){
+                if(GSonSerializer.getElements().size() > 0 || ((MapRepositoryImplementation)AppCore.getInstance().getMapRepository()).isFromCommand()){
                     addToTabItem((MapNode) obj);
+                    ((MapRepositoryImplementation)AppCore.getInstance().getMapRepository()).setFromCommand(false);
                 }
             }
         }

@@ -1,8 +1,7 @@
 package dsw.gerumap.app.gui.swing.view;
 
 import dsw.gerumap.app.AppCore;
-import dsw.gerumap.app.core.Command;
-import dsw.gerumap.app.gui.swing.commands.CommandManager;
+import dsw.gerumap.app.mapRepository.commands.CommandManager;
 import dsw.gerumap.app.gui.swing.controller.ActionManager;
 import dsw.gerumap.app.gui.swing.tabbedPane.TabbedPaneImplementation;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;

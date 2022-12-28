@@ -1,6 +1,6 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
-import dsw.gerumap.app.gui.swing.commands.implementations.MoveElementsCommand;
+import dsw.gerumap.app.mapRepository.commands.implementations.MoveElementsCommand;
 import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
@@ -142,8 +142,9 @@ public class MoveState extends State {
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
 
-        ((MoveElementsCommand)MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand()).setEndingPointElements(tb.getTabSelectionModel().getSelected());
-        MainFrame.getIntance().getCommandManager().addCommand(MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand());
+        ((MoveElementsCommand)MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand()).setEndingPoints();
+        tb.getMapNode().getCommandManager().addCommand(MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand());
+
 
         released = true;
         return false;

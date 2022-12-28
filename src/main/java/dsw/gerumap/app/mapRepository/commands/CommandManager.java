@@ -1,8 +1,7 @@
-package dsw.gerumap.app.gui.swing.commands;
+package dsw.gerumap.app.mapRepository.commands;
 
 import dsw.gerumap.app.core.Command;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
