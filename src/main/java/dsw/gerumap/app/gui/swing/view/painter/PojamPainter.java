@@ -28,11 +28,15 @@ public class PojamPainter extends DevicePainter{
         g.setColor(new Color(element.getPaint()[0], element.getPaint()[1], element.getPaint()[2]));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int width = g.getFontMetrics().stringWidth(element.getName());
+
         if(width < ((PojamElement)element).getWidth()){
             width = ((PojamElement)element).getWidth();
         }
-//        shape = new Ellipse2D.Float(element.getX()-((PojamElement)element).getWidth()/2, element.getY()-((PojamElement)element).getHeight()/2, width,((PojamElement)element).getHeight());
+
         shape = new Ellipse2D.Float(element.getX(), element.getY(), width,((PojamElement)element).getHeight());
+
+        ((PojamElement)element).setCenterX((float) shape.getBounds2D().getCenterX());
+        ((PojamElement)element).setCenterY((float) shape.getBounds2D().getCenterY());
 
         g.fill(shape);
 
