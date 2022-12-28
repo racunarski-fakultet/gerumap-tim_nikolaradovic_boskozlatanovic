@@ -16,13 +16,11 @@ public class ProjectLoader {
     public static void loadProject(MapNode node){
 
         MapNode returnedNode = null;
-        ((MapNodeComposite)node).getChildren().clear();
+
         AppCore.getInstance().getMapRepository().addChild(AppCore.getInstance().getMapRepository().getProjectExplorer(),node);
 
         for (MapNode mp : GSonSerializer.getElements().keySet()){
             List<Element> children = GSonSerializer.getElements().get(mp);
-            ((MapNodeComposite)mp).getChildren().clear();
-
             AppCore.getInstance().getMapRepository().addChild(node,mp);
 
             for (Element el: children){

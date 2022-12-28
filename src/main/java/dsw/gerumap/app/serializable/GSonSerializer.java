@@ -3,6 +3,7 @@ package dsw.gerumap.app.serializable;
 import com.google.gson.*;
 import dsw.gerumap.app.core.Serializer;
 import dsw.gerumap.app.mapRepository.composite.MapNode;
+import dsw.gerumap.app.mapRepository.composite.MapNodeComposite;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.MindMap;
 import dsw.gerumap.app.mapRepository.implementation.Project;
@@ -37,6 +38,8 @@ public class GSonSerializer implements Serializer {
             try {
                 var3 = (Project)this.gson.fromJson(fileReader, Project.class);
 
+                var3.setChildren(new ArrayList<>());
+
                  JsonElement fileElement = JsonParser.parseReader(customFileReader);
                 JsonObject fileObject = fileElement.getAsJsonObject();
 
@@ -46,6 +49,7 @@ public class GSonSerializer implements Serializer {
 
                     JsonObject mindMap  = mindMapJs.getAsJsonObject();
                     MindMap mp = this.gson.fromJson(mindMapJs.toString(), MindMap.class);
+                    mp.setChildren(new ArrayList<>());
                     mindMapElements.put(mp,new ArrayList<>());
 
                     JsonArray jsonArrayOfElements = (JsonArray) mindMap.get("children");

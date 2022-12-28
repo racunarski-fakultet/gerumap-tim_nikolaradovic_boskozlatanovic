@@ -11,6 +11,6 @@ public class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
 
     @Override
     public boolean shouldSkipClass(Class<?> aClass) {
-        return false;
+        return aClass.getAnnotation(Hide.class) != null;
     }
 }
