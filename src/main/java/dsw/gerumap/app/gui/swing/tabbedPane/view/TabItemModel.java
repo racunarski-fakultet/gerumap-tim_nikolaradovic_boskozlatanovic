@@ -5,6 +5,7 @@ import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.mapRepository.Actions;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MouseDragged;
 import dsw.gerumap.app.gui.swing.tabbedPane.controller.MousePainter;
@@ -33,6 +34,8 @@ public class TabItemModel extends JPanel implements Subscriber {
 
     private int w;
     private int h;
+
+    private float screenScailingFactor =1.8f;
     private double scalingFactor = 1.2;
 
     private double scaling = 1;
@@ -111,8 +114,11 @@ public class TabItemModel extends JPanel implements Subscriber {
                 }
             }
         }
-        //g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
-        //g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4));
+        g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
+        g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4f));
+
+        g.drawLine(0, (int) (this.getHeight()/1.1),this.getWidth(), (int) (this.getHeight()/1.1));
+        g.drawLine(0, (int) (this.getHeight()/5.2),this.getWidth(), (int) (this.getHeight()/5.2));
 
     }
 
@@ -132,6 +138,14 @@ public class TabItemModel extends JPanel implements Subscriber {
         }
         return null;
     }
+
+    public DevicePainter elementByPainter(Element element){
+        for (DevicePainter dp : painters){
+            if (dp.getElement().equals(element)) return dp;
+        }
+        return null;
+    }
+
 
     public boolean hasPainter(DevicePainter startPainter,DevicePainter endPainter){
 
