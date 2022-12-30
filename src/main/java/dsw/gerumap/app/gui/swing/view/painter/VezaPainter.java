@@ -31,7 +31,7 @@ public class VezaPainter extends DevicePainter{
             float x2 = ((PojamElement)((VezaElement) element).getElements().get(1)).getCenterX();
             float y2 = ((PojamElement)((VezaElement) element).getElements().get(1)).getCenterY();
 
-            System.out.println("Koordinate su " + x1 + " " + x2 + " " + y1 + " "+ y2 + " ");
+           // System.out.println("Koordinate su " + x1 + " " + x2 + " " + y1 + " "+ y2 + " ");
 
             shape = new Line2D.Float(x1,y1,x2,y2);
 
@@ -76,7 +76,7 @@ public class VezaPainter extends DevicePainter{
             float x2 = ((PojamElement)((VezaElement) element).getElements().get(1)).getCenterX();
             float y2 = ((PojamElement)((VezaElement) element).getElements().get(1)).getCenterY();
 
-            System.out.println("Koordinate su " + x1 + " " + x2 + " " + y1 + " "+ y2 + " ");
+          //  System.out.println("Koordinate su " + x1 + " " + x2 + " " + y1 + " "+ y2 + " ");
 
             shape = new Line2D.Float(x1,y1,x2,y2);
 

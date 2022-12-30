@@ -19,7 +19,7 @@ public class MousePainter implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("x = " +e.getX() + " "+ "y = " + e.getY());
+     //   System.out.println("x = " +e.getX() + " "+ "y = " + e.getY());
 
         //System.out.print(e.getY());
         Point point = State.PointMultiply(e.getPoint());
