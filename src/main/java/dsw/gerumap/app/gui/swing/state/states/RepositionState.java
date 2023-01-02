@@ -21,8 +21,8 @@ public class RepositionState extends State {
     private Deque<DevicePainter> children;
 
 
-    double ugao = 0;
-    int r = 0;
+    double ugao;
+    double r = 300;
     @Override
     public void execute(TabItemModel tb, Point point) {
         bfs(tb);
@@ -31,18 +31,17 @@ public class RepositionState extends State {
 
     private void bfs(TabItemModel tb) {
 
-        r = 200;
+
+        ugao = 60;
         painters = new LinkedList<>();
         seen = new ArrayList<>();
 
 
         addToQueue((PojamPainter) tb.getPainters().get(0),tb, painters);
-
         bestFit(tb,tb.getPainters().get(0),r);
+        r = (r/1.75);
 
         while (!painters.isEmpty()){
-
-
 
             int size = painters.size();
 
@@ -52,24 +51,18 @@ public class RepositionState extends State {
 
                 if (!seen.contains(dp)){
 
-
-
                     addToQueue((PojamPainter) dp,tb, painters);
+
                     bestFit(tb, dp,r);
                     seen.add(dp);
                     //customSort(tb,koef1,koef2,dp);
                 }
 
+
             }
-            ugao = 0;
-            //r += 200;
-//            koef1 *=scailing;
-//            koef2 /=scailing;
-
-//            tb.setStart(0);
-//            tb.setStart2(0);
-
+            r = (r/1.75);
         }
+
 
     }
 
@@ -135,9 +128,9 @@ public class RepositionState extends State {
         }
     }
 
-    private void bestFit(TabItemModel tb, DevicePainter dp, int r){
+    private void bestFit(TabItemModel tb, DevicePainter dp, double r){
 
-        ugao = 0;
+        ugao = 60;
 
        PojamElement element = (PojamElement) dp.getElement();
 
@@ -157,17 +150,16 @@ public class RepositionState extends State {
                ((PojamElement) dv.getElement()).setCenterX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX()));
                ((PojamElement) dv.getElement()).setCenterY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY()));
                System.out.println(ugao);
-               ugao += 30;
+               ugao += 55;
 
            }
-
 
        }
 
 
 
 
-        //ugao %= 360;
+       // ugao %= 360;
 
         //System.out.println(ugao);
         tb.repaint();

@@ -114,11 +114,11 @@ public class TabItemModel extends JPanel implements Subscriber {
                 }
             }
         }
-        g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
-        g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4f));
-
-        g.drawLine(0, (int) (this.getHeight()/1.1),this.getWidth(), (int) (this.getHeight()/1.1));
-        g.drawLine(0, (int) (this.getHeight()/5.2),this.getWidth(), (int) (this.getHeight()/5.2));
+       // g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
+//        g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4f));
+//
+//        g.drawLine(0, (int) (this.getHeight()/1.1),this.getWidth(), (int) (this.getHeight()/1.1));
+//        g.drawLine(0, (int) (this.getHeight()/5.2),this.getWidth(), (int) (this.getHeight()/5.2));
 
     }
 
