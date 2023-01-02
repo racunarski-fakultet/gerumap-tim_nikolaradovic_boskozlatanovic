@@ -18,9 +18,10 @@ public class RepositionState extends State {
 
     private Deque<DevicePainter> painters;
     private List<DevicePainter> seen;
-    private List<DevicePainter> parenti;
-    private Stack<Double> uglovi;
-    double ugao = 30;
+    private Deque<DevicePainter> children;
+
+
+    double ugao = 0;
     int r = 0;
     @Override
     public void execute(TabItemModel tb, Point point) {
@@ -29,43 +30,39 @@ public class RepositionState extends State {
 
 
     private void bfs(TabItemModel tb) {
-        r = 150;
-        uglovi = new Stack<>();
-        uglovi.push(ugao);
+
+        r = 200;
         painters = new LinkedList<>();
         seen = new ArrayList<>();
 
 
         addToQueue((PojamPainter) tb.getPainters().get(0),tb, painters);
 
-        int depth = 0;
-//        float koef1 = 4;
-//        float koef2 = 1.2f;
-//        float scailing = 1.3f;
+        bestFit(tb,tb.getPainters().get(0),r);
+
         while (!painters.isEmpty()){
 
-            ++depth;
+
 
             int size = painters.size();
 
             for (int i = 0; i < size; i++){
 
-                // izvucemo prvo povezanost dodamo u seen set i pokrenemo customSort za njega
-                // dodajem decu dece
-
                 DevicePainter dp = painters.poll();
 
                 if (!seen.contains(dp)){
 
-                    seen.add(dp);
+
+
                     addToQueue((PojamPainter) dp,tb, painters);
-                    bestFit(tb, dp);
+                    bestFit(tb, dp,r);
+                    seen.add(dp);
                     //customSort(tb,koef1,koef2,dp);
                 }
 
             }
-            ugao = 30;
-            r += 150;
+            ugao = 0;
+            //r += 200;
 //            koef1 *=scailing;
 //            koef2 /=scailing;
 
@@ -138,21 +135,41 @@ public class RepositionState extends State {
         }
     }
 
-    private void bestFit(TabItemModel tb, DevicePainter dp){
-        //poluprecnik r
+    private void bestFit(TabItemModel tb, DevicePainter dp, int r){
+
+        ugao = 0;
+
+       PojamElement element = (PojamElement) dp.getElement();
 
 
-        if (dp instanceof PojamPainter && tb.getPainters().indexOf(dp) != 0){
-            dp.getElement().setX((float) Math.abs((tb.getWidth()/2-r*Math.sin(Math.PI/180*ugao))));
-            dp.getElement().setY((float) Math.abs((tb.getHeight()/2-r*Math.cos(Math.PI/180*ugao))));
-//            System.out.println(" x = "+Math.abs((tb.getWidth()/2-r*Math.sin(Math.PI/180*ugao))));
-//            System.out.println("y = "+Math.abs((tb.getHeight()/2-r*Math.cos(Math.PI/180*ugao))));
-        }
+       children = new LinkedList<>();
 
-        ugao += 60;
+       addToQueue((PojamPainter) dp,tb,children);
+
+
+       for (DevicePainter dv : children){
+
+           if (dv instanceof PojamPainter && tb.getPainters().indexOf(dv) != 0 && !seen.contains(dv)){
+
+               dv.getElement().setX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX() - ((PojamElement)dv.getElement()).getWidth()/2.f));
+               dv.getElement().setY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY() - ((PojamElement)dv.getElement()).getHeight()/2.f));
+
+               ((PojamElement) dv.getElement()).setCenterX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX()));
+               ((PojamElement) dv.getElement()).setCenterY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY()));
+               System.out.println(ugao);
+               ugao += 30;
+
+           }
+
+
+       }
+
+
+
+
         //ugao %= 360;
 
-        System.out.println(ugao);
+        //System.out.println(ugao);
         tb.repaint();
     }
 
