@@ -19,6 +19,9 @@ public class MousePainter implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+     //   System.out.println("x = " +e.getX() + " "+ "y = " + e.getY());
+
+        //System.out.print(e.getY());
         Point point = State.PointMultiply(e.getPoint());
         MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().execute(tb, point);
 
@@ -26,7 +29,8 @@ public class MousePainter implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().isConnected(tb, e.getPoint());
+        Point point = State.PointMultiply(e.getPoint());
+        MainFrame.getIntance().getProjectView().getStateManager().getCurrentState().isConnected(tb, point);
 
     }
 

@@ -12,11 +12,8 @@ import java.util.List;
 @Setter
 public class Project extends MapNodeComposite {
 
-    private String ime;
-
     private String autor;
 
-    private String putanjaResursi;
 
     public Project(MapNode parent, String name) {
         super(parent, name);

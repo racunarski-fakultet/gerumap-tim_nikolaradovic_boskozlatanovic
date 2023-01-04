@@ -27,6 +27,9 @@ public class ProjectView extends JPanel {
     public void switchToAddLinijaState(){
         stateManager.setAddLinijaState();
     }
+    public void switchToGlavniPojamState(){
+        stateManager.setGlavniPojamState();
+    }
     public void switchToZoomInState(){
         stateManager.setZoomInState();
     }
@@ -40,5 +43,8 @@ public class ProjectView extends JPanel {
 
     public void switchToMovePanelState(){
         stateManager.setDragPanelState();
+    }
+    public void switchToRepositionState(){
+        stateManager.setRepositionState();
     }
 }

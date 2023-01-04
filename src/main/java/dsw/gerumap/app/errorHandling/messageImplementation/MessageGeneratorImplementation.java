@@ -42,6 +42,10 @@ public class MessageGeneratorImplementation implements MessageGenerator, Publish
             message = new Message("Polje ne moze biti prazno",(EventType) e);
             notifySubscribers(message,e);
         }
+        if(e.equals(EventType.GlAVNI_POJAM)){
+            message = new Message("Morate dodati Glavni Pojam prvo", (EventType) e);
+            notifySubscribers(message, e);
+        }
 
     }
 

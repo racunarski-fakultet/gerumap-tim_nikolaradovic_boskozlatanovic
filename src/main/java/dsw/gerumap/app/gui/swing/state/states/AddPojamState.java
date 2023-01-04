@@ -1,7 +1,9 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.Command;
 import dsw.gerumap.app.errorHandling.EventType;
+import dsw.gerumap.app.mapRepository.commands.implementations.AddElementCommand;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.view.CustomDrawingPopUp;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
@@ -22,6 +24,10 @@ public class AddPojamState extends State {
             return;
         }
 
+        if(tb.getPainters().size() == 0){
+            AppCore.getInstance().getMessageGenerator().generateMessage(EventType.GlAVNI_POJAM);
+            return;
+        }
         String name = JOptionPane.showInputDialog(MainFrame.getIntance(),
                 "Ime pojma");
 
@@ -40,6 +46,8 @@ public class AddPojamState extends State {
         el.setX(point.x);
         el.setY(point.y);
         DevicePainter painter = new PojamPainter(el);
+        Command command = new AddElementCommand(el,tb.getMapNode());
+        tb.getMapNode().getCommandManager().addCommand(command);
 
         CustomDrawingPopUp cdw = new CustomDrawingPopUp();
 
@@ -55,7 +63,6 @@ public class AddPojamState extends State {
                 el.setPaint(new int[]{cdw.getC().getRed(), cdw.getC().getGreen(), cdw.getC().getBlue()});
             }
         }
-
         tb.getPainters().add(painter);
         tb.repaint();
     }

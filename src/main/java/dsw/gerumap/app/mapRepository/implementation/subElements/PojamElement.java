@@ -11,14 +11,17 @@ import java.util.List;
 @Setter
 public class PojamElement extends Element {
 
-    private List<VezaElement> veze;
     private int width;
     private int height;
+
+    private float centerX;
+    private float centerY;
+
+
     public PojamElement(MapNode parent, String name) {
         super(parent, name);
         width = 100;
         height =50 ;
-        veze = new ArrayList<>();
     }
 
     public PojamElement(MapNode parent, String name, List<MapNode> children) {

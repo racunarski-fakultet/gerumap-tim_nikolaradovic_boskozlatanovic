@@ -27,6 +27,7 @@ import java.util.Map;
 public class MapRepositoryImplementation implements MapRepository, Publisher {
 
     private MapNode projectExplorer;
+    private boolean fromCommand;
     List<Subscriber> subscribers;
 
     public MapRepositoryImplementation() {
@@ -63,6 +64,15 @@ public class MapRepositoryImplementation implements MapRepository, Publisher {
         ((MapNodeComposite) parent).addChildren(newNode);
         this.notifySubscribers(newNode,Actions.ADD);
         return newNode;
+    }
+
+    @Override
+    public void addChild(MapNode parent, MapNode child) {
+
+        child.setParent(parent);
+        ((MapNodeComposite)parent).addChildren(child);
+        fromCommand = true;
+        this.notifySubscribers(child,Actions.ADD);
     }
 
     @Override

@@ -1,10 +1,15 @@
 package dsw.gerumap.app.gui.swing.state;
 
 import dsw.gerumap.app.gui.swing.state.states.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class StateManager {
 
     private AddLinijaState addLinijaState;
+    private GlavniPojamState glavniPojamState;
     private AddPojamState addPojamState;
     private DeleteElementsState deleteElementsState;
 
@@ -16,12 +21,15 @@ public class StateManager {
 
     private DragPanelState dragPanelState;
 
+    private RepositionState repositionState;
+
     public StateManager() {
         initialise();
     }
 
     private void initialise(){
         addLinijaState = new AddLinijaState();
+        glavniPojamState = new GlavniPojamState();
         addPojamState = new AddPojamState();
         moveState = new MoveState();
         deleteElementsState = new DeleteElementsState();
@@ -31,10 +39,15 @@ public class StateManager {
         zoomOutState = new ZoomOutState();
         currentState = selectionElementsState;
         dragPanelState = new DragPanelState();
+        repositionState = new RepositionState();
     }
 
     public void setAddLinijaState() {
         currentState = addLinijaState;
+    }
+
+    public void setGlavniPojamState(){
+        currentState = glavniPojamState;
     }
 
     public void setAddPojamState() {
@@ -64,6 +77,10 @@ public class StateManager {
     }
     public State getCurrentState() {
         return currentState;
+    }
+
+    public void setRepositionState(){
+        currentState = repositionState;
     }
 
 

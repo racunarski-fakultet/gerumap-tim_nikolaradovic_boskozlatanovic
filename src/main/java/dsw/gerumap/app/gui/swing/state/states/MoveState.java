@@ -1,5 +1,6 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
+import dsw.gerumap.app.mapRepository.commands.implementations.MoveElementsCommand;
 import dsw.gerumap.app.mapRepository.implementation.subElements.PojamElement;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
@@ -60,32 +61,14 @@ public class MoveState extends State {
 
            currentylSelected = tb.getTabSelectionModel().getSelected().get(0);
 
-           for (DevicePainter v : ((PojamPainter)currentylSelected).getVeze()){
-
-               int dx = startX - point.x;
-               int dy = startY - point.y;
-
-
-               if (((VezaElement)v.getElement()).getElements().indexOf(currentylSelected.getElement()) == 0){
-
-
-                   v.getElement().setX(point.x);
-                   v.getElement().setY(point.y);
-
-               }
-               else {
-
-                   ((VezaElement) v.getElement()).setX2(point.x);
-                   ((VezaElement) v.getElement()).setY2(point.y);
-               }
-           }
-
             float dx = point.x - ((PojamElement)currentylSelected.getElement()).getWidth()/2.f;
             float dy = point.y - ((PojamElement)currentylSelected.getElement()).getHeight()/2.f;
 
             currentylSelected.getElement().setX(dx);
             currentylSelected.getElement().setY(dy);
 
+            ((PojamElement)currentylSelected.getElement()).setCenterX(point.x);
+            ((PojamElement)currentylSelected.getElement()).setCenterY(point.y);
 
             tb.repaint();
         }
@@ -109,25 +92,12 @@ public class MoveState extends State {
                     float newEllipseX = p.getElement().getX() - dx;
                     float newEllipseY = p.getElement().getY() - dy;
 
-
                     p.getElement().setX(newEllipseX);
                     p.getElement().setY(newEllipseY);
+
+                    ((PojamElement)p.getElement()).setCenterX(((PojamElement)p.getElement()).getCenterX()-dx);
+                    ((PojamElement)p.getElement()).setCenterY(((PojamElement)p.getElement()).getCenterY()-dy);
                 }
-                else if (p instanceof VezaPainter){
-
-                    float newLineX1 = p.getElement().getX() - dx;
-                    float newLineY1 = p.getElement().getY() - dy;
-                    float newLineX2 = ((VezaElement)p.getElement()).getX2() - dx;
-                    float newLineY2 = ((VezaElement)p.getElement()).getY2() - dy;
-
-                    p.getElement().setX(newLineX1);
-                    p.getElement().setY(newLineY1);
-                    ((VezaElement) p.getElement()).setX2(newLineX2);
-                    ((VezaElement) p.getElement()).setY2(newLineY2);
-
-                }
-
-
 
                 tb.repaint();
             }
@@ -143,6 +113,11 @@ public class MoveState extends State {
 
     @Override
     public boolean isConnected(TabItemModel tb, Point point) {
+
+        ((MoveElementsCommand)MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand()).setEndingPoints();
+        tb.getMapNode().getCommandManager().addCommand(MainFrame.getIntance().getProjectView().getStateManager().getSelectionElementsState().getMoveElementsCommand());
+
+
         released = true;
         return false;
     }

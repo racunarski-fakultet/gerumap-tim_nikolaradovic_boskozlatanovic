@@ -18,9 +18,15 @@ public class  ActionManager {
 
     private RenameAction renameAction;
 
+    private SaveAction saveAction;
+
+    private LoadAction loadAction;
+
     private AddLinijaAction addLinijaAction;
 
     private AddPojamAction addPojamAction;
+
+    private GlavniPojamAction glavniPojamAction;
 
     private DeleteElementsAction deleteElementsAction;
 
@@ -32,15 +38,28 @@ public class  ActionManager {
 
     private ChangeColorAction changeColorAction;
 
+    private ExportImageAction exportImageAction;
+
     private MovePanelAction movePanelAction;
 
+    private DoAction doAction;
+
+    private BestFitAction bestFitAction;
+
+    private UndoAction undoAction;
+
+
     private void initialliseActions(){
+        doAction = new DoAction();
+        undoAction = new UndoAction();
         infoAction = new InfoAction();
         newProjectAction = new NewProjectAction();
         deleteAction = new DeleteAction();
         addAuthorAction = new AddAuthorAction();
         renameAction = new RenameAction();
+        saveAction = new SaveAction();
         addLinijaAction = new AddLinijaAction();
+        glavniPojamAction = new GlavniPojamAction();
         deleteElementsAction = new DeleteElementsAction();
         selectElementAction = new SelectElementAction();
         addPojamAction = new AddPojamAction();
@@ -48,6 +67,9 @@ public class  ActionManager {
         zoomInAction = new ZoomInAction();
         changeColorAction = new ChangeColorAction();
         movePanelAction = new MovePanelAction();
+        loadAction = new LoadAction();
+        bestFitAction = new BestFitAction();
+        exportImageAction = new ExportImageAction();
     }
 
     public ActionManager(){

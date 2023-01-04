@@ -1,39 +1,62 @@
 package dsw.gerumap.app.gui.swing.state.states;
 
 import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.core.Command;
+import dsw.gerumap.app.mapRepository.commands.implementations.DeleteElementsCommand;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
+import dsw.gerumap.app.gui.swing.view.MainFrame;
 import dsw.gerumap.app.gui.swing.view.painter.DevicePainter;
 import dsw.gerumap.app.gui.swing.view.painter.PojamPainter;
 import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
 import dsw.gerumap.app.gui.swing.state.State;
+import dsw.gerumap.app.mapRepository.implementation.Element;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
+import java.util.List;
 
 public class DeleteElementsState extends State {
     @Override
     public void execute(TabItemModel tb, Point point) {
 
+        Set<Element> tempElements = new HashSet<>();
+        List<Element> toBeRemoved = new ArrayList<>();
+
             for (DevicePainter painter : tb.getTabSelectionModel().getSelected()){
 
-                tb.getPainters().remove(painter);
+               // tb.getPainters().remove(painter);
+                tempElements.add(painter.getElement());
+
                 if(painter instanceof PojamPainter){
+
+                    //tb.getPainters().removeAll(((PojamPainter) painter).getVeze());
 
                     ((PojamPainter) painter).getVeze().removeAll(Collections.singletonList(null));
 
-                    tb.getPainters().removeAll(((PojamPainter) painter).getVeze());
+
 
                     for (DevicePainter veze: ((PojamPainter) painter).getVeze()){
-                        AppCore.getInstance().getMapRepository().removeChild(veze.getElement());
+                        toBeRemoved.add(veze.getElement());
+                        //AppCore.getInstance().getMapRepository().removeChild(veze.getElement());
+                        tempElements.add(veze.getElement());
                     }
                 }
-                AppCore.getInstance().getMapRepository().removeChild(painter.getElement());
+                toBeRemoved.add(painter.getElement());
+
+                //AppCore.getInstance().getMapRepository().removeChild(painter.getElement());
                 deleteSelectionRectangle(tb);
                 tb.repaint();
 
 
             }
+            for (Element el: toBeRemoved){
+                AppCore.getInstance().getMapRepository().removeChild(el);
+            }
+            toBeRemoved.clear();
+
+        Command command = new DeleteElementsCommand(tb.getMapNode());
+        ((DeleteElementsCommand)command).setSelektovaniElementi(tempElements);
+        tb.getMapNode().getCommandManager().addCommand(command);
             tb.getTabSelectionModel().setSelected(new ArrayList<>());
     }
 

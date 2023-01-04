@@ -1,11 +1,13 @@
 package dsw.gerumap.app.gui.swing.view;
 
 import dsw.gerumap.app.AppCore;
+import dsw.gerumap.app.mapRepository.commands.CommandManager;
 import dsw.gerumap.app.gui.swing.controller.ActionManager;
 import dsw.gerumap.app.gui.swing.tabbedPane.TabbedPaneImplementation;
 import dsw.gerumap.app.gui.swing.tabbedPane.view.TabItemModel;
 import dsw.gerumap.app.gui.swing.tree.MapTree;
 import dsw.gerumap.app.gui.swing.tree.MapTreeImplementation;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +32,8 @@ public class MainFrame extends JFrame {
 
     private ProjectViewToolBar projectViewToolBar;
 
+    private CommandManager commandManager;
+
     private ProjectView projectView;
     private TabbedPaneImplementation tabbedPane;
     private MainFrame(){
@@ -40,6 +44,7 @@ public class MainFrame extends JFrame {
         actionManager = new ActionManager();
         mapTree = new MapTreeImplementation();
         tabbedPane = new TabbedPaneImplementation();
+        commandManager = new CommandManager();
         initialiseGUI();
 
     }
@@ -61,6 +66,8 @@ public class MainFrame extends JFrame {
         int screenHeight = screensize.height;
 
         setSize(screenWidth / 2, screenHeight / 2);
+        System.out.println("scr width = " + screenWidth / 2);
+        System.out.println("scr height = " + screenHeight / 2);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Gerumap app");

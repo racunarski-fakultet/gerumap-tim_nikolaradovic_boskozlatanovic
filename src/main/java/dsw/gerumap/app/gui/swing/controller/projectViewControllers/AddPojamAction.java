@@ -13,9 +13,8 @@ public class AddPojamAction extends AbstractGerumapAction {
     public AddPojamAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P,ActionEvent.CTRL_MASK));
         putValue(NAME,"Add concept");
-        putValue(SHORT_DESCRIPTION,"Concept");
+        putValue(SHORT_DESCRIPTION,"Pojam");
         putValue(SMALL_ICON,loadIcon("/images/Ellipse.png"));
-
     }
 
     @Override
