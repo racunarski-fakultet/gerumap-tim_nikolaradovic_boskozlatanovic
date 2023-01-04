@@ -44,6 +44,8 @@ public class  ActionManager {
 
     private DoAction doAction;
 
+    private BestFitAction bestFitAction;
+
     private UndoAction undoAction;
 
 
@@ -66,6 +68,7 @@ public class  ActionManager {
         changeColorAction = new ChangeColorAction();
         movePanelAction = new MovePanelAction();
         loadAction = new LoadAction();
+        bestFitAction = new BestFitAction();
         exportImageAction = new ExportImageAction();
     }
 

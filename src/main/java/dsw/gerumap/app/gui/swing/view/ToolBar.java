@@ -25,6 +25,8 @@ public class ToolBar extends JToolBar {
         add(MainFrame.getIntance().getActionManager().getUndoAction());
         this.addSeparator(new Dimension(3,3));
         add(MainFrame.getIntance().getActionManager().getDoAction());
+        this.addSeparator(new Dimension(3, 3));
+        add(MainFrame.getIntance().getActionManager().getBestFitAction());
 
 
     }

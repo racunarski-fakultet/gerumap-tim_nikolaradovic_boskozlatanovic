@@ -24,7 +24,7 @@ public class RepositionState extends State {
     double ugao;
 
     private boolean flag = true;
-    double r = 300;
+    double r;
     @Override
     public void execute(TabItemModel tb, Point point) {
         bfs(tb);
@@ -33,15 +33,14 @@ public class RepositionState extends State {
 
     private void bfs(TabItemModel tb) {
 
-        r = 250;
+        r = 300;
         ugao = 60;
         painters = new LinkedList<>();
         seen = new ArrayList<>();
 
-
         addToQueue((PojamPainter) tb.getPainters().get(0),tb, painters);
         bestFit(tb,tb.getPainters().get(0),r);
-        r = (r/1.4);
+        r = (r/1.75);
 
         while (!painters.isEmpty()){
 
@@ -60,62 +59,14 @@ public class RepositionState extends State {
                     seen.add(dp);
                     //customSort(tb,koef1,koef2,dp);
                 }
-
-
             }
-            r = (r/1.75);
-        }
-
-
-    }
-
-//    private void dfs(TabItemModel tb){
-//        parenti = new ArrayList<>();
-//        seen = new ArrayList<>();
-//        children = new Stack<>();
-//        painters = new LinkedList<>();
-//        Deque<DevicePainter> sortedChildren = new LinkedList<>();
-//        addToQueue((PojamPainter) tb.getPainters().get(0),tb, painters);
-//
-//
-//
-//        while(!painters.isEmpty()){
-//            int size = painters.size();
-//            for(int i = 0; i<size; i++){
-//                int tempR = r +150;
-//                int tempUgao = 30;
-//                int sortedSize = sortedChildren.size();
-//                DevicePainter dp = painters.poll();
-//                for(int j =0; j < sortedSize; j++){
-//                    DevicePainter dv = sortedChildren.pop();
-//                    bestFit(tb, dv);
-//                }
-//                if(!seen.contains(dp)){
-//                    seen.add(dp);
-//                    parenti.add(dp);
-//                    addToQueue((PojamPainter) dp, tb, painters);
-//                    addToQueue((PojamPainter) dp, tb, sortedChildren);
-//                    if(!children.contains(dp)){
-//                        bestFit(tb, dp);
-//                    }
-//                }
-//            }
-//        }
-//        ugao = 30;
-//        r += 150;
-//    }
-
-    private void rekurzivniGraf(DevicePainter dp, TabItemModel tb ){
-        if(((PojamPainter)dp).getVeze().isEmpty()){
-
+            r = (r/1.5);
         }
     }
 
     private void addToQueue(PojamPainter pp,TabItemModel tb, Deque<DevicePainter> painters){
 
         PojamPainter pojamPainter = pp;
-
-
 
         for(DevicePainter veza : pojamPainter.getVeze()){
 
@@ -132,75 +83,57 @@ public class RepositionState extends State {
     }
 
     private void bestFit(TabItemModel tb, DevicePainter dp, double r){
+        ugao = 0;
 
        PojamElement element = (PojamElement) dp.getElement();
-
-
 
        children = new LinkedList<>();
 
        addToQueue((PojamPainter) dp,tb,children);
 
-
        for (DevicePainter dv : children){
 
            if (dv instanceof PojamPainter && tb.getPainters().indexOf(dv) != 0 && !seen.contains(dv)){
-
                dv.getElement().setX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX() - ((PojamElement)dv.getElement()).getWidth()/2.f));
                dv.getElement().setY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY() - ((PojamElement)dv.getElement()).getHeight()/2.f));
 
                ((PojamElement) dv.getElement()).setCenterX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX()));
                ((PojamElement) dv.getElement()).setCenterY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY()));
                System.out.println(ugao);
-               if (flag){
-                   ugao -=45;
+              /** if (flag){
+                   ugao +=45;
                }
                else {
                    ugao += 45;
                }
+               */
 
-               //ugao %= 360;
            }
-
+           ugao+=55;
+           ugao %= 360;
        }
-
-
-
-
-
-
         //System.out.println(ugao);
         tb.repaint();
     }
 
-    @Override
-    public void drag(TabItemModel tb, Point point) {
-
-    }
-
-    @Override
-    public boolean isConnected(TabItemModel tb, Point point) {
-        return false;
-    }
-
     private void closestLine(TabItemModel tb,DevicePainter dp) {
 
-        if (dp instanceof PojamPainter && tb.getPainters().indexOf(dp) != 0){
+   /**     if (dp instanceof PojamPainter && tb.getPainters().indexOf(dp) != 0){
 
             double upperHorizontal = Line2D.ptLineDist(0, (int) (tb.getHeight()/1.0005),tb.getWidth(), (int) (tb.getHeight()/1.0005),dp.getElement().getX(),dp.getElement().getY());
             double underHorizontal = Line2D.ptLineDist(0, (int) (tb.getHeight()/(tb.getHeight()/1.1)),tb.getWidth(), (int) (tb.getHeight()/(tb.getHeight()/1.1)),dp.getElement().getX(),dp.getElement().getY());
             double rightVertical = Line2D.ptLineDist((tb.getWidth()/1.0005), 0, (int) (tb.getWidth()/1.0005),(tb.getHeight()),dp.getElement().getX(),dp.getElement().getY());
             double leftVertical = Line2D.ptLineDist((int) (tb.getWidth()/(tb.getWidth()/1.0005)), 0, (int) (tb.getWidth()/(tb.getWidth()/1.0005)), (int) (tb.getHeight()),dp.getElement().getX(),dp.getElement().getY());
 
-            if (upperHorizontal > underHorizontal){
+            if (upperHorizontal < underHorizontal){
 
-                if (upperHorizontal > rightVertical && upperHorizontal > leftVertical){
+                if (upperHorizontal < rightVertical && upperHorizontal < leftVertical){
 
                     ugao = 90;
                     flag = false;
 
                 }
-                else if (upperHorizontal < rightVertical){
+                else if (upperHorizontal > rightVertical){
                     //right vertical
                     ugao = 0;
                     flag = true;
@@ -212,13 +145,13 @@ public class RepositionState extends State {
 
                 }
             }
-            else if (underHorizontal > upperHorizontal) {
+            else if (underHorizontal < upperHorizontal) {
 
-                if (underHorizontal > rightVertical && underHorizontal > leftVertical){
+                if (underHorizontal < rightVertical && underHorizontal < leftVertical){
                     ugao = 270;
                     flag = true;
                 }
-                else if (underHorizontal < rightVertical){
+                else if (underHorizontal > rightVertical){
                     //right vertical
                     ugao = 0;
                     flag = true;
@@ -229,14 +162,14 @@ public class RepositionState extends State {
                     flag = false;
                 }
             }
-            else if (rightVertical > leftVertical) {
+            else if (rightVertical < leftVertical) {
 
-                if (rightVertical > upperHorizontal && rightVertical > underHorizontal){
+                if (rightVertical < upperHorizontal && rightVertical < underHorizontal){
                     ugao = 0;
                     flag = true;
 
                 }
-                else if(rightVertical < underHorizontal){
+                else if(rightVertical > underHorizontal){
                     // under horizontal
                     ugao = 270;
                     flag = true;
@@ -249,12 +182,12 @@ public class RepositionState extends State {
 
             }
             else {
-                if (leftVertical > upperHorizontal && leftVertical > underHorizontal){
+                if (leftVertical < upperHorizontal && leftVertical < underHorizontal){
 
                     ugao = 180;
                     flag = false;
                 }
-                else if(leftVertical < underHorizontal){
+                else if(leftVertical > underHorizontal){
                     // under horizontal
                     ugao = 270;
                     flag = true;
@@ -268,7 +201,18 @@ public class RepositionState extends State {
 
 
         }
+    */
 
+    }
+
+    @Override
+    public void drag(TabItemModel tb, Point point) {
+
+    }
+
+    @Override
+    public boolean isConnected(TabItemModel tb, Point point) {
+        return false;
     }
 
 
