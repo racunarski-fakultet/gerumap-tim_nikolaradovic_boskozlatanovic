@@ -25,7 +25,7 @@ public class LoadAction extends AbstractGerumapAction {
         if (jfc.showOpenDialog(MainFrame.getIntance()) == 0) {
             try {
                 File file = jfc.getSelectedFile();
-                Project p = AppCore.getInstance().getSerializer().loadMindMap(file);
+                Project p = AppCore.getInstance().getSerializer().loadProject(file);
                 ProjectLoader.loadProject((MapNode) p);
             } catch (Exception var5) {
                 var5.printStackTrace();

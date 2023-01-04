@@ -22,6 +22,8 @@ public class RepositionState extends State {
 
 
     double ugao;
+
+    private boolean flag = true;
     double r = 300;
     @Override
     public void execute(TabItemModel tb, Point point) {
@@ -31,7 +33,7 @@ public class RepositionState extends State {
 
     private void bfs(TabItemModel tb) {
 
-
+        r = 250;
         ugao = 60;
         painters = new LinkedList<>();
         seen = new ArrayList<>();
@@ -39,7 +41,7 @@ public class RepositionState extends State {
 
         addToQueue((PojamPainter) tb.getPainters().get(0),tb, painters);
         bestFit(tb,tb.getPainters().get(0),r);
-        r = (r/1.75);
+        r = (r/1.4);
 
         while (!painters.isEmpty()){
 
@@ -52,6 +54,7 @@ public class RepositionState extends State {
                 if (!seen.contains(dp)){
 
                     addToQueue((PojamPainter) dp,tb, painters);
+                    closestLine(tb,dp);
 
                     bestFit(tb, dp,r);
                     seen.add(dp);
@@ -130,9 +133,8 @@ public class RepositionState extends State {
 
     private void bestFit(TabItemModel tb, DevicePainter dp, double r){
 
-        ugao = 60;
-
        PojamElement element = (PojamElement) dp.getElement();
+
 
 
        children = new LinkedList<>();
@@ -150,8 +152,14 @@ public class RepositionState extends State {
                ((PojamElement) dv.getElement()).setCenterX((float) (r*Math.sin(Math.PI/180*ugao) + element.getCenterX()));
                ((PojamElement) dv.getElement()).setCenterY((float) (r*Math.cos(Math.PI/180*ugao) + element.getCenterY()));
                System.out.println(ugao);
-               ugao += 55;
+               if (flag){
+                   ugao -=45;
+               }
+               else {
+                   ugao += 45;
+               }
 
+               //ugao %= 360;
            }
 
        }
@@ -159,7 +167,7 @@ public class RepositionState extends State {
 
 
 
-       // ugao %= 360;
+
 
         //System.out.println(ugao);
         tb.repaint();
@@ -175,58 +183,93 @@ public class RepositionState extends State {
         return false;
     }
 
-    private void customSort(TabItemModel tb,float koef1, float koef2,DevicePainter dp) {
-
-        tb.setStart(0);
-        tb.setStart2(0);
-
+    private void closestLine(TabItemModel tb,DevicePainter dp) {
 
         if (dp instanceof PojamPainter && tb.getPainters().indexOf(dp) != 0){
 
-        double dist1 = Line2D.ptLineDist(0,tb.getHeight()/koef1,tb.getWidth(),tb.getHeight()/koef1,dp.getShape().getBounds2D().getCenterX(), dp.getShape().getBounds2D().getCenterY());
-        double dist2 = Line2D.ptLineDist(0,tb.getHeight()/koef2,tb.getWidth(),tb.getHeight()/koef2,dp.getShape().getBounds2D().getCenterX(), dp.getShape().getBounds2D().getCenterY());
-        int increment = 120;
+            double upperHorizontal = Line2D.ptLineDist(0, (int) (tb.getHeight()/1.0005),tb.getWidth(), (int) (tb.getHeight()/1.0005),dp.getElement().getX(),dp.getElement().getY());
+            double underHorizontal = Line2D.ptLineDist(0, (int) (tb.getHeight()/(tb.getHeight()/1.1)),tb.getWidth(), (int) (tb.getHeight()/(tb.getHeight()/1.1)),dp.getElement().getX(),dp.getElement().getY());
+            double rightVertical = Line2D.ptLineDist((tb.getWidth()/1.0005), 0, (int) (tb.getWidth()/1.0005),(tb.getHeight()),dp.getElement().getX(),dp.getElement().getY());
+            double leftVertical = Line2D.ptLineDist((int) (tb.getWidth()/(tb.getWidth()/1.0005)), 0, (int) (tb.getWidth()/(tb.getWidth()/1.0005)), (int) (tb.getHeight()),dp.getElement().getX(),dp.getElement().getY());
 
-        if (dist1 < dist2){
+            if (upperHorizontal > underHorizontal){
 
-                dp.getElement().setX((tb.getStart()+increment - ((PojamElement)dp.getElement()).getWidth()/2.f));
-                dp.getElement().setY((tb.getHeight()/koef1 - ((PojamElement)dp.getElement()).getHeight()/2.f));
-                ((PojamElement)dp.getElement()).setCenterX(tb.getStart()+increment);
-                ((PojamElement)dp.getElement()).setCenterY(tb.getHeight()/koef1);
+                if (upperHorizontal > rightVertical && upperHorizontal > leftVertical){
 
-                tb.setStart(tb.getStart()+increment);
-        }
-        else {
-            dp.getElement().setX((float) (tb.getStart2()+increment - ((PojamElement)dp.getElement()).getWidth()/2.f));
-            dp.getElement().setY((float) (tb.getHeight()/koef2 - ((PojamElement)dp.getElement()).getHeight()/2.f));
-            ((PojamElement)dp.getElement()).setCenterX(tb.getStart2()+increment);
-            ((PojamElement)dp.getElement()).setCenterY((float) (tb.getHeight()/koef2));
-            tb.setStart2(tb.getStart2()+increment);
-        }
+                    ugao = 90;
+                    flag = false;
 
+                }
+                else if (upperHorizontal < rightVertical){
+                    //right vertical
+                    ugao = 0;
+                    flag = true;
+                }
+                else {
+                    //left vertical
+                    ugao = 180;
+                    flag = false;
+
+                }
+            }
+            else if (underHorizontal > upperHorizontal) {
+
+                if (underHorizontal > rightVertical && underHorizontal > leftVertical){
+                    ugao = 270;
+                    flag = true;
+                }
+                else if (underHorizontal < rightVertical){
+                    //right vertical
+                    ugao = 0;
+                    flag = true;
+                }
+                else {
+                    //left vertical
+                    ugao = 180;
+                    flag = false;
+                }
+            }
+            else if (rightVertical > leftVertical) {
+
+                if (rightVertical > upperHorizontal && rightVertical > underHorizontal){
+                    ugao = 0;
+                    flag = true;
+
+                }
+                else if(rightVertical < underHorizontal){
+                    // under horizontal
+                    ugao = 270;
+                    flag = true;
+                }
+                else {
+                    //upper horizontal
+                    ugao = 90;
+                    flag = false;
+                }
+
+            }
+            else {
+                if (leftVertical > upperHorizontal && leftVertical > underHorizontal){
+
+                    ugao = 180;
+                    flag = false;
+                }
+                else if(leftVertical < underHorizontal){
+                    // under horizontal
+                    ugao = 270;
+                    flag = true;
+                }
+                else {
+                    //upper horizontal
+                    ugao = 90;
+                    flag = false;
+                }
             }
 
 
-        tb.repaint();
-    }
-
-    private void positionLine(DevicePainter dp, TabItemModel tb, PojamPainter centralniPojam){
-        float x1 = (float) dp.getElement().getX()+ ((PojamElement)dp.getElement()).getWidth()/2.f;
-        float y1 = (float) dp.getElement().getY() + ((PojamElement)dp.getElement()).getHeight()/2.f;
-        float x2 = (float) centralniPojam.getElement().getX() +  ((PojamElement)centralniPojam.getElement()).getWidth()/2.f;
-        float y2 = (float) centralniPojam.getElement().getY() +  ((PojamElement)centralniPojam.getElement()).getHeight()/2.f;
-        for(DevicePainter veza: ((PojamPainter) dp).getVeze()){
-            Point point = new Point((int) ((VezaElement)veza.getElement()).getX2(), (int) ((VezaElement)veza.getElement()).getY2());
-            if(centralniPojam.contains(point) || dp.contains(point)){
-                ((VezaElement)veza.getElement()).setX(x1);
-                ((VezaElement)veza.getElement()).setY(y1);
-                ((VezaElement)veza.getElement()).setX2(x2);
-                ((VezaElement)veza.getElement()).setY2(y2);
-            }
         }
+
     }
-
-
 
 
 }

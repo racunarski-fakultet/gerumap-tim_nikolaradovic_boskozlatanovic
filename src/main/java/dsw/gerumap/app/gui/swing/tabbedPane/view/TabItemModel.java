@@ -4,6 +4,7 @@ import dsw.gerumap.app.AppCore;
 import dsw.gerumap.app.core.observer.Publisher;
 import dsw.gerumap.app.core.observer.Subscriber;
 import dsw.gerumap.app.gui.swing.view.MainFrame;
+import dsw.gerumap.app.gui.swing.view.painter.SelectioElements;
 import dsw.gerumap.app.mapRepository.Actions;
 import dsw.gerumap.app.mapRepository.implementation.Element;
 import dsw.gerumap.app.mapRepository.implementation.subElements.VezaElement;
@@ -114,11 +115,11 @@ public class TabItemModel extends JPanel implements Subscriber {
                 }
             }
         }
-       // g.drawLine(0, (int) (this.getHeight()/1.2),this.getWidth(), (int) (this.getHeight()/1.2));
-//        g.drawLine(0, (int) (this.getHeight()/4),this.getWidth(), (int) (this.getHeight()/4f));
-//
-//        g.drawLine(0, (int) (this.getHeight()/1.1),this.getWidth(), (int) (this.getHeight()/1.1));
-//        g.drawLine(0, (int) (this.getHeight()/5.2),this.getWidth(), (int) (this.getHeight()/5.2));
+        g.drawLine(0, (int) (this.getHeight()/1.0005),this.getWidth(), (int) (this.getHeight()/1.0005));
+        g.drawLine(0, (int) (this.getHeight()/(getHeight()/1.1)),this.getWidth(), (int) (this.getHeight()/(getHeight()/1.1)));
+
+        g.drawLine((int) (getWidth()/1.0005), 0, (int) (getWidth()/1.0005),(this.getHeight()));
+        g.drawLine((int) (getWidth()/(getWidth()/1.0005)), 0, (int) (getWidth()/(getWidth()/1.0005)), (int) (this.getHeight()));
 
     }
 
@@ -194,12 +195,33 @@ public class TabItemModel extends JPanel implements Subscriber {
                 if (painters.get(i).getElement() == null)continue;
                 if (painters.get(i).getElement().equals(obj)){
                     painters.remove(i);
+
                     break;
+                }
+            }
+            if (!getTabSelectionModel().getSelected().isEmpty()){
+                for (int i = 0; i < painters.size(); i++){
+                    if (getTabSelectionModel().getSelected().get(i).getElement() == null)continue;
+                    if (getTabSelectionModel().getSelected().get(i).getElement().equals(obj)){
+                        getTabSelectionModel().getSelected().remove(i);
+                        break;
+                    }
                 }
             }
         }
 
+        if (this.getTabSelectionModel().getSelected().size() == 0 && hasRectangle() != null){
+            painters.remove(hasRectangle());
+        }
+
         this.repaint();
+    }
+
+    private DevicePainter hasRectangle(){
+        for (DevicePainter dv : painters){
+            if (dv instanceof SelectioElements) return dv;
+        }
+        return null;
     }
 
 }

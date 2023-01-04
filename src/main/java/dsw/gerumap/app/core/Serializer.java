@@ -7,6 +7,6 @@ import dsw.gerumap.app.mapRepository.implementation.Project;
 import java.io.File;
 
 public interface Serializer {
-    Project loadMindMap(File file);
+    Project loadProject(File file);
     void saveMindMap(MapNode node, String filePath);
 }

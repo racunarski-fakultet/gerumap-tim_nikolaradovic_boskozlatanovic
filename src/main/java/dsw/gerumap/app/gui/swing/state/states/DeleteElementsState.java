@@ -20,6 +20,7 @@ public class DeleteElementsState extends State {
     public void execute(TabItemModel tb, Point point) {
 
         Set<Element> tempElements = new HashSet<>();
+        List<Element> toBeRemoved = new ArrayList<>();
 
             for (DevicePainter painter : tb.getTabSelectionModel().getSelected()){
 
@@ -35,16 +36,24 @@ public class DeleteElementsState extends State {
 
 
                     for (DevicePainter veze: ((PojamPainter) painter).getVeze()){
-                        AppCore.getInstance().getMapRepository().removeChild(veze.getElement());
+                        toBeRemoved.add(veze.getElement());
+                        //AppCore.getInstance().getMapRepository().removeChild(veze.getElement());
                         tempElements.add(veze.getElement());
                     }
                 }
-                AppCore.getInstance().getMapRepository().removeChild(painter.getElement());
+                toBeRemoved.add(painter.getElement());
+
+                //AppCore.getInstance().getMapRepository().removeChild(painter.getElement());
                 deleteSelectionRectangle(tb);
                 tb.repaint();
 
 
             }
+            for (Element el: toBeRemoved){
+                AppCore.getInstance().getMapRepository().removeChild(el);
+            }
+            toBeRemoved.clear();
+
         Command command = new DeleteElementsCommand(tb.getMapNode());
         ((DeleteElementsCommand)command).setSelektovaniElementi(tempElements);
         tb.getMapNode().getCommandManager().addCommand(command);
